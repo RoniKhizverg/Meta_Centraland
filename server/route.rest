@@ -1,0 +1,27 @@
+GET http://localhost:3000/places 
+
+###
+
+GET http://localhost:3000/places/61c20840daca29f33afa9ad4
+
+###
+
+Post http://localhost:3000/places
+Content-Type: application/json
+
+{
+    "name":"The most beatiful place",
+    "country":"Brazil",
+    "description":"dhdhdhdhdhdd"
+}
+
+###
+DELETE http://localhost:3000/places/61c20840daca29f33afa9ad4
+
+###
+PATCH http://localhost:3000/places/61c20840daca29f33afa9ad4
+Content-Type: application/json
+
+{
+    "name":"New name"
+}

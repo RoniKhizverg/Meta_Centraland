@@ -1,0 +1,46 @@
+{
+    "_id": {
+        "$oid": "61c36567119f47f0a9a8d0fb"
+    },
+    "name": "Eiffel Tower",
+    "country": "France",
+    "description": "Locally nicknamed \"La dame de fer\" (French for \"Iron Lady\"), it was constructed from 1887 to 1889 as the centerpiece of the 1889 World's Fair and was initially criticized by some of France's leading artists and intellectuals for its design, but it has become a global cultural icon of France and one of the most recognizable structures in the world.[3] The Eiffel Tower is the most visited monument with an entrance fee in the world; 6.91 million people ascended it in 2015. The Tower was made a Monument historique in 1964 and named part of UNESCO World Heritage Site (\"Paris, Banks of the Seins\") in 1991. [4]\r\n\r\nThe tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure in the world to surpass both the 200-metre and 300-metre mark in height. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.\r\n\r\nThe tower has three levels for visitors, with restaurants on the first and second levels. The top level's upper platform is 276 m (906 ft) above the ground – the highest observation deck accessible to the public in the European Union. Tickets can be purchased to ascend by stairs or lift to the first and second levels. The climb from ground level to the first level is over 300 steps, as is the climb from the first level to the second. Although there is a staircase to the top level, it is usually accessible only by lift.",
+    "images": ["AifalTower.jpg"],
+    "__v": 0
+} {
+    "_id": {
+        "$oid": "61c36598119f47f0a9a8d100"
+    },
+    "name": "Hạ Long Bay",
+    "country": "Viet Nam",
+    "description": "Hạ Long Bay or Halong Bay (Vietnamese: Vịnh Hạ Long, IPA: [vînˀ hâːˀ lawŋm] (About this soundlisten)) is a UNESCO World Heritage Site and popular travel destination in Quảng Ninh Province, Vietnam. The name Hạ Long means \"descending dragon\". Administratively, the bay belongs to Hạ Long city, Cẩm Phả city, and is a part of Vân Đồn District. The bay features thousands of limestone karsts and isles in various shapes and sizes. Ha Long Bay is a center of a larger zone which includes Bai Tu Long Bay to the northeast, and Cát Bà Island to the southwest. These larger zones share a similar geological, geographical, geomorphological, climate, and cultural characters.\r\n\r\nHạ Long Bay has an area of around 1,553 km2 (600 sq mi), including 1,960–2,000 islets, most of which are limestone. The core of the bay has an area of 334 km2 (129 sq mi) with a high density of 775 islets.[1] The limestone in this bay has gone through 500 million years of formation in different conditions and environments. The evolution of the karst in this bay has taken 20 million years under the impact of the tropical wet climate.[2] The geo-diversity of the environment in the area has created biodiversity, including a tropical evergreen biosystem, oceanic and sea shore biosystem.[3] Hạ Long Bay is home to 14 endemic floral species[4] and 60 endemic faunal species.[5]",
+    "images": ["Halong.jpg"],
+    "__v": 0
+} {
+    "_id": {
+        "$oid": "61c365d3119f47f0a9a8d103"
+    },
+    "name": "Great Wall of China",
+    "country": "China",
+    "description": "The Great Wall of China (traditional Chinese: 萬里長城; simplified Chinese: 万里长城; pinyin: Wànlǐ Chángchéng) is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe. Several walls were built from as early as the 7th century BC,[2] with selective stretches later joined together by Qin Shi Huang (220–206 BC), the first emperor of China. Little of the Qin wall remains.[3] Later on, many successive dynasties built and maintained multiple stretches of border walls. The best-known sections of the wall were built by the Ming dynasty (1368–1644).\r\n\r\nApart from defense, other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration.[4] Furthermore, the defensive characteristics of the Great Wall were enhanced by the construction of watchtowers, troop barracks, garrison stations, signaling capabilities through the means of smoke or fire, and the fact that the path of the Great Wall also served as a transportation corridor.",
+    "images": ["GreatWallInChina.jpg"],
+    "__v": 0
+} {
+    "_id": {
+        "$oid": "61c36622119f47f0a9a8d108"
+    },
+    "name": "Kuang Si Falls",
+    "country": "Lao Democratic Republic",
+    "description": "The Kuang Si Falls or Kuang Xi Falls (Lao: ນ້ຳຕົກຕາດ ກວາງຊີ), alternatively known as the Tat Kuang Si Waterfalls, is a three-tiered waterfall about 29 kilometers (18 mi) south of Luang Prabang. The waterfalls are a favorite side trip for tourists in Luang Prabang, and begin in shallow pools atop a steep hillside. These lead to the main fall with a drop of 60 meters (200 ft).[1]\r\n\r\nThey are accessed via a trail to a left of the falls. The water flows into a turquoise blue pool before continuing downstream. The many cascades of Kuang Si are not typical of waterfalls, adding to the attractiveness.\r\n\r\nThe locals charge a nominal admission fee of 20,000 kip to visit the site, which is well maintained with walkways and bridges to guide the visitor.[2] Most of the pools are open to swimming (although at least one is closed as being a sacred site).",
+    "images": ["kuang-si.jpg"],
+    "__v": 0
+} {
+    "_id": {
+        "$oid": "61c36653119f47f0a9a8d10b"
+    },
+    "name": "Western Wall",
+    "country": "Israel",
+    "description": "The Wailing Wall (as it is known in the West) or Western Wall (derived from Hebrew: הַכּוֹתֶל הַמַּעֲרָבִי‎, romanized: HaKotel HaMa'aravi, lit. 'the western wall',[1] often shortened to the Kotel or Kosel), known in Islam as the Buraq Wall (Arabic: Ḥā'iṭ al-Burāq حَائِط ٱلْبُرَاق Arabic pronunciation: ['ħaːʔɪtˤ albʊ'raːq]),[2] is an ancient limestone wall in the Old City of Jerusalem. It is a relatively small segment of a far longer ancient retaining wall, known also in its entirety as the \"Western Wall\".[3] The wall was originally erected as part of the expansion of the Second Jewish Temple begun by Herod the Great,[4] which resulted in the encasement of the natural, steep hill known to Jews and Christians as the Temple Mount, in a huge rectangular structure topped by a flat platform, thus creating more space for the Temple itself, its auxiliary buildings, and crowds of worshipers and visitors.\r\n\r\n",
+    "images": ["westernWall.jpeg"],
+    "__v": 0
+}
