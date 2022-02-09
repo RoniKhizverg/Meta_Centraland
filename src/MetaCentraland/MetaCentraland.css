@@ -1,36 +1,42 @@
-#board {
-    border: 1px solid black;
-    height: 100%;
-    width: 100%;
-}
-
-.spot {
-    padding: 2px;
-    border-radius: 5px;
-    position: relative;
-    float: left;
-}
-
-.road {
-    height: 1%;
-    width: 1%;
-    background-color: rgb(66, 64, 64);
-}
-
-.park {
-    height: 1%;
-    width: 1%;
-    background-color: chartreuse;
-}
-
-.empty {
-    height: 1%;
-    width: 1%;
-    background-color: black;
-}
-
-.plot {
-    height: 1%;
-    width: 1%;
-    background-color: blue;
-}
+    .MetaCentraland {
+        background-color: rgb(116, 105, 125);
+    }
+    
+    .MetaCentraland__cells {
+        display: flex;
+    }
+    
+    .MetaCentraland__column {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .MetaCentraland__cell {
+        width: 5.5px;
+        height: 5.5px;
+        border: 1px solid #b6b3b3;
+    }
+    
+    .MetaCentraland__cell--alive {
+        background-color: black;
+    }
+    
+    .MetaCentraland__cell--dead {
+        background-color: rgb(201, 181, 181);
+    }
+    
+    .MetaCentraland__cell--road {
+        background-color: rgb(100, 92, 92);
+    }
+    
+    .MetaCentraland__cell--park {
+        background-color: green;
+    }
+    
+    .MetaCentraland__cell--plot {
+        background-color: blue;
+    }
+    
+    .MetaCentraland__cell--empty {
+        background-color: white;
+    }
