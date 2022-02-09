@@ -33,10 +33,18 @@
         background-color: green;
     }
     
-    .MetaCentraland__cell--plot {
-        background-color: blue;
+    .MetaCentraland__cell--cheepPlot {
+        background-color: rgb(135, 240, 135);
+    }
+    
+    .MetaCentraland__cell--mediocrePlot {
+        background-color: rgb(194, 194, 22);
+    }
+    
+    .MetaCentraland__cell--highPlot {
+        background-color: red;
     }
     
     .MetaCentraland__cell--empty {
-        background-color: white;
+        background-color: rgb(93, 65, 148);
     }

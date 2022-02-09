@@ -2,10 +2,13 @@ import React from "react";
 import './MetaCentraland.css'
 import $ from 'jquery';
 
-let num;
+let num1;
+let num2;
+
 var board = $('#board');
 const rows = 200;
 const column = 200;
+
 
 export default class MetaCentraland extends React.Component {
 
@@ -19,7 +22,9 @@ static field = {
         ROAD: "road",
         PARK: "park",
         EMPTYCELL:"empty",
-        PLOT:"plot",
+        CHEEPPLOT:"cheepPlot",
+        MEDIOCREPLOT:"mediocrePLOT",
+        HIGHPLOT:"highPlot"
     };
 
     // region Initialization
@@ -36,24 +41,12 @@ static field = {
     }
 
     initializeCells() {
-
+        let count =0;
         let cells = [];
 
         for (let columnIndex = 0; columnIndex < MetaCentraland.field.columnsAmount; columnIndex++) {
             cells[columnIndex] = [];
             for (let rowIndex = 0; rowIndex < MetaCentraland.field.rowsAmount; rowIndex++) {
-
-                
-               
-                
-
-
-
-
-
-
-
-
 
 
 
@@ -130,14 +123,24 @@ static field = {
                 {
                      cells[columnIndex][rowIndex] = MetaCentraland.cellState.ROAD;
                 }
-
-
-                else{
+                 else{
                      cells[columnIndex][rowIndex] = MetaCentraland.cellState.DEAD;
 
                 }
+
+                
+            }   
+               
             }
-        }
+        while(count<3000)
+                {
+                num1 = getRandomInt(200);
+                num2 = getRandomInt(200);
+                if((cells[num1][num2]== MetaCentraland.cellState.DEAD))
+                
+                    cells[num1][num2] = MetaCentraland.cellState.EMPTYCELL;
+                    count++;
+                }
 
         return cells;
     }
@@ -219,10 +222,20 @@ function cellColoring(cellState) {
 
         cell = "park";
       }
-      if(cellState === MetaCentraland.cellState.PLOT )
+      if(cellState === MetaCentraland.cellState.CHEEPPLOT )
       {
 
-        cell = "plot";
+        cell = "cheepPlot";
+      }
+      if(cellState === MetaCentraland.cellState.MEDIOCREPLOT )
+      {
+
+        cell = "mediocrePlot";
+      }
+      if(cellState === MetaCentraland.cellState.HIGHPLOT )
+      {
+
+        cell = "highPlot";
       }
       if(cellState === MetaCentraland.cellState.EMPTYCELL )
       {
@@ -232,3 +245,10 @@ function cellColoring(cellState) {
       return cell;
         
     }
+    function getRandomInt(max) {
+            let num =
+                Math.floor(Math.random() * max);
+
+            return num.toString();
+
+        }
