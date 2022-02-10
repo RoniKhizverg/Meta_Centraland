@@ -1,0 +1,50 @@
+.MetaCentraland {
+    background-color: rgb(116, 105, 125);
+}
+
+.MetaCentraland__cells {
+    display: flex;
+}
+
+.MetaCentraland__column {
+    display: flex;
+    flex-direction: column;
+}
+
+.MetaCentraland__cell {
+    width: 5.5px;
+    height: 5.5px;
+    border: 1px solid #b6b3b3;
+}
+
+.MetaCentraland__cell--alive {
+    background-color: black;
+}
+
+.MetaCentraland__cell--dead {
+    background-color: rgb(201, 181, 181);
+}
+
+.MetaCentraland__cell--road {
+    background-color: rgb(100, 92, 92);
+}
+
+.MetaCentraland__cell--park {
+    background-color: green;
+}
+
+.MetaCentraland__cell--cheepPlot {
+    background-color: rgb(135, 240, 135);
+}
+
+.MetaCentraland__cell--mediocrePlot {
+    background-color: rgb(194, 194, 22);
+}
+
+.MetaCentraland__cell--highPlot {
+    background-color: red;
+}
+
+.MetaCentraland__cell--empty {
+    background-color: rgb(93, 65, 148);
+}
