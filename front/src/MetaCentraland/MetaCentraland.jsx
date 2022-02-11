@@ -1,23 +1,32 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route} from "react-router-dom";
 
-//import Navbar from "./components/navbar.component"
-import createMap from "../components/createMap.component";
-// import EditExercise from "./components/edit-exercise.component";
-// import CreateExercise from "./components/create-exercise.component";
-// import CreateUser from "./components/create-user.component";
+import Navbar from "../components/navbar.component"
+import Createmap from "../components/createmap.component";
+import Login from "../components/login";
+import Signup from "../components/signup";
+
+
+
+
 
 function MetaCentraland() {
   return (
-    <Router>
-      <div className="container">
+    <BrowserRouter>
+    <div className="container">
+    <Navbar />
       <br/>
-      <Route path="/" exact component={createMap} />
-      
-      </div>
-    </Router>
+      <Routes>
+     
+    <Route exact path="/"  element={<Createmap/>}> </Route>
+        <Route exact path="/signin"  element={<Login/>}> </Route>
+        <Route exact path="/signup"  element={<Signup/>}> </Route>
+
+
+    </Routes>
+    </div>
+  </BrowserRouter>
   );
 }
-
 export default MetaCentraland;

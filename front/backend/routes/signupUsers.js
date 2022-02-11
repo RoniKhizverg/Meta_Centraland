@@ -53,7 +53,7 @@ router.post('/signup', async(request, response) => {
         const signupFromUser = new signupTemplatesCopy({
             name: request.body.name,
             userType: request.body.userType,
-            ID: request.body.ID,
+            password: request.body.password,
             wallet: 1000
         })
         signupFromUser.save()

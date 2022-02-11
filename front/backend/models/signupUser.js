@@ -10,7 +10,7 @@ const signUpScheme = new mongoose.Schema({
             type: String,
             required: true
         },
-        ID: {
+        password: {
             type: String,
             required: true
         },

@@ -154,13 +154,12 @@ export default class createMap extends React.Component {
     renderColumn(rows, columnIndex) {
 
         return ( 
-            <div className = "MetaCentraland__column">
+            <div className = "MetaCentraland__column"
             key = {
                 `column_${columnIndex}`
-            }  {
+            }>  {
                 rows.map((cellState, rowIndex) => {
                     const cellModifier = cellColoring(cellState);
-                    console.log(cellModifier);
                     return <div
                     className = {
                         `MetaCentraland__cell MetaCentraland__cell--${cellModifier}`

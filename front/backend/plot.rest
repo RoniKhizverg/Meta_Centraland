@@ -1,0 +1,12 @@
+GET http://localhost:4000/plots 
+###
+POST http://localhost:4000/plots/plots
+Content-Type: application/json
+
+{
+    "ownerName":"Roni",
+    "price":"1000",
+    "avaibleForSale":true
+}
+
+###

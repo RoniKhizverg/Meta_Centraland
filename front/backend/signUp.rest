@@ -1,0 +1,12 @@
+GET http://localhost:4000/signup 
+###
+POST http://localhost:4000/signupUsers/signup
+Content-Type: application/json
+
+{
+    "name":"Roni",
+    "userType":"1000",
+    "password":"2233333"
+}
+
+###

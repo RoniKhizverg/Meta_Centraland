@@ -1,5 +1,5 @@
 .MetaCentraland {
-    background-color: rgb(116, 105, 125);
+    background-color: rgb(87, 93, 129);
 }
 
 .MetaCentraland__cells {
@@ -12,8 +12,8 @@
 }
 
 .MetaCentraland__cell {
-    width: 7.7px;
-    height: 7.7px;
+    width: 7px;
+    height: 5px;
     border: 1px solid #b6b3b3;
 }
 
