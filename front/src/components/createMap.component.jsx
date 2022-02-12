@@ -1,5 +1,7 @@
 import '../MetaCentraland/MetaCentraland.css'
 import React from 'react';
+import axios from 'axios';
+
 
 
 
@@ -33,9 +35,37 @@ export default class createMap extends React.Component {
 
         this.state = {
             cells: this.initializeCells(),
+            user: []
         };
 
     }
+    async componentDidMount() {
+     axios.get('http://localhost:4000/signupUsers')
+     .then((response) => {
+         const data = response.data;
+         var length = data.length;
+
+         this.setState({user: data[length-1].name +" has " + data[length-1].wallet + " $"} );
+      })
+   
+    console.log(this.state.user)
+  }
+
+
+//   getRegisterUser = () => {
+//     axios.get('http://localhost:4000/signupUsers')
+//       .then((response) => {
+//         const data = response.data;
+//         var length = data.length;
+//         <form>
+//          data[length-1].name
+//         </form>
+//         console.log(data[length-1].name);
+//       })
+//       .catch(() => {
+//         alert('Error retrieving data!!!');
+//       });
+//   }
 
     initializeCells() {
         let count = 0;
@@ -186,15 +216,26 @@ export default class createMap extends React.Component {
 
 
     render() {
-        return (  
+        if (!this.state.user) {
+      return <div>Welcome guest</div>;
+      
+    }
+        return ( 
+            <div>
+                
+        <div className='my_text'>{this.state.user}</div>
+        
             <div className = "MetaCentraland" > {
                 this.renderCells()
+              
             } 
+            </div>
             </div>
                         
         );
-    };
+    }
 }
+
 
 function cellColoring(cellState) {
     let cell = "";

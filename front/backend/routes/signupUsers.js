@@ -49,14 +49,15 @@ async function getUser(req, res, next) {
 
 
 
-router.post('/signup', async(request, response) => {
-        const signupFromUser = new signupTemplatesCopy({
-            name: request.body.name,
-            userType: request.body.userType,
-            password: request.body.password,
-            wallet: 1000
-        })
-        signupFromUser.save()
+router.route('/signup').post((request, response) => {
+        const name = request.body.name;
+        const userType = request.body.userType;
+        const password = request.body.password;
+        const wallet = 1000;
+
+        const newUser = new signupTemplatesCopy({ name, userType, password, wallet })
+
+        newUser.save()
             .then(data => {
                 response.json(data)
             })

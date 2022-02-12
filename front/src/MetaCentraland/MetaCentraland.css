@@ -48,3 +48,12 @@
 .MetaCentraland__cell--empty {
     background-color: rgb(93, 65, 148);
 }
+
+.my_text {
+    padding-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: blueviolet;
+    font-size: 30px;
+    font-weight: bold;
+    width: 121.7vmax;
+}

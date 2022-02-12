@@ -19,8 +19,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.json()) //let our server to accept json as a body
 
-const signupRouter = require('./routes/signupUsers'); //to route all of our places information
-const plotsRouter = require('./routes/plots'); //to route all of our places information
+const signupRouter = require('./routes/signupUsers');
+const plotsRouter = require('./routes/plots');
+const userPlotRouter = require('./routes/userPlot');
 app.use('/plots', plotsRouter) //we want to use this whenever we query places
 app.use('/signupUsers', signupRouter)
+app.use('/userPlot', userPlotRouter)
+
 app.listen(process.env.PORT, () => console.log('Server started')); //tell what the port we want to listen on in our case-8080 when the server ges started.
