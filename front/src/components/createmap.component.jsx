@@ -52,20 +52,6 @@ export default class createMap extends React.Component {
   }
 
 
-//   getRegisterUser = () => {
-//     axios.get('http://localhost:4000/signupUsers')
-//       .then((response) => {
-//         const data = response.data;
-//         var length = data.length;
-//         <form>
-//          data[length-1].name
-//         </form>
-//         console.log(data[length-1].name);
-//       })
-//       .catch(() => {
-//         alert('Error retrieving data!!!');
-//       });
-//   }
 
     initializeCells() {
         let count = 0;

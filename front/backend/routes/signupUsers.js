@@ -14,7 +14,9 @@ router.get('/', async(req, res) => {
     }
 
 })
-
+router.get("/:id", getUser, (req, res) => {
+    res.json(res.user)
+})
 router.delete('/:id', getUser, async(req, res) => {
     try {
         await res.user.remove()
@@ -51,11 +53,12 @@ async function getUser(req, res, next) {
 
 router.route('/signup').post((request, response) => {
         const name = request.body.name;
+        const ID = request.body.ID;
         const userType = request.body.userType;
         const password = request.body.password;
         const wallet = 1000;
 
-        const newUser = new signupTemplatesCopy({ name, userType, password, wallet })
+        const newUser = new signupTemplatesCopy({ name, ID, userType, password, wallet })
 
         newUser.save()
             .then(data => {
