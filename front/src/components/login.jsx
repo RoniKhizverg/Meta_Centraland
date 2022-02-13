@@ -42,14 +42,17 @@ onChangePaswword(e) {   //when we enters a user name its going to call this func
     }
 axios.get('http://localhost:4000/signupUsers')
      .then((response) => {
+         
          const data = response.data;
          const length = data.length;
          for(var i=0; i < length; i++)
          {
             if(data[i].ID === user.ID )
             {
-                if(data[i].password == user.password)
+                if(data[i].password === user.password)
                 {
+                localStorage.clear();
+                localStorage.setItem("userid",data[i].ID);
                 window.location = "/";
                 notRegistered = 1;
                 break;
@@ -61,7 +64,7 @@ axios.get('http://localhost:4000/signupUsers')
                 }
             }    
             }
-        if(notRegistered == 0 && isPasswordValid == 1)
+        if(notRegistered === 0 && isPasswordValid === 1)
         {
             alert("Your details are wrong!!!");
 
@@ -90,7 +93,7 @@ render() {
                     <h2>Sign In</h2>
                 </Grid>
                 <form onSubmit={this.onSubmit}>
-                <TextField label='ID' placeholder='Enter ID' fullWidth 
+                <TextField label='ID'id="userid" placeholder='Enter ID' fullWidth 
                      required
                     className="form-control"
                     value={this.state.ID}
@@ -113,7 +116,9 @@ render() {
 
             </Paper>
         </Grid>
+        
         </div>
     )
 }
+
 }

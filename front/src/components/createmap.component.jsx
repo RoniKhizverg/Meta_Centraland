@@ -44,12 +44,18 @@ export default class createMap extends React.Component {
      .then((response) => {
          const data = response.data;
          var length = data.length;
+         const userid = localStorage.getItem('userid');
+         for(var i=0; i < length; i++)
+         {
+            if(data[i].ID === userid )
+            {
+                 this.setState({user: data[i].name +" has " + data[i].wallet + " $"} );
 
-         this.setState({user: data[length-1].name +" has " + data[length-1].wallet + " $"} );
-      })
+            }
+      }
    
-    console.log(this.state.user)
-  }
+  });
+}
 
 
 
@@ -208,7 +214,7 @@ export default class createMap extends React.Component {
     }
         return ( 
             <div>
-                
+              
         <div className='my_text'>{this.state.user}</div>
         
             <div className = "MetaCentraland" > {

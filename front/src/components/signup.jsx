@@ -76,12 +76,12 @@ export default class Signup extends React.Component {
                 break;
             }    
             }
-        if(isRepeat == 0)
+        if(isRepeat === 0)
         {
         axios.post('http://localhost:4000/signupUsers/signup',newUser)
         .then(res => console.log(res.data));
 
-        window.location = "/";
+        window.location = "/signin";
 }
        })
 
