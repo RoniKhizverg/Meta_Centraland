@@ -53,7 +53,10 @@ router.post('/plots', async(request, response) => {
         const userPlot = new plotsTemplatesCopy({
             ownerName: request.body.ownerName,
             price: request.body.price,
-            avaibleForSale: request.body.avaibleForSale
+            avaibleForSale: request.body.avaibleForSale,
+            row: request.body.row,
+            column: request.body.column,
+            userid: request.body.userid
         })
         userPlot.save()
             .then(data => {

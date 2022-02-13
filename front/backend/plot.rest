@@ -4,9 +4,13 @@ POST http://localhost:4000/plots/plots
 Content-Type: application/json
 
 {
-    "ownerName":"Roni",
+    "ownerName":"or",
     "price":"1000",
-    "avaibleForSale":true
+    "avaibleForSale":true,
+    "row": 170,
+    "column": 11,
+    "userid": "123456789"
+    
 }
 
 ###

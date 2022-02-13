@@ -14,6 +14,18 @@ const plotScheme = new mongoose.Schema({
         avaibleForSale: {
             type: Boolean,
             required: true
+        },
+        row: {
+            type: String,
+            required: true
+        },
+        column: {
+            type: String,
+            required: true
+        },
+        userid: {
+            type: String,
+            required: false
         }
 
 

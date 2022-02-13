@@ -35,7 +35,8 @@ export default class createMap extends React.Component {
 
         this.state = {
             cells: this.initializeCells(),
-            user: []
+            user: [],
+            plots:[]
         };
 
     }
@@ -63,12 +64,35 @@ export default class createMap extends React.Component {
         let count = 0;
         let cells = [];
 
+        axios.get('http://localhost:4000/plots')
+     .then((response) => {
+         const data = response.data;
+         const length = data.length;
+
+    for(let i=0; i< length;i++)
+                {
+                console.log(data[i].price);
+
+                 if(data[i].price <50)
+                    cells[data[i].row][data[i].column] = createMap.cellState.CHEEPPLOT;
+                
+                    else if((data[i].price >50) && (data[i].price < 150))
+                    cells[data[i].row][data[i].column] = createMap.cellState.MEDIOCREPLOT;
+                
+                    else if(data[i].price >150)
+                    {
+                        console.log('shen bina');
+                    cells[data[i].row][data[i].column] = createMap.cellState.HIGHPLOT;
+                }
+            }
+     })
+
         for (let columnIndex = 0; columnIndex < createMap.field.columnsAmount; columnIndex++) {
             cells[columnIndex] = [];
             for (let rowIndex = 0; rowIndex < createMap.field.rowsAmount; rowIndex++) {
 
-
-
+                
+        
                 if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
                     cells[columnIndex][rowIndex] = createMap.cellState.PARK;
 
@@ -131,14 +155,14 @@ export default class createMap extends React.Component {
             }
 
         }
-        while (count < 3000) {
-            num1 = getRandomInt(200);
-            num2 = getRandomInt(200);
-            if ((cells[num1][num2] === createMap.cellState.DEAD))
+        // while (count < 3000) {
+        //     num1 = getRandomInt(200);
+        //     num2 = getRandomInt(200);
+        //     if ((cells[num1][num2] === createMap.cellState.DEAD))
 
-                cells[num1][num2] = createMap.cellState.EMPTYCELL;
-            count++;
-        }
+        //         cells[num1][num2] = createMap.cellState.EMPTYCELL;
+        //     count++;
+        // }
 
         return cells;
     }
@@ -263,10 +287,10 @@ function cellColoring(cellState) {
 
 }
 
-function getRandomInt(max) {
-    let num =
-        Math.floor(Math.random() * max);
+// function getRandomInt(max) {
+//     let num =
+//         Math.floor(Math.random() * max);
 
-    return num.toString();
+//     return num.toString();
 
-}
+// }
