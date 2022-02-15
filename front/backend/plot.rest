@@ -1,14 +1,15 @@
 GET http://localhost:4000/plots 
 ###
-POST http://localhost:4000/plots/plots
+POST http://localhost:4000/plots/plots/
 Content-Type: application/json
 
 {
     "ownerName":"or",
     "price":"1000",
+    "description":"joke",
     "avaibleForSale":true,
-    "row": 170,
-    "column": 11,
+    "row": 31,
+    "column": 15,
     "userid": "123456789"
     
 }

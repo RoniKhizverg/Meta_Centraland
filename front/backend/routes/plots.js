@@ -53,6 +53,7 @@ router.post('/plots', async(request, response) => {
         const userPlot = new plotsTemplatesCopy({
             ownerName: request.body.ownerName,
             price: request.body.price,
+            description: request.body.description,
             avaibleForSale: request.body.avaibleForSale,
             row: request.body.row,
             column: request.body.column,

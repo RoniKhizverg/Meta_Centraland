@@ -11,6 +11,10 @@ const plotScheme = new mongoose.Schema({
             type: String,
             required: true
         },
+        description: {
+            type: String,
+            required: false
+        },
         avaibleForSale: {
             type: Boolean,
             required: true
