@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const signupTemplatesCopy = require('../models/signupUser') //import the shceme we have created
+    // const bcrypt = require('bcrypt');
+    // const NodeRSA = require('node-rsa');
+
 
 router.get('/', async(req, res) => {
     try {
@@ -51,11 +54,21 @@ async function getUser(req, res, next) {
 
 
 
-router.route('/signup').post((request, response) => {
+router.route('/signup').post(async(request, response) => {
+        // const saltPassword = await bcrypt.genSalt(10);
+        // const securePassword = await bcrypt.hash(request.body.password, saltPassword)
+        // const key = new NodeRSA({ b: 1024 });
+        // var encryptedString = key.encrypt
+
+
+
         const name = request.body.name;
         const ID = request.body.ID;
         const userType = request.body.userType;
+        // const password = securePassword;
         const password = request.body.password;
+        const privateKey;
+        const publicKey;
         const wallet = 1000;
 
         const newUser = new signupTemplatesCopy({ name, ID, userType, password, wallet })

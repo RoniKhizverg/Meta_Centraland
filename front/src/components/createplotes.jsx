@@ -266,7 +266,7 @@ export default class CreatePlots extends React.Component {
    generatePlots()
     {
    
-    for(var i=0;i<1000;i++)
+    for(var i=0;i<10000;i++)
     {
      var price = getRandomInt(200) ;
      var row = getRandomInt(200);
