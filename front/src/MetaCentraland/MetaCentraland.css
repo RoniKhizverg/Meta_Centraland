@@ -34,11 +34,11 @@
 }
 
 .MetaCentraland__cell--cheepPlot {
-    background-color: rgb(135, 240, 135);
+    background-color: rgb(99, 249, 99);
 }
 
 .MetaCentraland__cell--mediocrePlot {
-    background-color: rgb(194, 194, 22);
+    background-color: rgb(255, 255, 0);
 }
 
 .MetaCentraland__cell--highPlot {
@@ -56,4 +56,11 @@
     font-size: 30px;
     font-weight: bold;
     width: 121.7vmax;
+}
+
+.box {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: 2px solid;
 }

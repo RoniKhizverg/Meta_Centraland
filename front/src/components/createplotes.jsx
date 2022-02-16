@@ -2,69 +2,7 @@ import React from 'react'
 
 import axios from 'axios';
 
-
-export default class CreatePlots extends React.Component {
-
-
-    
-    constructor(props) {
-        super(props);
-      
-        this.state = {
-           plots: this.generatePlots()
-        
-        };
-
-    }
-
-   generatePlots()
-    {
-   
-    for(var i=0;i<30000;i++)
-    {
-    
-     var price = getRandomInt(200) ;
-     var row = getRandomInt(200);
-     var column = getRandomInt(200);
-     var countryIndex = getRandomInt(242);
-     const newPlot = {
-         ownerName:"O&R.Ltd",
-         price: price,
-         description: countriesList[countryIndex].toString,
-          avaibleForSale:true,
-          row: row,
-          column:column,
-          userid:"316283696"
-       }
-    
-         axios.post('http://localhost:4000/plots/plots',newPlot)
-
-         
-           
-    }
-    
-    }
-  
-  
-
-
-
-render() {
-return(
-    window.location="/createmap"
-)
-}
-
-}
-function getRandomInt(max) {
-    let num =
-        Math.floor(Math.random() * max);
-    return num.toString();
-
-}
-
-
-   const countriesList = [ 
+let countriesList = [ 
    "",
    " Everydays: The First 5000 Days",
    "Jack Dorsey's first tweet",
@@ -311,3 +249,63 @@ function getRandomInt(max) {
    "Zambia",
    "Zimbabwe",
 ];
+export default class CreatePlots extends React.Component {
+
+
+    
+    constructor(props) {
+        super(props);
+      
+        this.state = {
+           plots: this.generatePlots()
+        
+        };
+
+    }
+
+   generatePlots()
+    {
+   
+    for(var i=0;i<1000;i++)
+    {
+     var price = getRandomInt(200) ;
+     var row = getRandomInt(200);
+     var column = getRandomInt(200);
+     var countryIndex = getRandomInt(242);
+     const newPlot = {
+         ownerName:"O&R.Ltd",
+         price: price,
+         description: countriesList[countryIndex],
+        avaibleForSale:true,
+        row: row,
+          column:column,
+          userid:"316283696"
+       }
+         axios.post('http://localhost:4000/plots/plots',newPlot)
+
+         
+           
+    }
+    
+    }
+  
+  
+
+
+
+render() {
+return(
+    window.location="/createmap"
+)
+}
+
+}
+function getRandomInt(max) {
+    let num =
+        Math.floor(Math.random() * max);
+    return num.toString();
+
+}
+
+
+   

@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 
-
+let colorize=[];
 export default class createMap extends React.Component {
 
     static field = {
@@ -28,6 +28,7 @@ export default class createMap extends React.Component {
 
       
         this.state = {
+           // legend:this.createlegend(),
             cells: this.initializeCells(),
             user: [],
             plots:[],
@@ -36,6 +37,33 @@ export default class createMap extends React.Component {
 
     }
     async componentDidMount() {
+
+        
+        var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
+
+    colorize = function(colorList) {
+    var container = document.getElementById('root');
+  
+    for (var key in colorList) {
+        var boxContainer = document.createElement("DIV");
+        var box = document.createElement("DIV");
+        var label = document.createElement("SPAN");
+
+        label.innerHTML = key;
+        box.className = "box";
+        box.style.backgroundColor = colorList[key];
+
+        boxContainer.appendChild(box);
+        boxContainer.appendChild(label);
+
+        container.appendChild(boxContainer);
+
+   }
+}
+
+    colorize(colorList);
+    this.setState({legend: colorize });
+
      axios.get('http://localhost:4000/signupUsers')
      .then((response) => {
          const data = response.data;
@@ -59,7 +87,7 @@ export default class createMap extends React.Component {
 }
 
 
-
+   
     initializeCells() {
         let cells = [];
 
@@ -153,6 +181,7 @@ export default class createMap extends React.Component {
                 }
             }
      })
+     
         
         // while (count < 3000) {
         //     num1 = getRandomInt(200);
@@ -235,9 +264,10 @@ export default class createMap extends React.Component {
       return <div>Welcome guest</div>;
       
     }
+
         return ( 
             <div>
-              
+             
         <div className='my_text'>{this.state.user}</div>
         
             <div className = "MetaCentraland" > {
