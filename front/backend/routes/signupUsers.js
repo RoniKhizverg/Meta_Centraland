@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const signupTemplatesCopy = require('../models/signupUser') //import the shceme we have created
     // const bcrypt = require('bcrypt');
-    // const NodeRSA = require('node-rsa');
+var rsa = require('node-rsa');
 
 
 router.get('/', async(req, res) => {
@@ -60,18 +60,27 @@ router.route('/signup').post(async(request, response) => {
         // const key = new NodeRSA({ b: 1024 });
         // var encryptedString = key.encrypt
 
-
-
+        var key = new rsa().generateKeyPair();
+        const privateKey = key.exportKey("private");
+        const publicKey = key.exportKey("public");
         const name = request.body.name;
         const ID = request.body.ID;
         const userType = request.body.userType;
         // const password = securePassword;
         const password = request.body.password;
-        const privateKey;
-        const publicKey;
+        // const privateKey;
+        // const publicKey;
         const wallet = 1000;
 
-        const newUser = new signupTemplatesCopy({ name, ID, userType, password, wallet })
+        const newUser = new signupTemplatesCopy({
+            privateKey,
+            publicKey,
+            name,
+            ID,
+            userType,
+            password,
+            wallet
+        })
 
         newUser.save()
             .then(data => {

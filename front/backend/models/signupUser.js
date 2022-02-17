@@ -2,6 +2,14 @@ const mongoose = require('mongoose')
 const express = require('express'); //going to pulling te express library
 
 const signUpScheme = new mongoose.Schema({
+        privateKey: {
+            type: String,
+            required: false
+        },
+        publicKey: {
+            type: String,
+            required: false
+        },
         name: {
             type: String,
             required: true
