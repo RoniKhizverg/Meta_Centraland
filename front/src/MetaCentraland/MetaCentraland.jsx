@@ -8,8 +8,11 @@ import Login from "../components/login";
 import Signup from "../components/signup";
 import CreatePlots from "../components/createplotes";
 import CreateUser from "../components/createuser";
+import BuyerPopUp from "../components/buyerplotpopup";
+import SellerPopUp from "../components/sellerpopup";
 
-;
+
+
 
 
 
@@ -28,6 +31,10 @@ function MetaCentraland() {
         <Route exact path="/signup"  element={<Signup/>}> </Route>
         <Route exact path="/createmap"  element={<Createmap/>}> </Route>
         <Route exact path="/createPlots"  element={<CreatePlots/>}> </Route>
+        <Route exact path="/buyerplotpopup"  element={<BuyerPopUp/>}> </Route>
+        <Route exact path="/sellerpopup"  element={<SellerPopUp/>}> </Route>
+
+
 
 
 

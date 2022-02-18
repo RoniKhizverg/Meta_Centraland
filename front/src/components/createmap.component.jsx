@@ -32,6 +32,7 @@ export default class createMap extends React.Component {
            // legend:this.createlegend(),
             cells: this.initializeCells(),
             user: [],
+            usertype:[],
             plots:[],
             countries:[]
         };
@@ -86,10 +87,11 @@ export default class createMap extends React.Component {
          var length1 = data1.length;
          for(var i=0; i < length1; i++)
          {
-             console.log(userid);
             if(data1[i].ID === userid )
             {
                  this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
+                 this.setState({usertype: data1[i].userType});
+                 console.log(data1[i].userType)
             }
       }
 
@@ -182,15 +184,15 @@ export default class createMap extends React.Component {
     for(let i=0; i< length;i++)
                 {
 
-                 if((data[i].price <50)&& (cells[data[i].row][data[i].column]===createMap.cellState.DEAD))
-                    cells[data[i].row][data[i].column] = createMap.cellState.CHEEPPLOT;
+                 if((data[i].price <50)&& (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
+                    cells[data[i].column][data[i].row] = createMap.cellState.CHEEPPLOT;
                 
-                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].row][data[i].column]===createMap.cellState.DEAD))
-                    cells[data[i].row][data[i].column] = createMap.cellState.MEDIOCREPLOT;
+                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
+                    cells[data[i].column][data[i].row] = createMap.cellState.MEDIOCREPLOT;
                 
-                    else if(data[i].price >150 && (cells[data[i].row][data[i].column]===createMap.cellState.DEAD))
+                    else if(data[i].price >150 && (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
                     {
-                    cells[data[i].row][data[i].column] = createMap.cellState.HIGHPLOT;
+                    cells[data[i].column][data[i].row] = createMap.cellState.HIGHPLOT;
                 }
             }
      })
@@ -211,6 +213,29 @@ export default class createMap extends React.Component {
 
 
     toggleCellState(columnIndex, rowIndex) {
+
+
+        console.log(this.state.usertype);
+        axios.get('http://localhost:4000/plots')
+     .then((response) => {
+         const data = response.data;
+         const length = data.length;
+        for(var i=0; i < length; i++)
+        {
+
+            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "buyer"))
+            {
+                localStorage.setItem("plot",data[i]._id);
+                window.location ="/buyerplotpopup";
+            }
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "Seller"))
+            {
+                localStorage.setItem("plot",data[i]._id);
+                window.location ="/sellerpopup";
+            }
+        }
+    })
+    
         const newCellsState = this.state.cells;
         
         newCellsState[columnIndex][rowIndex] = !newCellsState[columnIndex][rowIndex];
