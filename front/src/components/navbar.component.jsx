@@ -10,7 +10,7 @@ export default class Navbar extends Component {
     render() {
         return ( <
             nav className = "navbar navbar-expand-md navbar-dark bg-dark fixed-top " >
-           <Link to="/" className="navbar-brand">META CENTRALAND</Link>
+           <Link to="/createmap" className="navbar-brand">META CENTRALAND</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">

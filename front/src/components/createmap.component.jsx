@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 
+
 let colorize=[];
 export default class createMap extends React.Component {
 
@@ -36,9 +37,12 @@ export default class createMap extends React.Component {
         };
 
     }
-    async componentDidMount() {
-
         
+        
+     componentDidMount() {
+    
+
+         
         var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
 
     colorize = function(colorList) {
@@ -76,12 +80,13 @@ export default class createMap extends React.Component {
          }
          for(var i=0; i < length; i++)
          {
+             console.log(userid);
             if(data[i].ID === userid )
             {
                  this.setState({user: data[i].name +" has " + data[i].wallet + " $"} );
-
             }
       }
+
    
   });
 }

@@ -279,7 +279,7 @@ export default class CreatePlots extends React.Component {
         avaibleForSale:true,
         row: row,
           column:column,
-          userid:"316283696"
+          userid:localStorage.getItem("userid")
        }
          axios.post('http://localhost:4000/plots/plots',newPlot)
 
@@ -306,6 +306,3 @@ function getRandomInt(max) {
     return num.toString();
 
 }
-
-
-   
