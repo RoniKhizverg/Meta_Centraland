@@ -1,0 +1,13 @@
+###
+
+GET http://localhost:4000/logsIn
+
+###
+POST http://localhost:4000/logsIn/login
+Content-Type: application/json
+
+{
+    "ID":"316283696",
+    "password":"2233333"
+}
+

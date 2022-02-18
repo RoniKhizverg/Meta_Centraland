@@ -53,7 +53,9 @@ axios.get('http://localhost:4000/signupUsers')
                 {
                 localStorage.clear();
                 localStorage.setItem("userid",data[i].ID);
-                window.location = "/";
+                axios.post('http://localhost:4000/logsIn/login',user)
+                .then(res => console.log(res.data));
+                window.location = "/createmap";
                 notRegistered = 1;
                 break;
                 }

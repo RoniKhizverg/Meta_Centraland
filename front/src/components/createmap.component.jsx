@@ -68,27 +68,35 @@ export default class createMap extends React.Component {
     colorize(colorList);
     this.setState({legend: colorize });
 
-     axios.get('http://localhost:4000/signupUsers')
+     axios.get('http://localhost:4000/logsIn')
      .then((response) => {
+
          const data = response.data;
          var length = data.length;
-         const userid = localStorage.getItem('userid');
          if(length===0)
          {
             this.setState({user: "Welcome Guest"});
 
          }
-         for(var i=0; i < length; i++)
+         else{
+             axios.get('http://localhost:4000/signupUsers')
+     .then((response) => {
+        const userid = localStorage.getItem('userid');
+         const data1 = response.data;
+         var length1 = data1.length;
+         for(var i=0; i < length1; i++)
          {
              console.log(userid);
-            if(data[i].ID === userid )
+            if(data1[i].ID === userid )
             {
-                 this.setState({user: data[i].name +" has " + data[i].wallet + " $"} );
+                 this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
             }
       }
 
    
   });
+}
+});
 }
 
 
