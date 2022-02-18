@@ -78,7 +78,7 @@ export default class Signup extends React.Component {
             }
         if(isRepeat === 0)
         {
-        localStorage.setItem("userid",data[i].ID);
+        localStorage.setItem("userid",newUser.ID);
         axios.post('http://localhost:4000/signupUsers/signup',newUser)
         .then(res => console.log(res.data));
 
