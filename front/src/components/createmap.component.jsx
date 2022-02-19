@@ -4,6 +4,8 @@ import axios from 'axios';
 
 
 
+
+
 let colorize=[];
 export default class createMap extends React.Component {
 
@@ -42,7 +44,6 @@ export default class createMap extends React.Component {
         
      componentDidMount() {
     
-
          
         var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
 
@@ -353,4 +354,5 @@ function cellColoring(cellState) {
     return cell;
 
 }
+
 

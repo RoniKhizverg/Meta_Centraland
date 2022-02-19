@@ -25,6 +25,7 @@ export default class SellerPopUp extends React.Component {
 
     this.state = {
       plot:'',
+      user:'',
       description: '',
       price: '',
       avaibleForSale:'',
@@ -78,18 +79,34 @@ export default class SellerPopUp extends React.Component {
     })
   }
    onChangeavaibleForSale(e) {   //when we enters id its going to call this function
-    this.setState({
-      avaibleForSale: e.target.value
+    if(e.target.value === "available for sale" )
+        {
+    this.setState({       
+      avaibleForSale: true
+      
     })
   }
+  else{
+       this.setState({       
+      avaibleForSale: false
+          })
+
+  }
+}
    
  
 
   onSubmit(e) { //when we click on submit button
     e.preventDefault();   //do what we wrote down
 
-
-    
+   const plotId = this.state.plot._id
+   console.log(plotId)
+const updatePlot = {
+      price: this.state.price,
+      avaibleForSale: this.state.avaibleForSale
+    }
+    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
+    window.location="/createmap";
 
 
   }
@@ -127,12 +144,12 @@ export default class SellerPopUp extends React.Component {
                     value={this.state.price}
                     onChange={this.onChangePrice}
                          />
-                        <TextField  label='game' placeholder="Enter link to game" 
+                        {/* <TextField  label='game' placeholder="Enter link to game" 
                         required
                     className="form-control"
                     value={this.state.addGame}
-                    onChange={this.onChangePrice}
-                    />
+                    onChange={this.onChangePrice} //temporary
+                    /> */}
                          <FormLabel component="legend">STATUS</FormLabel>
                         <RadioGroup aria-label="usertype" name="usertype"onChange={this.onChangeavaibleForSale} style={{ display: 'center' }}>
                             <FormControlLabel value="seller" control={<Radio />} label="available for sale" />

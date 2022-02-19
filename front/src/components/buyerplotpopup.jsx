@@ -65,7 +65,14 @@ export default class BuyerPopUp extends React.Component {
   onSubmit(e) { //when we click on submit button
     e.preventDefault();   //do what we wrote down
 
+    const updatePlot = {
+      description: this.state.description,
+      price: this.state.price,
+       userType: this.state.userType,
+       password: this.state.password,
+       wallet:1000
 
+    }
     
 
 

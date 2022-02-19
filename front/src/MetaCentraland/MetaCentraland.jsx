@@ -30,7 +30,7 @@ function MetaCentraland() {
         <Route exact path="/signin"  element={<Login/>}> </Route>
         <Route exact path="/signup"  element={<Signup/>}> </Route>
         <Route exact path="/createmap"  element={<Createmap/>}> </Route>
-        <Route exact path="/createPlots"  element={<CreatePlots/>}> </Route>
+        <Route exact path="/createplots"  element={<CreatePlots/>}> </Route>
         <Route exact path="/buyerplotpopup"  element={<BuyerPopUp/>}> </Route>
         <Route exact path="/sellerpopup"  element={<SellerPopUp/>}> </Route>
 

@@ -28,11 +28,52 @@ router.delete('/:id', getPlot, async(req, res) => {
         })
     }
 })
+
+router.patch('/:id', getPlot, async(req, res) => {
+    console.log("error");
+
+    if (req.body.ownerName != null) {
+        res.plot.ownerName = req.body.ownerName
+    }
+    if (req.body.price != null) {
+        res.plot.price = req.body.price
+    }
+    if (req.body.description != null) {
+        res.plot.description = req.body.description
+    }
+    if (req.body.avaibleForSale != null) {
+        res.plot.avaibleForSale = req.body.avaibleForSale
+    }
+    if (req.body.row != null) {
+        res.plot.row = req.body.row
+    }
+    if (req.body.column != null) {
+        res.plot.column = req.body.column
+    }
+    if (req.body.userid != null) {
+        res.plot.userid = req.body.userid
+    }
+    try {
+        const updatePlot = await res.plot.save() //the updated version of our plot if they successfully saved 
+        res.json(updatePlot)
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+
+    }
+
+
+})
+
+
+
+
 async function getPlot(req, res, next) {
     let plot
     try {
         plot = await plotsTemplatesCopy.findById(req.params.id)
-        if (user == null) {
+        if (plot == null) {
             return res.status(404).json({
                 message: 'Cannot find plot'
             })
@@ -42,7 +83,7 @@ async function getPlot(req, res, next) {
                 message: err.message
             }) // status 500 means that there is something wrong with our circuit
     }
-    res.plot = user
+    res.plot = plot
     next()
 
 }
