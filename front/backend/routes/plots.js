@@ -30,7 +30,6 @@ router.delete('/:id', getPlot, async(req, res) => {
 })
 
 router.patch('/:id', getPlot, async(req, res) => {
-    console.log("error");
 
     if (req.body.ownerName != null) {
         res.plot.ownerName = req.body.ownerName

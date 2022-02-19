@@ -229,7 +229,7 @@ export default class createMap extends React.Component {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/buyerplotpopup";
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "Seller"))
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "seller"))
             {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/sellerpopup";

@@ -20,6 +20,46 @@ router.get('/', async(req, res) => {
 router.get("/:id", getUser, (req, res) => {
     res.json(res.user)
 })
+
+
+
+router.patch('/:id', getUser, async(req, res) => {
+
+    if (req.body.privateKey != null) {
+        res.user.privateKey = req.body.privateKey
+    }
+    if (req.body.publicKey != null) {
+        res.user.publicKey = req.body.publicKey
+    }
+    if (req.body.name != null) {
+        res.user.name = req.body.name
+    }
+    if (req.body.ID != null) {
+        res.user.ID = req.body.ID
+    }
+    if (req.body.userType != null) {
+        res.user.userType = req.body.userType
+    }
+    if (req.body.password != null) {
+        res.user.password = req.body.password
+    }
+    if (req.body.wallet != null) {
+        res.user.wallet = req.body.wallet
+    }
+    try {
+        const updateuser = await res.user.save() //the updated version of our plot if they successfully saved 
+        res.json(updateuser)
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+
+    }
+
+
+})
+
+
 router.delete('/:id', getUser, async(req, res) => {
     try {
         await res.user.remove()

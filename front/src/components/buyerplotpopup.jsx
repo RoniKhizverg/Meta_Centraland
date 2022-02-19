@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Avatar, Typography, TextField, Dialog } from '@material-ui/core'
+import { Grid, Paper, Avatar, Typography, Dialog } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CreateMap from './createmap.component'
 import axios from 'axios';
@@ -19,6 +19,8 @@ export default class BuyerPopUp extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      buyeruser:'',
+      selleruser:'',
       plot:'',
       description: '',
       price: '',
@@ -26,6 +28,26 @@ export default class BuyerPopUp extends React.Component {
     }
   }
        componentDidMount() {
+
+       
+
+
+         const userId = localStorage.getItem("userid");
+        axios.get('http://localhost:4000/signupUsers').then((response) => {
+         const data = response.data;
+         const length = data.length;
+
+        for(var i=0; i < length; i++)
+        {
+          if(data[i].ID === userId)
+          {
+        this.setState({
+          buyeruser: data[i]
+        })
+      }
+    }
+  })
+  
          const plot_id = localStorage.getItem("plot");
          axios.get('http://localhost:4000/plots').then((response) => {
          const data = response.data;
@@ -34,12 +56,35 @@ export default class BuyerPopUp extends React.Component {
         {
           if(data[i]._id === plot_id)
           {
+            localStorage.setItem("ownernameid", data[i].userid)
             this.setState({
           plot: data[i]
         })
       }
           }
         })
+
+
+         axios.get('http://localhost:4000/signupUsers').then((response) => {
+         const data = response.data;
+         const length = data.length;
+           const sellerId = localStorage.getItem("ownernameid");
+        console.log(sellerId)
+
+        for(var i=0; i < length; i++)
+        {
+          if(data[i].ID === sellerId)
+          {
+        this.setState({
+          selleruser: data[i]
+        })
+      }
+    }
+  })
+
+        
+
+       
       }
 
         
@@ -63,16 +108,52 @@ export default class BuyerPopUp extends React.Component {
   }
 
   onSubmit(e) { //when we click on submit button
+    let isMinus = 0;
     e.preventDefault();   //do what we wrote down
 
+    const plotId = this.state.plot._id
     const updatePlot = {
-      description: this.state.description,
-      price: this.state.price,
+      ownerName: this.state.buyeruser.name,
+      
        userType: this.state.userType,
        password: this.state.password,
-       wallet:1000
+       userid: this.state.buyeruser.ID
+    }
+    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
+
+    const updateWallet = Number(this.state.buyeruser.wallet)- Number(this.state.plot.price)
+    if(updateWallet < 0 )
+    {
+      alert("You dont have enough money!!!");
+      isMinus = 1
+          window.location="/createmap";
 
     }
+    if(isMinus === 0)
+    {
+    const userId = this.state.buyeruser._id
+    console.log(userId)
+    const updateBuyerUser = {
+         wallet: updateWallet
+         //privatekey:
+    }
+      axios.patch('http://localhost:4000/signupUsers/'+ userId , updateBuyerUser);
+ 
+      const seller_id = this.state.selleruser._id
+      console.log(seller_id);
+      const sellerWallet =Number(this.state.plot.price) + Number(this.state.selleruser.wallet);
+            console.log(sellerWallet);
+
+      const updateSellerUser = {
+         wallet: sellerWallet
+         //privatekey:
+    }
+        axios.patch('http://localhost:4000/signupUsers/'+ seller_id , updateSellerUser);
+
+
+    window.location="/createmap";
+  }
+
     
 
 
@@ -81,8 +162,8 @@ export default class BuyerPopUp extends React.Component {
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-    console.log(this.state.plot);
-    return (
+       
+      return (
         <div>
           <CreateMap></CreateMap>
 
@@ -103,12 +184,12 @@ export default class BuyerPopUp extends React.Component {
                 <form onSubmit={this.onSubmit}>
                     <Typography variant='caption' gutterBottom>Plot price:{this.state.plot.price} </Typography>
 
-                         <TextField  label='privateKey' placeholder="Enter seller's private key" 
+                         {/* <TextField  label='privateKey' placeholder="Enter seller's private key" 
                  required
                     className="form-control"
                     value={this.state.privateKey}
                     onChange={this.onChangePrivateKey}
-                         />
+                         /> */}
                         
                          
                         <div>

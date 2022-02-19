@@ -34,8 +34,24 @@ export default class SellerPopUp extends React.Component {
     }
   }
        componentDidMount() {
-
         
+const userId = localStorage.getItem("userid");
+        axios.get('http://localhost:4000/signupUsers').then((response) => {
+         const data = response.data;
+         const length = data.length;
+                         console.log(localStorage.getItem("userid"))
+
+        for(var i=0; i < length; i++)
+        {
+          if(data[i].ID === userId)
+          {
+        this.setState({
+          user: data[i]
+        })
+      }
+    }
+  })
+
          const plot_id = localStorage.getItem("plot");
          axios.get('http://localhost:4000/plots').then((response) => {
          const data = response.data;
