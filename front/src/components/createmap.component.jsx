@@ -1,6 +1,7 @@
 import '../MetaCentraland/MetaCentraland.css'
 import React from 'react';
 import axios from 'axios';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
 
@@ -329,16 +330,20 @@ export default class createMap extends React.Component {
     }
 
         return ( 
+            <TransformWrapper>
+            <TransformComponent>
             <div>
              
         <div className='my_text'>{this.state.user}</div>
         
-            <div className = "MetaCentraland" > {
+            <div className = "MetaCentraland"  > {
                 this.renderCells()
               
             } 
             </div>
             </div>
+            </TransformComponent>
+            </TransformWrapper>
                         
         );
     }
