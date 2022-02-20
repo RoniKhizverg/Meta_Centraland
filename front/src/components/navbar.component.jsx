@@ -95,7 +95,7 @@ axios.get('http://localhost:4000/logsIn')
           </li>
 
           <li className={"navbar-item"}>
-          <div className="nav-link">{this.state.user}</div>
+          <div className="navbar navbar-dark bg-dark">{this.state.user}</div>
           </li>
 
 
