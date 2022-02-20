@@ -1,3 +1,4 @@
+
 import '../MetaCentraland/MetaCentraland.css'
 import React from 'react';
 import axios from 'axios';
@@ -93,7 +94,7 @@ export default class createMap extends React.Component {
          {
             if(data1[i].ID === userid )
             {
-                localStorage.setItem("user_id",data[i]._id);
+                localStorage.setItem("user_id",data[0]._id);
                  this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
                  this.setState({usertype: data1[i].userType});
                  console.log(data1[i].userType)
@@ -203,14 +204,6 @@ export default class createMap extends React.Component {
      })
      
         
-        // while (count < 3000) {
-        //     num1 = getRandomInt(200);
-        //     num2 = getRandomInt(200);
-        //     if ((cells[num1][num2] === createMap.cellState.DEAD))
-
-        //         cells[num1][num2] = createMap.cellState.EMPTYCELL;
-        //     count++;
-        // }
 
         return cells;
     }
@@ -324,17 +317,13 @@ export default class createMap extends React.Component {
 
 
     render() {
-        if (!this.state.user) {
-      return <div>Welcome guest</div>;
-      
-    }
+        
 
         return ( 
-            <TransformWrapper>
-            <TransformComponent>
+            <TransformWrapper >
+            <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
             <div>
              
-        <div className='my_text'>{this.state.user}</div>
         
             <div className = "MetaCentraland"  > {
                 this.renderCells()
@@ -382,5 +371,4 @@ function cellColoring(cellState) {
     return cell;
 
 }
-
 

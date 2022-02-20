@@ -15,11 +15,47 @@ constructor(props) {
         this.state = {
            signIn:'visabiity',
            logIn: 'visabiity',
-           logout: 'hiddeninput'
+           logout: 'hiddeninput',
+            user: [],
+
         }
 
     }
         componentDidMount() {
+
+axios.get('http://localhost:4000/logsIn')
+     .then((response) => {
+
+         const data = response.data;
+         var length = data.length;
+         if(length===0 || !localStorage.getItem('loguserid'))
+         {
+            this.setState({user: "Welcome Guest"});
+            this.setState({usertype: "guest"});
+
+
+         }
+         else{
+             axios.get('http://localhost:4000/signupUsers')
+     .then((response) => {
+        const userid = localStorage.getItem('loguserid');
+         const data1 = response.data;
+         var length1 = data1.length;
+         for(var i=0; i < length1; i++)
+         {
+            if(data1[i].ID === userid )
+            {
+                 this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
+                 this.setState({usertype: data1[i].userType});
+                 console.log(data1[i].userType)
+            }
+      }
+
+   
+  });
+}
+});
+
 
   axios.get('http://localhost:4000/logsIn')
      .then((response) => {
@@ -42,6 +78,7 @@ constructor(props) {
       }
 
     render() {
+     console.log(this.state.user)
         return ( <
             nav className = "navbar navbar-expand-md navbar-dark bg-dark fixed-top " >
            <Link to="/createmap" className="navbar-brand">META CENTRALAND</Link>
@@ -56,6 +93,12 @@ constructor(props) {
           <li className={this.state.logout}>
           <Link to="/logout" className="nav-link">LOG-OUT</Link>
           </li>
+
+          <li className={"navbar-item"}>
+          <div className="nav-link">{this.state.user}</div>
+          </li>
+
+
           <li className="navbar-item">
           </li>
         </ul>
