@@ -52,7 +52,7 @@ axios.get('http://localhost:4000/signupUsers')
                 if(data[i].password === user.password)
                 {
                 localStorage.clear();
-                localStorage.setItem("userid",data[i].ID);
+                localStorage.setItem("loguserid",data[i].ID);
                 axios.post('http://localhost:4000/logsIn/login',user)
                 .then(res => console.log(res.data));
                 window.location = "/createmap";

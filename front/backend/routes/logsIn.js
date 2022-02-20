@@ -18,7 +18,9 @@ router.get('/', async(req, res) => {
 router.get("/:id", (req, res) => {
     res.json(res.user)
 })
-router.delete('/:id', async(req, res) => {
+
+
+router.delete('/:id', getUser, async(req, res) => {
     try {
         await res.user.remove()
         res.json({
@@ -30,10 +32,24 @@ router.delete('/:id', async(req, res) => {
         })
     }
 })
+async function getUser(req, res, next) {
+    let user
+    try {
+        user = await logTemplatesCopy.findById(req.params.id)
+        if (user == null) {
+            return res.status(404).json({
+                message: 'Cannot find User'
+            })
+        }
+    } catch (err) {
+        return res.status(500).json({
+                message: err.message
+            }) // status 500 means that there is something wrong with our circuit
+    }
+    res.user = user
+    next()
 
-
-
-
+}
 
 router.route('/login').post(async(request, response) => {
 

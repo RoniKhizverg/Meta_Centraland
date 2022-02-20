@@ -30,6 +30,10 @@ const plotScheme = new mongoose.Schema({
         userid: {
             type: String,
             required: false
+        },
+        linkToGame: {
+            type: String,
+            required: false
         }
 
 

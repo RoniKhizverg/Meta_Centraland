@@ -64,3 +64,15 @@
     width: 20px;
     border: 2px solid;
 }
+
+.hiddeninput {
+    display: none;
+}
+
+.validinput {
+    background-color: blueviolet
+}
+
+.price {
+    display: none;
+}

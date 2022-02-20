@@ -3,6 +3,7 @@ import { Grid, Paper, Avatar, Typography, Dialog } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CreateMap from './createmap.component'
 import axios from 'axios';
+import '../MetaCentraland/MetaCentraland.css'
 
 
 //import axios from 'axios';
@@ -24,7 +25,9 @@ export default class BuyerPopUp extends React.Component {
       plot:'',
       description: '',
       price: '',
-      privateKey:''
+      privateKey:'',
+      inputtype:'hiddeninput'
+
     }
   }
        componentDidMount() {
@@ -56,7 +59,6 @@ export default class BuyerPopUp extends React.Component {
         {
           if(data[i]._id === plot_id)
           {
-            localStorage.setItem("ownernameid", data[i].userid)
             this.setState({
           plot: data[i]
         })
@@ -68,7 +70,7 @@ export default class BuyerPopUp extends React.Component {
          axios.get('http://localhost:4000/signupUsers').then((response) => {
          const data = response.data;
          const length = data.length;
-           const sellerId = localStorage.getItem("ownernameid");
+           const sellerId = localStorage.getItem("ownerNameId");
         console.log(sellerId)
 
         for(var i=0; i < length; i++)
@@ -81,6 +83,23 @@ export default class BuyerPopUp extends React.Component {
       }
     }
   })
+        const selleruserid= localStorage.getItem("userid");
+        const plotOwnerName= localStorage.getItem("ownerNameId");
+        console.log(selleruserid)
+                console.log(plotOwnerName)
+
+        if(selleruserid === plotOwnerName)
+        {
+           this.setState({
+        inputtype:"hiddeninput"
+        })
+        }
+        else{
+          this.setState({
+        inputtype:"validinput"
+        })
+        }
+   
 
         
 
@@ -184,6 +203,10 @@ export default class BuyerPopUp extends React.Component {
                 <form onSubmit={this.onSubmit}>
                     <Typography variant='caption' gutterBottom>Plot price:{this.state.plot.price} </Typography>
 
+                    <br></br>
+
+                      <Typography variant='caption' gutterBottom>Owner name:{this.state.plot.ownerName} </Typography>
+
                          {/* <TextField  label='privateKey' placeholder="Enter seller's private key" 
                  required
                     className="form-control"
@@ -196,7 +219,8 @@ export default class BuyerPopUp extends React.Component {
         <br></br>
         </div>
 
-                    <input type="submit" value="buy_plot" className="btn btn-primary" />
+
+                    <input className={this.state.inputtype} type="submit" value="buy_plot" />
                 </form>
                                 </Grid>
 

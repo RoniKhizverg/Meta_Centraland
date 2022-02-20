@@ -78,18 +78,22 @@ export default class createMap extends React.Component {
          if(length===0)
          {
             this.setState({user: "Welcome Guest"});
+            this.setState({usertype: "guest"});
+
 
          }
          else{
              axios.get('http://localhost:4000/signupUsers')
      .then((response) => {
-        const userid = localStorage.getItem('userid');
+        const userid = localStorage.getItem('loguserid');
          const data1 = response.data;
          var length1 = data1.length;
          for(var i=0; i < length1; i++)
          {
             if(data1[i].ID === userid )
             {
+                                localStorage.setItem("user_id",data[i]._id)
+
                  this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
                  this.setState({usertype: data1[i].userType});
                  console.log(data1[i].userType)
@@ -227,12 +231,20 @@ export default class createMap extends React.Component {
             if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "buyer"))
             {
                 localStorage.setItem("plot",data[i]._id);
+                localStorage.setItem("ownerNameId", data[i].userid)
+
                 window.location ="/buyerplotpopup";
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "seller"))
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "Seller"))
             {
                 localStorage.setItem("plot",data[i]._id);
+                localStorage.setItem("ownerNameId", data[i].userid)
                 window.location ="/sellerpopup";
+            }
+             else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "guest"))
+            {
+                localStorage.setItem("plot",data[i]._id);
+                window.location ="/guestpopup";
             }
         }
     })
@@ -319,7 +331,6 @@ export default class createMap extends React.Component {
         );
     }
 }
-
 
 function cellColoring(cellState) {
     let cell = "";

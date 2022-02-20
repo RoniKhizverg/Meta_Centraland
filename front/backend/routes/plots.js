@@ -52,6 +52,9 @@ router.patch('/:id', getPlot, async(req, res) => {
     if (req.body.userid != null) {
         res.plot.userid = req.body.userid
     }
+    if (req.body.linkToGame != null) {
+        res.plot.linkToGame = req.body.linkToGame
+    }
     try {
         const updatePlot = await res.plot.save() //the updated version of our plot if they successfully saved 
         res.json(updatePlot)
