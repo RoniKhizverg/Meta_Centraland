@@ -14,7 +14,8 @@ constructor(props) {
       
         this.state = {
            signIn:'visabiity',
-           logIn: 'visabiity'
+           logIn: 'visabiity',
+           logout: 'hiddeninput'
         }
 
     }
@@ -29,8 +30,11 @@ constructor(props) {
          {
           this.setState({signIn: "hiddeninput"});
           this.setState({logIn: "hiddeninput"});
+          this.setState({logout: "visabiity"})
+
          }
          else{
+           this.setState({logout: "hiddeninput"})
            this.setState({signIn: "visabiity"});
           this.setState({logIn: "visabiity"});
          }
@@ -49,7 +53,7 @@ constructor(props) {
           <li className={this.state.signIn}>
           <Link to="/signup" className="nav-link">SIGN-UP</Link>
           </li>
-          <li className="navbar-item">
+          <li className={this.state.logout}>
           <Link to="/logout" className="nav-link">LOG-OUT</Link>
           </li>
           <li className="navbar-item">
