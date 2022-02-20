@@ -75,7 +75,7 @@ export default class createMap extends React.Component {
 
          const data = response.data;
          var length = data.length;
-         if(length===0)
+         if(length===0 || !localStorage.getItem('loguserid'))
          {
             this.setState({user: "Welcome Guest"});
             this.setState({usertype: "guest"});
@@ -92,8 +92,7 @@ export default class createMap extends React.Component {
          {
             if(data1[i].ID === userid )
             {
-                                localStorage.setItem("user_id",data[i]._id)
-
+                localStorage.setItem("user_id",data[i]._id);
                  this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
                  this.setState({usertype: data1[i].userType});
                  console.log(data1[i].userType)
@@ -232,13 +231,15 @@ export default class createMap extends React.Component {
             {
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid)
+                console.log( data[i].userid +"hi")
 
                 window.location ="/buyerplotpopup";
             }
             else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "Seller"))
             {
                 localStorage.setItem("plot",data[i]._id);
-                localStorage.setItem("ownerNameId", data[i].userid)
+                localStorage.setItem("ownerNameId", data[i].userid);
+                console.log( data[i].userid)
                 window.location ="/sellerpopup";
             }
              else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "guest"))

@@ -18,13 +18,14 @@ constructor(props) {
 logout()
     {
        let userId = localStorage.getItem('user_id');
+       console.log(localStorage.getItem('user_id'))
       localStorage.clear();
       axios.delete('http://localhost:4000/logsIn/'+ userId)
         .then(res => console.log(res.data));
     }
     render() {
 return(
-   <div>{window.location="/createmap"}</div>
+  <div>{window.location="/createmap"}</div>
 )
     }
 }

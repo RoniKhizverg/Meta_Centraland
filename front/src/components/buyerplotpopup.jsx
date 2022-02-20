@@ -35,7 +35,7 @@ export default class BuyerPopUp extends React.Component {
        
 
 
-         const userId = localStorage.getItem("userid");
+         const userId = localStorage.getItem("loguserid");
         axios.get('http://localhost:4000/signupUsers').then((response) => {
          const data = response.data;
          const length = data.length;
@@ -83,12 +83,12 @@ export default class BuyerPopUp extends React.Component {
       }
     }
   })
-        const selleruserid= localStorage.getItem("userid");
-        const plotOwnerName= localStorage.getItem("ownerNameId");
-        console.log(selleruserid)
-                console.log(plotOwnerName)
+        const userID= localStorage.getItem("loguserid");
+        const plotOwnerId= localStorage.getItem("ownerNameId");
+        console.log(userID)
+        console.log(plotOwnerId)
 
-        if(selleruserid === plotOwnerName)
+        if(userID === plotOwnerId)
         {
            this.setState({
         inputtype:"hiddeninput"
@@ -131,6 +131,9 @@ export default class BuyerPopUp extends React.Component {
     e.preventDefault();   //do what we wrote down
 
     const plotId = this.state.plot._id
+        console.log(plotId);
+
+        console.log(this.state.buyeruser)
     const updatePlot = {
       ownerName: this.state.buyeruser.name,
       
@@ -138,9 +141,11 @@ export default class BuyerPopUp extends React.Component {
        password: this.state.password,
        userid: this.state.buyeruser.ID
     }
+    console.log(updatePlot)
     axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
 
     const updateWallet = Number(this.state.buyeruser.wallet)- Number(this.state.plot.price)
+    console.log(updatePlot);
     if(updateWallet < 0 )
     {
       alert("You dont have enough money!!!");
