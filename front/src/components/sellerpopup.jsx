@@ -83,7 +83,7 @@ const userId = localStorage.getItem("userid");
       }
           }
         })
-        const selleruserid= localStorage.getItem("userid");
+        const selleruserid= localStorage.getItem("loguserid");
         const plotOwnerName= localStorage.getItem("ownerNameId");
         console.log(selleruserid)
                 console.log(plotOwnerName)
