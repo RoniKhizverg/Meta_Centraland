@@ -279,7 +279,7 @@ export default class CreatePlots extends React.Component {
         avaibleForSale:true,
         row: row,
           column:column,
-          userid:localStorage.getItem("userid")
+          userid:localStorage.getItem("loguserid")
        }
          axios.post('http://localhost:4000/plots/plots',newPlot)
 

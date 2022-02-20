@@ -29,7 +29,7 @@ createuser()
        wallet:1000
 
     }  
-    localStorage.setItem("userid", newUser.ID);
+    localStorage.setItem("loguserid", newUser.ID);
     
       axios.post('http://localhost:4000/signupUsers/signup',newUser)
         .then(res => console.log(res.data));

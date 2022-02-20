@@ -76,3 +76,7 @@
 .price {
     display: none;
 }
+
+.visabiity {
+    border: 2px solid;
+}

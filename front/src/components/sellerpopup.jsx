@@ -141,10 +141,17 @@ onChangeLinkGame(e) {   //when we enters a user name its going to call this func
   onSubmit(e) { //when we click on submit button
     e.preventDefault();   //do what we wrote down
    
+    let plotPrice='';
+    if(!this.state.price)
+    {
+      plotPrice = this.state.plot.price;
+    }
+    else{
+      plotPrice = this.state.price
+    }
    const plotId = this.state.plot._id
-   console.log(plotId)
 const updatePlot = {
-      price: this.state.price,
+      price: plotPrice,
       avaibleForSale: this.state.avaibleForSale,
       linkToGame: this.state.linkToGame
     }
@@ -155,6 +162,7 @@ const updatePlot = {
   
 }
   render() {
+    
     
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
@@ -187,7 +195,6 @@ const updatePlot = {
                     <Typography variant='caption' gutterBottom>Plot price:{this.state.plot.price} </Typography>
 
                          <TextField  label='editPrice' placeholder="Enter price" 
-                 required
                     className="form-control"
                     value={this.state.price}
                     onChange={this.onChangePrice}

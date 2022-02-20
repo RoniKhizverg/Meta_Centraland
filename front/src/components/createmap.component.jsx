@@ -235,14 +235,25 @@ export default class createMap extends React.Component {
 
                 window.location ="/buyerplotpopup";
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "Seller"))
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "seller"))
             {
+                
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid);
+
+                const selleruserid= localStorage.getItem("loguserid");
+                const plotOwnerName= localStorage.getItem("ownerNameId");
+                if(selleruserid !== plotOwnerName)
+                {
+                window.location ="/guestpopup"
+                }
+                else{
+
                 console.log( data[i].userid)
                 window.location ="/sellerpopup";
+                }
             }
-             else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "guest"))
+             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "guest")))
             {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/guestpopup";
