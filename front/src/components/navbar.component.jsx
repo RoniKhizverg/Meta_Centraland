@@ -49,7 +49,7 @@ axios.get('http://localhost:4000/logsIn')
   });
 }
 });
-});
+},[]);
 
 
   axios.get('http://localhost:4000/logsIn')

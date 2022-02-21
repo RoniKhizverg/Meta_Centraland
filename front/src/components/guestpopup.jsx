@@ -62,7 +62,7 @@ const GuestPopUp = () => {
           }
        
  })
-});
+},[]);
       
 
       const handleSubmit = event => {
