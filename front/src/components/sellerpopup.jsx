@@ -77,8 +77,7 @@ const userId = localStorage.getItem("userid");
             setPlot(
           data[i]
         )
-            console.log(plot.avaibleForSale)
-        if(plot.avaibleForSale === true)
+        if(data[i].avaibleForSale === true)
     {
         setStatus(
       "For sale"
@@ -150,6 +149,7 @@ const updatePlot = {
       avaibleForSale: avaibleForSale,
       linkToGame: linkToGame
     }
+    console.log(updatePlot)
     axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
     window.location="/createmap";
 

@@ -12,22 +12,7 @@ const CreateMap = () =>{
 
      let colorize=[];
 
-
-    // region Initialization
-// field = {
-//         columnsAmount: 200,
-//         rowsAmount: 200,
-//     };
-//      cellState = {
-//         ALIVE: true,
-//         DEAD: false,
-//         ROAD: "road",
-//         PARK: "park",
-//         EMPTYCELL: "empty",
-//         CHEEPPLOT: "cheepPlot",
-//         MEDIOCREPLOT: "mediocrePLOT",
-//         HIGHPLOT: "highPlot"
-//     };
+    
     const [columnsAmount] = useState(200);
     const [rowsAmount] = useState(200);
     const [state,setState] = useState('')
@@ -42,27 +27,12 @@ const CreateMap = () =>{
     const[cells] = useState(initializeCells());
     const[user,setUser] = useState('');
     const[usertype,setUserType] = useState('');
-    const[plots,setPlots] = useState('');
 
-
-
-
-   
-        // this.state = {
-        //    // legend:this.createlegend(),
-        //     cells: this.initializeCells(),
-        //     user: [],
-        //     usertype:[],
-        //     plots:[],
-        //     countries:[]
-        // };
-
-    
         
         
     useEffect(() => {
     
-         
+            
         var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
 
     colorize = function(colorList) {
@@ -119,6 +89,8 @@ const CreateMap = () =>{
   });
 }
 });
+
+
 },[]);
 
 
@@ -126,6 +98,7 @@ const CreateMap = () =>{
    function initializeCells() {
         let cells = [];
 
+       
         
 
         for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
@@ -133,7 +106,7 @@ const CreateMap = () =>{
             for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
 
                 
-        
+
                 if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
                     cells[columnIndex][rowIndex] = cellStatePARK;
 
@@ -197,10 +170,12 @@ const CreateMap = () =>{
             }
 
         }
-        axios.get('http://localhost:4000/plots')
+
+ axios.get('http://localhost:4000/plots')
      .then((response) => {
          const data = response.data;
          const length = data.length;
+
     for(let i=0; i< length;i++)
                 {
 
@@ -215,7 +190,10 @@ const CreateMap = () =>{
                     cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
                 }
             }
+            
+
      })
+        
      
         
 
@@ -238,7 +216,8 @@ const CreateMap = () =>{
             if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer"))
             {
                 localStorage.setItem("plot",data[i]._id);
-                localStorage.setItem("ownerNameId", data[i].userid)
+                localStorage.setItem("ownerNameId", data[i].userid);
+
                 console.log( data[i].userid +"hi")
 
                 window.location ="/buyerplotpopup";
@@ -251,6 +230,7 @@ const CreateMap = () =>{
 
                 const selleruserid= localStorage.getItem("loguserid");
                 const plotOwnerName= localStorage.getItem("ownerNameId");
+
                 if(selleruserid !== plotOwnerName)
                 {
                 window.location ="/guestpopup"
@@ -327,7 +307,12 @@ const CreateMap = () =>{
         
 
         return ( 
+            
+
             <TransformWrapper >
+                
+                <br></br>
+        <br></br>
             <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
             <div>
              

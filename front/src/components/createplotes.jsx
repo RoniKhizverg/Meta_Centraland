@@ -254,40 +254,23 @@ const CreatePlots = () => {
 
     
    
-    useEffect(() => {
+useEffect(() => {
     {
-   
-    for(var i=0;i<10000;i++)
-    {
-     var price = getRandomInt(200) ;
-     var row = getRandomInt(200);
-     var column = getRandomInt(200);
-     var countryIndex = getRandomInt(242);
-     const newPlot = {
-         ownerName:"O&R.Ltd",
-         price: price,
-         description: countriesList[countryIndex],
-        avaibleForSale:true,
-        row: row,
-          column:column,
-          userid:localStorage.getItem("loguserid")
-       }
-         axios.post('http://localhost:4000/plots/plots',newPlot)
+    axios.post('http://localhost:4000/plots/plots', { userid: localStorage.getItem("loguserid") });
+        
+    }
+},[]);
 
-         
-           
-    }
-    
-    }
-});
-  
   
 
 
 
-return(
-    window.location="/createmap"
-)
+return(  
+    setTimeout(() => {
+                window.location="/createmap"
+
+        }, 5000));
+
 }
 
 

@@ -93,21 +93,27 @@ async function getPlot(req, res, next) {
 
 
 router.post('/plots', async(request, response) => {
+    console.log(request.body)
+
+    for (let i = 0; i < 2000; i++) {
+
         const userPlot = new plotsTemplatesCopy({
-            ownerName: request.body.ownerName,
-            price: request.body.price,
-            description: request.body.description,
-            avaibleForSale: request.body.avaibleForSale,
-            row: request.body.row,
-            column: request.body.column,
+            ownerName: "O&R.Ltd",
+            price: Math.floor(Math.random() * 200),
+            description: `index ${i}`,
+            avaibleForSale: true,
+            row: Math.floor(Math.random() * 200),
+            column: Math.floor(Math.random() * 200),
             userid: request.body.userid
         })
         userPlot.save()
-            .then(data => {
-                response.json(data)
-            })
-
-    }) // when a user enters every data to buy a plot and click 'send'- a post request has been made and come to this server,method.
+    }
 
 
+
+    response.json({
+            success: "ok"
+        }) // when a user enters every data to buy a plot and click 'send'- a post request has been made and come to this server,method.
+
+})
 module.exports = router

@@ -46,8 +46,9 @@ const GuestPopUp = () => {
         )
 
         }
-        if(plot.avaibleForSale === true)
+        if(data[i].avaibleForSale === true)
         {
+
         setStatus(
          "For sale"
         )
