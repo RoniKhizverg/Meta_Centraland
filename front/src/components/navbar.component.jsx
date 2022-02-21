@@ -1,5 +1,5 @@
 import React, {
-    Component
+    Component, useState,useEffect
 } from 'react';
 import {
     Link
@@ -7,22 +7,20 @@ import {
 import axios from 'axios';
 
 
-export default class Navbar extends Component {
-constructor(props) {
+const Navbar = () => {
 
-        super(props);
-      
-        this.state = {
-           signIn:'visabiity',
-           logIn: 'visabiity',
-           logout: 'hiddeninput',
-            user: [],
+const [signIn, setSignIn] = useState('visability');
 
-        }
+const [logIn , setLogIn] = useState('visability');
 
-    }
-        componentDidMount() {
+const [logout , setLogOut] = useState('hiddeninput');
 
+const [user , setUser] = useState('');
+
+
+    
+       useEffect(() => {
+    
 axios.get('http://localhost:4000/logsIn')
      .then((response) => {
 
@@ -30,9 +28,7 @@ axios.get('http://localhost:4000/logsIn')
          var length = data.length;
          if(length===0 || !localStorage.getItem('loguserid'))
          {
-            this.setState({user: "Welcome Guest"});
-            this.setState({usertype: "guest"});
-
+            setUser("Welcome Guest");
 
          }
          else{
@@ -45,15 +41,14 @@ axios.get('http://localhost:4000/logsIn')
          {
             if(data1[i].ID === userid )
             {
-                 this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
-                 this.setState({usertype: data1[i].userType});
-                 console.log(data1[i].userType)
+                 setUser(data1[i].name +" has " + data1[i].wallet + " $" );
             }
       }
 
    
   });
 }
+});
 });
 
 
@@ -64,38 +59,34 @@ axios.get('http://localhost:4000/logsIn')
          var length = data.length;
          if((length!==0) || (localStorage.getItem('loguserid')=== "null"))
          {
-          this.setState({signIn: "hiddeninput"});
-          this.setState({logIn: "hiddeninput"});
-          this.setState({logout: "visabiity"})
+          setSignIn("hiddeninput");
+          setLogIn("hiddeninput");
+          setLogOut("visabiity")
 
          }
          else{
-           this.setState({logout: "hiddeninput"})
-           this.setState({signIn: "visabiity"});
-          this.setState({logIn: "visabiity"});
+           setLogOut("hiddeninput")
+           setSignIn("visabiity");
+          setLogIn("visabiity");
          }
-        })
-      }
-
-    render() {
-     console.log(this.state.user)
+        })  
         return ( <
             nav className = "navbar navbar-expand-md navbar-dark bg-dark fixed-top " >
            <Link to="/createmap" className="navbar-brand">META CENTRALAND</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
-          <li className={this.state.logIn}>
+          <li className={logIn}>
           <Link to="/signin" className={"nav-link"}>LOG-IN</Link>
           </li>
-          <li className={this.state.signIn}>
+          <li className={signIn}>
           <Link to="/signup" className="nav-link">SIGN-UP</Link>
           </li>
-          <li className={this.state.logout}>
+          <li className={logout}>
           <Link to="/logout" className="nav-link">LOG-OUT</Link>
           </li>
 
           <li className={"navbar-item"}>
-          <div className="navbar navbar-dark bg-dark">{this.state.user}</div>
+          <div className="navbar navbar-dark bg-dark">{user}</div>
           </li>
 
 
@@ -106,4 +97,5 @@ axios.get('http://localhost:4000/logsIn')
       </nav>
     );
   }
-}
+  export default Navbar;
+

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react';
 import { Grid, Paper, Avatar, Typography, TextField,Dialog } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import Radio from '@material-ui/core/Radio';
@@ -15,30 +15,40 @@ import '../MetaCentraland/MetaCentraland.css'
 // axios for send data to the backend.
 
 
-export default class SellerPopUp extends React.Component {
-  constructor(props) {  
-    super(props);
+const SellerPopUp =() => {
 
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangePrice = this.onChangePrice.bind(this);
-    this.onChangeavaibleForSale = this.onChangeavaibleForSale.bind(this);
-    this.onChangeLinkGame = this.onChangeLinkGame.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    const[plot,setPlot] = useState('');
+    const[user,setUser] = useState('');
+    const[selleruser,setSellerUser] = useState('');
+    const[description,setDescription] = useState('');
+    const[price,setPrice] = useState('');
+    const[avaibleForSale,setAvaibleForSale] = useState('');
+    const[linkToGame,setLinkToGame] = useState('');
+    const[status,setStatus] = useState('');
+    const[inputype,setInputype] = useState('hiddeninput');
+  // constructor(props) {  
+  //   super(props);
 
-    this.state = {
-      plot:'',
-      user:'',
-      selleruser: '',
-      description: '',
-      price: '',
-      avaibleForSale:'',
-      linkToGame:'',
-      status:'',
-      inputtype:'hiddeninput'
+  //   this.onChangeDescription = this.onChangeDescription.bind(this);
+  //   this.onChangePrice = this.onChangePrice.bind(this);
+  //   this.onChangeavaibleForSale = this.onChangeavaibleForSale.bind(this);
+  //   this.onChangeLinkGame = this.onChangeLinkGame.bind(this);
+  //   this.onSubmit = this.onSubmit.bind(this);
 
-    }
-  }
-       componentDidMount() {
+  //   this.state = {
+  //     plot:'',
+  //     user:'',
+  //     selleruser: '',
+  //     description: '',
+  //     price: '',
+  //     avaibleForSale:'',
+  //     linkToGame:'',
+  //     status:'',
+  //     inputtype:'hiddeninput'
+
+  //   }
+  // }
+       useEffect(() => {
         
 const userId = localStorage.getItem("userid");
         axios.get('http://localhost:4000/signupUsers').then((response) => {
@@ -49,9 +59,9 @@ const userId = localStorage.getItem("userid");
         {
           if(data[i].ID === userId)
           {
-        this.setState({
-          user: data[i]
-        })
+        setUser(
+          data[i]
+        )
       }
     }
   })
@@ -64,21 +74,21 @@ const userId = localStorage.getItem("userid");
         {
           if(data[i]._id === plot_id)
           {
-            this.setState({
-          plot: data[i]
-        })
-            console.log(this.state.plot.avaibleForSale)
-        if(this.state.plot.avaibleForSale === true)
+            setPlot(
+          data[i]
+        )
+            console.log(plot.avaibleForSale)
+        if(plot.avaibleForSale === true)
     {
-        this.setState({
-      status: "For sale"
-        })
+        setStatus(
+      "For sale"
+        )
     }
      else
     {
-        this.setState({
-      status: "No for sale"
-        })
+        setStatus(
+       "No for sale"
+        )
     }
       }
           }
@@ -90,70 +100,55 @@ const userId = localStorage.getItem("userid");
 
         if(selleruserid === plotOwnerName)
         {
-           this.setState({
-        inputtype:"validinput"
-        })
+           setInputype(
+        "validinput"
+        )
         }
         else{
-          this.setState({
-        inputtype:"hiddeninput"
-        })
+          setInputype(
+         "hiddeninput"
+        )
         }
+  });
+
    
 
-      }
 
         
-onChangeLinkGame(e) {   //when we enters a user name its going to call this function
-    this.setState({
-      linkToGame: e.target.value
-    })
-  }
 
-  onChangeDescription(e) {   //when we enters a user name its going to call this function
-    this.setState({
-      description: e.target.value
-    })
-  }
-  onChangePrice(e) {   //when we enters id its going to call this function
-    this.setState({
-      price: e.target.value
-    })
-  }
-   onChangeavaibleForSale(e) {   //when we enters id its going to call this function
+   function onChangeavaibleForSale(e) {   //when we enters id its going to call this function
     if(e.target.value === "available for sale" )
         {
-    this.setState({       
-      avaibleForSale: true
-      
-    })
+    setAvaibleForSale(      
+      true     
+    )
   }
   else{
-       this.setState({       
-      avaibleForSale: false
-          })
+       setAvaibleForSale(      
+      false
+          )
 
   }
 }
    
  
 
-  onSubmit(e) { //when we click on submit button
-    e.preventDefault();   //do what we wrote down
+  const handleSubmit = event => {
+    event.preventDefault();
    
     let plotPrice='';
-    if(!this.state.price)
+    if(!price)
     {
-      plotPrice = this.state.plot.price;
+      plotPrice = plot.price;
     }
     else{
-      plotPrice = this.state.price
+      plotPrice =price
     }
-   const plotId = this.state.plot._id
+   const plotId = plot._id
 const updatePlot = {
       price: plotPrice,
-      avaibleForSale: this.state.avaibleForSale,
-      linkToGame: this.state.linkToGame
+      avaibleForSale: avaibleForSale,
+      linkToGame: linkToGame
     }
     axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
     window.location="/createmap";
@@ -161,7 +156,6 @@ const updatePlot = {
 
   
 }
-  render() {
     
     
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
@@ -184,33 +178,34 @@ const updatePlot = {
                     </Avatar>
                     <h2 style={headerStyle}>Edit plot</h2>
                     <br></br>
-                    <Typography variant='caption' gutterBottom>Status:{this.state.status} </Typography>
+                    <Typography variant='caption' gutterBottom>Status:{status} </Typography>
             <br></br>
-                    <Typography variant='caption' gutterBottom>Description:{this.state.plot.description} </Typography>
+                    <Typography variant='caption' gutterBottom>Description:{plot.description} </Typography>
                                 <br></br>
 
-                      <Typography variant='caption' gutterBottom>Owner name:{this.state.plot.ownerName} </Typography>
+                      <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
 
-                <form onSubmit={this.onSubmit}>
-                    <Typography variant='caption' gutterBottom>Plot price:{this.state.plot.price} </Typography>
+                    <form onSubmit={ handleSubmit }>
+
+                    <Typography variant='caption' gutterBottom>Plot price:{plot.price} </Typography>
 
                          <TextField  label='editPrice' placeholder="Enter price" 
                     className="form-control"
-                    value={this.state.price}
-                    onChange={this.onChangePrice}
+                    value={price}
+                    onChange={event => setPrice(event.target.value)}
                          />
                         { <TextField  label='game' placeholder="Enter link to game" 
                     className="form-control"
-                    value={this.state.linkToGame}
-                    onChange={this.onChangeLinkGame} 
+                    value={linkToGame}
+                    onChange={event => setLinkToGame(event.target.value)} 
                     /> }
                          <FormLabel component="legend">STATUS</FormLabel>
-                        <RadioGroup aria-label="usertype" name="usertype"onChange={this.onChangeavaibleForSale} style={{ display: 'center' }}>
+                        <RadioGroup aria-label="usertype" name="usertype"onChange={onChangeavaibleForSale} style={{ display: 'center' }}>
                             <FormControlLabel value="seller" control={<Radio />} label="available for sale" />
                             <FormControlLabel value="buyer"  control={<Radio />} label="not available for sale" />
                         </RadioGroup> 
 
-                              <input className={this.state.inputtype} type="submit" value="submit" />
+                              <input className={inputype} type="submit" value="submit" />
 
                         <div>
         <br></br>
@@ -224,5 +219,6 @@ const updatePlot = {
         </div>
     )
 }
-}
+export default SellerPopUp
+
 

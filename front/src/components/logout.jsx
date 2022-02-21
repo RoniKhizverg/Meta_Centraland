@@ -1,21 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 
-export default class LogOut extends React.Component {
-
-constructor(props) {
-
-        super(props);
-      
-        this.state = {
-           user:this.logout()
-        
-        }
-
-    }
+const LogOut = () => {
 
 
-logout()
+    const [user] = useState(logout);
+       
+
+
+function logout()
     {
        let userId = localStorage.getItem('user_id');
        console.log(localStorage.getItem('user_id'))
@@ -23,12 +16,12 @@ logout()
       axios.delete('http://localhost:4000/logsIn/'+ userId)
         .then(res => console.log(res.data));
     }
-    render() {
 return(
   <div>{window.location="/createmap"}</div>
 )
     }
-}
+
+export default LogOut
       
   
 

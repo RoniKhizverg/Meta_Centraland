@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import Radio from '@material-ui/core/Radio';
@@ -9,57 +9,35 @@ import axios from 'axios';
 // axios for send data to the backend.
 
 
-export default class Signup extends React.Component {
-  constructor(props) {  
-    super(props);
+  const FunctionSignUp = () =>{ 
+  // constructor(props) {  
+  //   super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeId = this.onChangeId.bind(this);
-    this.onChangeUserType = this.onChangeUserType.bind(this);
-    this.onChangePaswword = this.onChangePaswword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  //   this.onChangeUsername = this.onChangeUsername.bind(this);
+  //   this.onChangeId = this.onChangeId.bind(this);
+  //   this.onChangeUserType = this.onChangeUserType.bind(this);
+  //   this.onChangePaswword = this.onChangePaswword.bind(this);
+  //   this.onSubmit = this.onSubmit.bind(this);
 
-    this.state = {
-      name: '',
-      ID: '',
-      userType: '',
-      password:'',
-      wallet: 1000,
-      users:[]
-    }
-  }
+    const[name,setName] = useState('');
+    const[ID,setID] = useState('');
+    const[userType,setUserType] = useState('');
+    const[password,setPaswword] = useState('');
+    const[wallet,setWallet] = useState('1000');
+  
 
-  onChangeUsername(e) {   //when we enters a user name its going to call this function
-    this.setState({
-      name: e.target.value
-    })
-  }
-  onChangeId(e) {   //when we enters id its going to call this function
-    this.setState({
-      ID: e.target.value
-    })
-  }
-   onChangeUserType(e) {   //when we enters a user type its going to call this function
-    this.setState({
-      userType: e.target.value
-    })
-  }
- onChangePaswword(e) {   //when we enters a password its going to call this function
-    this.setState({
-      password: e.target.value
-    })
-  }
+  
 
-  onSubmit(e) { //when we click on submit button
-    e.preventDefault();   //do what we wrote down
+  const handleSubmit = event => {
+    event.preventDefault();
 
 
     var isRepeat = 0;
     const newUser = {
-      name: this.state.name,
-      ID: this.state.ID,
-       userType: this.state.userType,
-       password: this.state.password,
+      name: name,
+      ID: ID,
+       userType:userType,
+       password: password,
        wallet:1000
 
     }
@@ -88,7 +66,6 @@ export default class Signup extends React.Component {
 
 
   }
-  render() {
     const paperStyle = { padding: 20, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
@@ -108,21 +85,21 @@ export default class Signup extends React.Component {
 
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={handleSubmit}>
              <TextField fullWidth label='Name' id="myName" placeholder="Enter your name" 
                  required
                     className="form-control"
-                    value={this.state.name}
-                    onChange={this.onChangeUsername}
+                    value={name}
+                    onChange={event => setName(event.target.value)}
                          />
                          <TextField fullWidth label='ID' placeholder="Enter your ID" 
                  required
                     className="form-control"
-                    value={this.state.ID}
-                    onChange={this.onChangeId}
+                    value={ID}
+                    onChange={event => setID(event.target.value)}
                          />
                         <FormLabel component="legend">User Type</FormLabel>
-                        <RadioGroup aria-label="usertype" name="usertype"onChange={this.onChangeUserType} style={{ display: 'initial' }}>
+                        <RadioGroup aria-label="usertype" name="usertype"onChange={event => setUserType(event.target.value)} style={{ display: 'initial' }}>
                             <FormControlLabel value="seller" control={<Radio />} label="Seller" />
                             <FormControlLabel value="buyer"  control={<Radio />} label="Buyer" />
                         </RadioGroup> 
@@ -131,8 +108,8 @@ export default class Signup extends React.Component {
                     <input  type="text"
                      required
                     className="form-control"
-                    value={this.state.password}
-                    onChange={this.onChangePaswword}
+                    value={password}
+                    onChange={event => setPaswword(event.target.value)}
                          />
                          </div>
                         <div>
@@ -147,5 +124,6 @@ export default class Signup extends React.Component {
         </div>
     )
 }
-}
+
+export default FunctionSignUp
 

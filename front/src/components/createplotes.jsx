@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 
 import axios from 'axios';
 
@@ -249,21 +249,12 @@ let countriesList = [
    "Zambia",
    "Zimbabwe",
 ];
-export default class CreatePlots extends React.Component {
+const CreatePlots = () => {
 
 
     
-    constructor(props) {
-        super(props);
-      
-        this.state = {
-           plots: this.generatePlots()
-        
-        };
-
-    }
-
-   generatePlots()
+   
+    useEffect(() => {
     {
    
     for(var i=0;i<10000;i++)
@@ -288,21 +279,22 @@ export default class CreatePlots extends React.Component {
     }
     
     }
+});
   
   
 
 
 
-render() {
 return(
     window.location="/createmap"
 )
 }
 
-}
+
 function getRandomInt(max) {
     let num =
         Math.floor(Math.random() * max);
     return num.toString();
 
 }
+export default CreatePlots

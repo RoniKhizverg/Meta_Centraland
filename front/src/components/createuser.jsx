@@ -1,27 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import axios from 'axios';
 
 
 
-export default class CreatePlots extends React.Component {
+const CreateUser = () => {
 
-constructor(props) {
+    const [user] = useState(createuser);
+       
 
-        super(props);
-      
-        this.state = {
-           user:this.createuser()
-        
-        }
-
-    }
+    
 
 
-createuser()
+function createuser()
     {
        
-   const newUser = {
+     const newUser = {
       name: "O&R.Ltd",
       ID: "123456789",
        userType: "seller",
@@ -34,9 +28,8 @@ createuser()
       axios.post('http://localhost:4000/signupUsers/signup',newUser)
         .then(res => console.log(res.data));
     }
-    render() {
 return(
    <div>{window.location="/createplots"}</div>
 )
-    }
 }
+export default CreateUser;

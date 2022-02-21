@@ -1,6 +1,6 @@
 
 import '../MetaCentraland/MetaCentraland.css'
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
@@ -8,43 +8,59 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
 
-let colorize=[];
-export default class createMap extends React.Component {
+const CreateMap = () =>{
 
-    static field = {
-        columnsAmount: 200,
-        rowsAmount: 200,
-    };
-    static cellState = {
-        ALIVE: true,
-        DEAD: false,
-        ROAD: "road",
-        PARK: "park",
-        EMPTYCELL: "empty",
-        CHEEPPLOT: "cheepPlot",
-        MEDIOCREPLOT: "mediocrePLOT",
-        HIGHPLOT: "highPlot"
-    };
+     let colorize=[];
+
 
     // region Initialization
+// field = {
+//         columnsAmount: 200,
+//         rowsAmount: 200,
+//     };
+//      cellState = {
+//         ALIVE: true,
+//         DEAD: false,
+//         ROAD: "road",
+//         PARK: "park",
+//         EMPTYCELL: "empty",
+//         CHEEPPLOT: "cheepPlot",
+//         MEDIOCREPLOT: "mediocrePLOT",
+//         HIGHPLOT: "highPlot"
+//     };
+    const [columnsAmount] = useState(200);
+    const [rowsAmount] = useState(200);
+    const [state,setState] = useState('')
+    const[cellStateAlive] = useState(true);
+    const[cellStateDead] = useState(false);
+    const[cellStateROAD] = useState("road");
+    const[cellStatePARK] = useState("park");
+    const[cellStateEMPTYCELL] = useState("empty");
+    const[cellStateCHEEPPLOT] = useState("cheepPlot");
+    const[cellStateMEDIOCREPLOT] = useState("mediocrePLOT");
+    const[cellStateHIGHPLOT] = useState("highPlot");
+    const[cells] = useState(initializeCells());
+    const[user,setUser] = useState('');
+    const[usertype,setUserType] = useState('');
+    const[plots,setPlots] = useState('');
 
-    constructor(props) {
-        super(props);
 
-      
-        this.state = {
-           // legend:this.createlegend(),
-            cells: this.initializeCells(),
-            user: [],
-            usertype:[],
-            plots:[],
-            countries:[]
-        };
 
-    }
+
+   
+        // this.state = {
+        //    // legend:this.createlegend(),
+        //     cells: this.initializeCells(),
+        //     user: [],
+        //     usertype:[],
+        //     plots:[],
+        //     countries:[]
+        // };
+
+    
         
         
-     componentDidMount() {
+    useEffect(() => {
     
          
         var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
@@ -70,7 +86,6 @@ export default class createMap extends React.Component {
 }
 
     colorize(colorList);
-    this.setState({legend: colorize });
 
      axios.get('http://localhost:4000/logsIn')
      .then((response) => {
@@ -79,9 +94,8 @@ export default class createMap extends React.Component {
          var length = data.length;
          if(length===0 || !localStorage.getItem('loguserid'))
          {
-            this.setState({user: "Welcome Guest"});
-            this.setState({usertype: "guest"});
-
+            setUser("Welcome Guest");
+            setUserType("guest");
 
          }
          else{
@@ -95,8 +109,8 @@ export default class createMap extends React.Component {
             if(data1[i].ID === userid )
             {
                 localStorage.setItem("user_id",data[0]._id);
-                 this.setState({user: data1[i].name +" has " + data1[i].wallet + " $"} );
-                 this.setState({usertype: data1[i].userType});
+                 setUser(data1[i].name +" has " + data1[i].wallet + " $" );
+                 setUserType(data1[i].userType);
                  console.log(data1[i].userType)
             }
       }
@@ -105,76 +119,76 @@ export default class createMap extends React.Component {
   });
 }
 });
-}
+});
 
 
    
-    initializeCells() {
+   function initializeCells() {
         let cells = [];
 
         
 
-        for (let columnIndex = 0; columnIndex < createMap.field.columnsAmount; columnIndex++) {
+        for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
             cells[columnIndex] = [];
-            for (let rowIndex = 0; rowIndex < createMap.field.rowsAmount; rowIndex++) {
+            for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
 
                 
         
                 if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] =cellStatePARK;
 
                 } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 70) && (columnIndex <= 80))) {
 
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 120) && (columnIndex <= 130))) {
 
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 170) && (columnIndex <= 180))) {
 
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] =cellStatePARK;
 
                 } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.PARK;
+                    cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex === 25) || (rowIndex === 75) || (rowIndex === 125) || (rowIndex === 175) || (columnIndex === 25) || (columnIndex === 75) || (columnIndex === 125) || (columnIndex === 175) || (rowIndex === 99) || (rowIndex === 100) || (columnIndex === 100) || (columnIndex === 99) || (rowIndex === 49) || (rowIndex === 50) || (rowIndex === 149) || (rowIndex === 150) || (columnIndex === 49) || (columnIndex === 50) || (columnIndex === 149) || (columnIndex === 150)) {
-                    cells[columnIndex][rowIndex] = createMap.cellState.ROAD;
+                    cells[columnIndex][rowIndex] = cellStateROAD;
                 } else {
-                    cells[columnIndex][rowIndex] = createMap.cellState.DEAD;
+                    cells[columnIndex][rowIndex] = cellStateDead;
 
                 }
                 
@@ -190,15 +204,15 @@ export default class createMap extends React.Component {
     for(let i=0; i< length;i++)
                 {
 
-                 if((data[i].price <50)&& (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
-                    cells[data[i].column][data[i].row] = createMap.cellState.CHEEPPLOT;
+                 if((data[i].price <50)&& (cells[data[i].column][data[i].row]===cellStateDead))
+                    cells[data[i].column][data[i].row] = cellStateCHEEPPLOT;
                 
-                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
-                    cells[data[i].column][data[i].row] = createMap.cellState.MEDIOCREPLOT;
+                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].column][data[i].row]===cellStateDead))
+                    cells[data[i].column][data[i].row] = cellStateMEDIOCREPLOT;
                 
-                    else if(data[i].price >150 && (cells[data[i].column][data[i].row]===createMap.cellState.DEAD))
+                    else if(data[i].price >150 && (cells[data[i].column][data[i].row]===cellStateDead))
                     {
-                    cells[data[i].column][data[i].row] = createMap.cellState.HIGHPLOT;
+                    cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
                 }
             }
      })
@@ -210,10 +224,10 @@ export default class createMap extends React.Component {
 
 
 
-    toggleCellState(columnIndex, rowIndex) {
+    function toggleCellState(columnIndex, rowIndex) {
 
 
-        console.log(this.state.usertype);
+        console.log(usertype);
         axios.get('http://localhost:4000/plots')
      .then((response) => {
          const data = response.data;
@@ -221,7 +235,7 @@ export default class createMap extends React.Component {
         for(var i=0; i < length; i++)
         {
 
-            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "buyer"))
+            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer"))
             {
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid)
@@ -229,7 +243,7 @@ export default class createMap extends React.Component {
 
                 window.location ="/buyerplotpopup";
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "seller"))
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller"))
             {
                 
                 localStorage.setItem("plot",data[i]._id);
@@ -247,7 +261,7 @@ export default class createMap extends React.Component {
                 window.location ="/sellerpopup";
                 }
             }
-             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (this.state.usertype === "guest")))
+             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "guest")))
             {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/guestpopup";
@@ -255,24 +269,24 @@ export default class createMap extends React.Component {
         }
     })
     
-        const newCellsState = this.state.cells;
+        const newCellsState = cells;
         
         newCellsState[columnIndex][rowIndex] = !newCellsState[columnIndex][rowIndex];
 
-        this.setState({
-            state: newCellsState
+        setState({
+            newCellsState
         })
     }
 
 
 
-    renderCells() {
+    function renderCells() {
 
         return ( 
             
             <div className = "MetaCentraland__cells">  {
-                this.state.cells.map((rows, columnIndex) => {
-                    return this.renderColumn(rows, columnIndex)
+                cells.map((rows, columnIndex) => {
+                    return renderColumn(rows, columnIndex)
                 })
             } 
            </div>
@@ -282,7 +296,7 @@ export default class createMap extends React.Component {
         );
     }
 
-    renderColumn(rows, columnIndex) {
+    function renderColumn(rows, columnIndex) {
 
         return ( 
             <div className = "MetaCentraland__column"
@@ -299,7 +313,7 @@ export default class createMap extends React.Component {
                         `cell_${columnIndex}_${rowIndex}`
                     }
                     onClick = {
-                        () => this.toggleCellState(columnIndex, rowIndex)
+                        () => toggleCellState(columnIndex, rowIndex)
                     }
                     />
                 })
@@ -310,13 +324,6 @@ export default class createMap extends React.Component {
         )
     }
 
-
-
-
-
-
-
-    render() {
         
 
         return ( 
@@ -326,7 +333,7 @@ export default class createMap extends React.Component {
              
         
             <div className = "MetaCentraland"  > {
-                this.renderCells()
+                renderCells()
               
             } 
             </div>
@@ -335,40 +342,42 @@ export default class createMap extends React.Component {
             </TransformWrapper>
                         
         );
-    }
-}
+        
+
 
 function cellColoring(cellState) {
     let cell = "";
-    if (cellState === createMap.cellState.DEAD) {
+    if (cellState === cellStateDead) {
 
         cell = "dead";
     }
-    if (cellState === createMap.cellState.ROAD) {
+    if (cellState === cellStateROAD) {
 
         cell = "road";
     }
-    if (cellState === createMap.cellState.PARK) {
+    if (cellState === cellStatePARK) {
 
         cell = "park";
     }
-    if (cellState === createMap.cellState.CHEEPPLOT) {
+    if (cellState === cellStateCHEEPPLOT) {
 
         cell = "cheepPlot";
     }
-    if (cellState === createMap.cellState.MEDIOCREPLOT) {
+    if (cellState === cellStateMEDIOCREPLOT) {
 
         cell = "mediocrePlot";
     }
-    if (cellState === createMap.cellState.HIGHPLOT) {
+    if (cellState === cellStateHIGHPLOT) {
 
         cell = "highPlot";
     }
-    if (cellState === createMap.cellState.EMPTYCELL) {
+    if (cellState === cellStateEMPTYCELL) {
 
         cell = "empty";
     }
     return cell;
 
 }
+}
+export default CreateMap
 

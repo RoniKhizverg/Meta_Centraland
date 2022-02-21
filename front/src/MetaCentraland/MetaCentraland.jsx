@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../components/navbar.component"
 import Createmap from "../components/createmap.component";
 import Login from "../components/login";
-import Signup from "../components/signup";
+import FunctionSignUp from "../components/signup";
 import CreatePlots from "../components/createplotes";
 import CreateUser from "../components/createuser";
 import BuyerPopUp from "../components/buyerplotpopup";
@@ -31,7 +31,7 @@ function MetaCentraland() {
      
     <Route exact path="/"  element={<CreateUser/>}> </Route>
         <Route exact path="/signin"  element={<Login/>}> </Route>
-        <Route exact path="/signup"  element={<Signup/>}> </Route>
+        <Route exact path="/signup"  element={<FunctionSignUp/>}> </Route>
         <Route exact path="/createmap"  element={<Createmap/>}> </Route>
         <Route exact path="/createplots"  element={<CreatePlots/>}> </Route>
         <Route exact path="/buyerplotpopup"  element={<BuyerPopUp/>}> </Route>
