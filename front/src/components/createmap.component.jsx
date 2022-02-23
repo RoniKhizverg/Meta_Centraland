@@ -30,31 +30,15 @@ const CreateMap = () =>{
     const [cells,setCells] = useState([[]]);
 
         
-        
+      var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
+      const legend= localStorage.getItem("legened");
+    
     useEffect(() => {
-        var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
-
-    colorize = function(colorList) {
-    var container = document.getElementById('root');
-  
-    for (var key in colorList) {
-        var boxContainer = document.createElement("DIV");
-        var box = document.createElement("DIV");
-        var label = document.createElement("SPAN");
-
-        label.innerHTML = key;
-        box.className = "box";
-        box.style.backgroundColor = colorList[key];
-
-        boxContainer.appendChild(box);
-        boxContainer.appendChild(label);
-
-        container.appendChild(boxContainer);
-
-   }
+       if(legend==1){
+Colorize(colorList);
+localStorage.setItem("legend",0);
 }
 
-    colorize(colorList);
     const getLogIn = async () =>{
     try
     {
@@ -73,13 +57,16 @@ const CreateMap = () =>{
          console.log(getUserLogIn)
         const getUserSignUp = (await axios.get('http://localhost:4000/signupUsers')).data;
         const userid = localStorage.getItem('loguserid');
-            if(getUserSignUp[0].ID === userid ) 
+        for(var i=0; i < getUserSignUp.length;i++)
+        {
+            if(getUserSignUp[i].ID === userid ) 
             {
                 localStorage.setItem("user_id",getUserLogIn[0]._id);
-                 setUser(getUserSignUp[0].name +" has " + getUserSignUp[0].wallet + " $" );
-                 setUserType(getUserSignUp[0].userType);
-                 console.log(getUserSignUp[0].userType)
+                 setUser(getUserSignUp[i].name +" has " + getUserSignUp[i].wallet + " $" );
+                 setUserType(getUserLogIn[0].userType);
+                 console.log(getUserLogIn[0].userType)
             }
+        }
      }
 
             }catch(error) {
@@ -108,63 +95,16 @@ for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
 
 
 
-            if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] =cellStatePARK;
-
-                } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 20) && (columnIndex <= 30)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 70) && (columnIndex <= 80))) {
-
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 120) && (columnIndex <= 130))) {
-
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 170) && (columnIndex <= 180))) {
-
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] =cellStatePARK;
-
-                } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 120) && (rowIndex <= 130) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 70) && (columnIndex <= 80)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 120) && (columnIndex <= 130)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex >= 170) && (rowIndex <= 180) && (columnIndex >= 170) && (columnIndex <= 180)) {
-                    cells[columnIndex][rowIndex] = cellStatePARK;
-
-                } else if ((rowIndex === 25) || (rowIndex === 75) || (rowIndex === 125) || (rowIndex === 175) || (columnIndex === 25) || (columnIndex === 75) || (columnIndex === 125) || (columnIndex === 175) || (rowIndex === 99) || (rowIndex === 100) || (columnIndex === 100) || (columnIndex === 99) || (rowIndex === 49) || (rowIndex === 50) || (rowIndex === 149) || (rowIndex === 150) || (columnIndex === 49) || (columnIndex === 50) || (columnIndex === 149) || (columnIndex === 150)) {
-                    cells[columnIndex][rowIndex] = cellStateROAD;
-                } else {
-                    cells[columnIndex][rowIndex] = cellStateDead;
-
-                }
+            if(((rowIndex %50 <30 && rowIndex % 50> 19 )&& (columnIndex % 50<30 && columnIndex % 50 >20)) ){
+                cells[columnIndex][rowIndex] = cellStatePARK;
+            }
+           else if((columnIndex%50<2 && columnIndex>10) || (columnIndex% 25 <1 && columnIndex>10)|| (rowIndex%50<2 && rowIndex>10) || (rowIndex% 25 <1 && rowIndex>10)|| (columnIndex == 199) ||( rowIndex == 199)|| (columnIndex == 0) ||( rowIndex == 0)){
+            cells[columnIndex][rowIndex] = cellStateROAD;
+           }
+            else {
+                        cells[columnIndex][rowIndex] = cellStateDead;
+    
+                    }
                 
 
 
@@ -190,7 +130,6 @@ for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
                     cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
                 }
             }
-                   
 const newCellsState = cells;
             setState(newCellsState)
           
@@ -218,7 +157,6 @@ const newCellsState = cells;
                 localStorage.setItem("ownerNameId", data[i].userid);
 
                 console.log( data[i].userid +"hi")
-
                 window.location ="/buyerplotpopup";
             }
             else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller"))
@@ -329,7 +267,25 @@ const newCellsState = cells;
                         
         );
         
-
+function Colorize (colorList) {
+            var container = document.getElementById('root');
+          
+            for (var key in colorList) {
+                var boxContainer = document.createElement("DIV");
+                var box = document.createElement("DIV");
+                var label = document.createElement("SPAN");
+        
+                label.innerHTML = key;
+                box.className = "box";
+                box.style.backgroundColor = colorList[key];
+        
+                boxContainer.appendChild(box);
+                boxContainer.appendChild(label);
+        
+                container.appendChild(boxContainer);
+        
+           }
+        }
 
 function cellColoring(cellState) {
     let cell = "";

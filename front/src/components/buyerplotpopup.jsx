@@ -5,11 +5,13 @@ import CreateMap from './createmap.component'
 import axios from 'axios';
 import '../MetaCentraland/MetaCentraland.css'
 
-
+import {
+    Link
+} from 'react-router-dom';
 //import axios from 'axios';
 // axios for send data to the backend.
 
-
+localStorage.setItem("legened",1);
 const BuyerPopUp = () => {
   // constructor(props) {  
   //   super(props);
@@ -24,8 +26,8 @@ const BuyerPopUp = () => {
   const[plot, setPlot] = useState('');
   // const[price], [SetPrice] = useState('');
  // const[privateKey], [setprivateKey] = useState('');
- const[inputtype,setinputtype] = useState('hiddeniput');
-  const[gametype,setinputGameType] = useState('hiddeniput');
+ const[inputtype,setinputtype] = useState('hiddeninput');
+  const[gametype,setinputGameType] = useState('hiddeninput');
 
    const[linkToGame,setLinkToGame] = useState('');
 
@@ -74,16 +76,20 @@ const BuyerPopUp = () => {
             setPlot(
            data[i]
         )
+        console.log(data[i].linkToGame)
         if(data[i].linkToGame != null)
         {
+
             setLinkToGame(
           data[i].linkToGame
         )
+
         setinputGameType(
         "validinput"
         )
         }
         else{
+
           setinputGameType(
         "hiddeninput"
         )
@@ -130,18 +136,23 @@ const BuyerPopUp = () => {
 
         
 
+function handleClick() {
+   window.location.href = plot.linkToGame.toString();
+   console.log("hi")
+  }
+
+
 
   
-
   const handleSubmit = e => { //when we click on submit button
     let isMinus = 0;
     e.preventDefault();   //do what we wrote down
     let inGame = 0;
-    if(plot.linkToGame !=null)
-   {
-       inGame = 1;
-      window.location.href = plot.linkToGame.toString()
-   }
+  //   if(plot.linkToGame !=null)
+  //  {
+  //      inGame = 1;
+  //     window.location.href = plot.linkToGame.toString()
+  //  }
    if(inGame !== 1)
    {
     const plotId = plot._id
@@ -169,7 +180,6 @@ const BuyerPopUp = () => {
     if(isMinus === 0)
     {
     const userId = buyeruser._id
-    console.log(userId)
     const updateBuyerUser = {
          wallet: updateWallet
          //privatekey:
@@ -198,11 +208,15 @@ const BuyerPopUp = () => {
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-       
-      return (
-          <div class="image">
-    <img src="plotWorld.png" ></img>
+                         console.log(gametype)
+                                                   console.log(inputtype)
 
+
+      return (
+        
+          <div className="image">
+    <img src="plotWorld.png" ></img>
+    
         <br></br>
         <br></br>
         <br></br>
@@ -213,6 +227,7 @@ const BuyerPopUp = () => {
                     <Avatar style={avatarStyle}>
                         <AddCircleOutlineOutlinedIcon />
                     </Avatar>
+                    
                     <h2 style={headerStyle}>buy Plot</h2>
 
                     <Typography variant='caption' gutterBottom>Description:{plot.description} </Typography>
@@ -233,15 +248,32 @@ const BuyerPopUp = () => {
                         
                          
                         <div>
+
+
+
+
         <br></br>
         </div>
 
 
-                    <input className={inputtype} type="submit" value="buy_plot" />
+                    <input className={inputtype} type="submit" value="buy plot" />
                             <div></div>
 
-                      <input className={gametype} type="submit" value="play game" />
+                      
+                                   <br></br>
+<div></div>
 
+              <button  className={gametype} type="button" onClick={() => handleClick()}>play game</button>
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
+        <br></br>
+
+
+                <Link to="/createmap" className="btn btn-primary">close</Link>
                 </form>
                                 </Grid>
 

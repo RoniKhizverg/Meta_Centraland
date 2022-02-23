@@ -8,13 +8,15 @@ import FormLabel from '@material-ui/core/FormLabel';
 import axios from 'axios';
 import CreateMap from './createmap.component'
 import '../MetaCentraland/MetaCentraland.css'
-
+import {
+    Link
+} from 'react-router-dom';
 
 
 //import axios from 'axios';
 // axios for send data to the backend.
 
-
+localStorage.setItem("legened",1);
 const SellerPopUp =() => {
 
     const[plot,setPlot] = useState('');
@@ -121,11 +123,14 @@ const userId = localStorage.getItem("userid");
     setAvaibleForSale(      
       true     
     )
+      console.log(avaibleForSale)
+
   }
   else{
        setAvaibleForSale(      
       false
           )
+      console.log(avaibleForSale)
 
   }
 }
@@ -134,19 +139,31 @@ const userId = localStorage.getItem("userid");
 
   const handleSubmit = event => {
     event.preventDefault();
-   
+         console.log(avaibleForSale)
+
     let plotPrice='';
     if(!price)
     {
       plotPrice = plot.price;
     }
     else{
-      plotPrice =price
+      plotPrice =price;
+    }
+
+   let availablePlot='';
+   console.log(avaibleForSale)
+    if(availablePlot === "")
+    {
+      availablePlot = plot.avaibleForSale;
+    }
+    else{
+      availablePlot =avaibleForSale
     }
    const plotId = plot._id
+   console.log(availablePlot)
 const updatePlot = {
       price: plotPrice,
-      avaibleForSale: avaibleForSale,
+      avaibleForSale: availablePlot,
       linkToGame: linkToGame
     }
     console.log(updatePlot)
@@ -158,11 +175,11 @@ const updatePlot = {
 }
     
     
-    const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
+    const paperStyle = { padding: 20,top:10000,height: 650, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     return (
-        <div class="image">
+        <div className="image">
     <img src="plotWorld.png" ></img>
 
         <br></br>
@@ -200,12 +217,21 @@ const updatePlot = {
                     /> }
                          <FormLabel component="legend">STATUS</FormLabel>
                         <RadioGroup aria-label="usertype" name="usertype"onChange={onChangeavaibleForSale} style={{ display: 'center' }}>
-                            <FormControlLabel value="seller" control={<Radio />} label="available for sale" />
-                            <FormControlLabel value="buyer"  control={<Radio />} label="not available for sale" />
+                            <FormControlLabel value="available for sale" control={<Radio />} label="available for sale" />
+                            <FormControlLabel value="not available for sale"  control={<Radio />} label="not available for sale" />
                         </RadioGroup> 
 
                               <input className={inputype} type="submit" value="submit" />
 
+
+<br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
+
+                <Link to="/createmap" className="btn btn-primary">close</Link>
                         <div>
         <br></br>
         </div>

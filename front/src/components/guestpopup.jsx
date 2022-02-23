@@ -4,8 +4,10 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import axios from 'axios';
 import CreateMap from './createmap.component'
 import '../MetaCentraland/MetaCentraland.css'
-
-
+import {
+    Link
+} from 'react-router-dom';
+localStorage.setItem("legened",1);
 const GuestPopUp = () => {
  
   const[plot,setPlot] = useState('');
@@ -30,6 +32,7 @@ const GuestPopUp = () => {
             setPlot(
           data[i]
         )
+        console.log(data[i].linkToGame)
         if(data[i].linkToGame != null)
         {
             setLinkToGame(
@@ -39,6 +42,7 @@ const GuestPopUp = () => {
         setInputype(
         "validinput"
         )
+        console.log(inputype)
         }
         else{
           setInputype(
@@ -81,11 +85,12 @@ const GuestPopUp = () => {
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-            
+            console.log(inputype)
     return (
-        <div class="image">
+      
+        <div className="image">
     <img src="plotWorld.png" ></img>
-            <input className={inputype} type="submit" value="play game" />
+            
 
         <br></br>
         <br></br>
@@ -113,9 +118,16 @@ const GuestPopUp = () => {
                         <div>
         <br></br>
         </div>
-        
-                   <input className={inputype} type="submit" value="play game" />
+        <input className={inputype} type="submit" value="play game" ></input>
          
+         <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
+
+                <Link to="/createmap" className="btn btn-primary">close</Link>
                 </form>
                                 </Grid>
 

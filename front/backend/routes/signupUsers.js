@@ -105,7 +105,6 @@ router.route('/signup').post(async(request, response) => {
         const publicKey = key.exportKey("public");
         const name = request.body.name;
         const ID = request.body.ID;
-        const userType = request.body.userType;
         // const password = securePassword;
         const password = request.body.password;
         // const privateKey;
@@ -117,7 +116,6 @@ router.route('/signup').post(async(request, response) => {
             publicKey,
             name,
             ID,
-            userType,
             password,
             wallet
         })

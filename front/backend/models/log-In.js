@@ -11,6 +11,10 @@ const signUpScheme = new mongoose.Schema({
         password: {
             type: String,
             required: true
+        },
+        userType: {
+            type: String,
+            required: true
         }
 
     }) //what are the details we want to collect from the user when they buy plots

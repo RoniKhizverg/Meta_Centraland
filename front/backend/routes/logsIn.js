@@ -56,11 +56,14 @@ router.route('/login').post(async(request, response) => {
 
     const ID = request.body.ID;
     const password = request.body.password;
+    const userType = request.body.userType;
 
 
     const user = new logTemplatesCopy({
         ID,
-        password
+        password,
+        userType
+
     })
 
     user.save()

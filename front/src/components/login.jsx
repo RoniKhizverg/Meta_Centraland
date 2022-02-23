@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
-
-
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+localStorage.setItem("legened",1);
 const Login = () => {
 
 
@@ -13,7 +16,8 @@ const Login = () => {
 
     const[ID,setID] = useState('');
     const[password,setPassword] = useState('');
-  
+    const[userType,setUserType] = useState('');
+
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -22,7 +26,9 @@ const Login = () => {
 
     const user = {
        ID: ID,
-       password: password
+       password: password,
+       userType:userType
+
 
     }
 axios.get('http://localhost:4000/signupUsers')
@@ -90,7 +96,11 @@ axios.get('http://localhost:4000/signupUsers')
                     value={password}
                     onChange={event => setPassword(event.target.value)}
                          />
-
+            <FormLabel component="legend">User Type</FormLabel>
+                        <RadioGroup aria-label="usertype" name="usertype"onChange={event => setUserType(event.target.value)} style={{ display: 'initial' }}>
+                            <FormControlLabel value="seller" control={<Radio />} label="Seller" />
+                            <FormControlLabel value="buyer"  control={<Radio />} label="Buyer" />
+                        </RadioGroup> 
                 <Button type='submit' value="Login" color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>               
                 <Typography align="center">Do you not have an account ? <br></br>
                      <Link href="/signup" onClick={()=>window.location="/"} >

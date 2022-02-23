@@ -250,7 +250,7 @@ let countriesList = [
    "Zimbabwe",
 ];
 const CreatePlots = () => {
-
+localStorage.setItem("legened",1);
 
     
    

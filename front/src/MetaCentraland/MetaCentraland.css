@@ -1,8 +1,4 @@
-.MetaCentraland {
-    background-color: rgb(87, 93, 129);
-    height: 100vmax;
-    width: 100vmax;
-}
+.MetaCentraland {}
 
 .image {
     background-image: url('metaVerse.jpg');
@@ -22,10 +18,12 @@
     flex-direction: column;
 }
 
+.closeButton {}
+
 .MetaCentraland__cell {
-    width: 7px;
-    height: 5px;
-    border: 1px solid #b6b3b3;
+    width: 6.5px;
+    height: 3.6px;
+    border: 0.1px solid #868585be;
 }
 
 .MetaCentraland__cell--alive {
@@ -81,7 +79,10 @@
 }
 
 .validinput {
-    background-color: blueviolet
+    color: #fff5f5;
+    background-color: #00bfff;
+    border-color: #15eb8b;
+    display: block;
 }
 
 .price {

@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
+
 import axios from 'axios';
 // axios for send data to the backend.
 
-
+localStorage.setItem("legened",1);
   const FunctionSignUp = () =>{ 
   // constructor(props) {  
   //   super(props);
@@ -21,7 +18,6 @@ import axios from 'axios';
 
     const[name,setName] = useState('');
     const[ID,setID] = useState('');
-    const[userType,setUserType] = useState('');
     const[password,setPaswword] = useState('');
     const[wallet,setWallet] = useState('1000');
   
@@ -36,7 +32,6 @@ import axios from 'axios';
     const newUser = {
       name: name,
       ID: ID,
-       userType:userType,
        password: password,
        wallet:1000
 
@@ -98,11 +93,7 @@ import axios from 'axios';
                     value={ID}
                     onChange={event => setID(event.target.value)}
                          />
-                        <FormLabel component="legend">User Type</FormLabel>
-                        <RadioGroup aria-label="usertype" name="usertype"onChange={event => setUserType(event.target.value)} style={{ display: 'initial' }}>
-                            <FormControlLabel value="seller" control={<Radio />} label="Seller" />
-                            <FormControlLabel value="buyer"  control={<Radio />} label="Buyer" />
-                        </RadioGroup> 
+                        
                          <div className="form-group"> 
           <         label>Create Password: </label>
                     <input  type="text"
