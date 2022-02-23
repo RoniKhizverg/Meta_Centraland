@@ -28,44 +28,31 @@ const Login = () => {
        ID: ID,
        password: password,
        userType:userType
-
-
     }
-axios.get('http://localhost:4000/signupUsers')
-     .then((response) => {
-         
+
+ axios.post('http://localhost:4000/logsIn/login',user).then((response) => {
          const data = response.data;
-         const length = data.length;
-         for(var i=0; i < length; i++)
-         {
-            if(data[i].ID === user.ID )
-            {
-                if(data[i].password === user.password)
-                {
-                localStorage.clear();
-                localStorage.setItem("loguserid",data[i].ID);
-                axios.post('http://localhost:4000/logsIn/login',user)
-                .then(res => console.log(res.data));
-                window.location = "/createmap";
-                notRegistered = 1;
-                break;
-                }
-                else{
-                    isPasswordValid=0;
-                    alert("Password incorrect!!!");
-                    break;
-                }
-            }    
-            }
-        if(notRegistered === 0 && isPasswordValid === 1)
+        if(data === "Cannot find User")  
         {
-            alert("Your details are wrong!!!");
+                alert("Your details are wrong!!!");
 
-        }
+        } 
+        else if(data === "wrong password!")  
+        {
+            alert(data);
 
+        }    
+        else{
+             localStorage.clear();
+            localStorage.setItem("loguserid",user.ID);
+            window.location="/createmap";
+        }          
+    
        })
-  }
+               
 
+  
+    }
 
     const paperStyle={padding :20,height:'73vh',width:300, margin:"0 auto"}
     const avatarStyle={backgroundColor:'#1bbd7e'}

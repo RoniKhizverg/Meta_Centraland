@@ -7,8 +7,9 @@ POST http://localhost:4000/logsIn/login
 Content-Type: application/json
 
 {
-    "ID":"316283696",
-    "password":"2233333"
+    "ID":"18",
+    "password":"121221",
+    "userType":"seller"
 }
 ###
 DELETE http://localhost:4000/logsIn/6211e668ef06977f8269c83e

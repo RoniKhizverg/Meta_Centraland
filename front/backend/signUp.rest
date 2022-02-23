@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
     "name":"Slav",
-    "ID":"316283696",
+    "ID":"12",
     "userType":"Seller",
-    "password":"2233333"
+    "password":"12"
 }
 

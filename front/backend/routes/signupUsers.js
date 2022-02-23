@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const signupTemplatesCopy = require('../models/signupUser') //import the shceme we have created
-    // const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 var rsa = require('node-rsa');
 
 
@@ -92,21 +92,48 @@ async function getUser(req, res, next) {
 }
 
 
+async function getUserFromSignup(req, res, next) {
+    let user;
+    try {
+        user = await signupTemplatesCopy.find()
+        if (user == null) {
+            return res.json({
+                message: 'Cannot find User'
+            })
+        }
+    } catch (err) {
+        return res.status(500).json({
+                message: err.message
+            }) // status 500 means that there is something wrong with our circuit
+    }
+    res.user = user
+    next()
 
+}
 
-router.route('/signup').post(async(request, response) => {
-        // const saltPassword = await bcrypt.genSalt(10);
-        // const securePassword = await bcrypt.hash(request.body.password, saltPassword)
-        // const key = new NodeRSA({ b: 1024 });
-        // var encryptedString = key.encrypt
+router.post('/signup', getUserFromSignup, async(request, response) => {
+
+        const signup = await response.user;
+        for (let i = 0; i < signup.length; i++) {
+
+            if (signup[i].ID == request.body.ID) {
+
+                return response.send('You already have account!')
+            }
+        }
+
+        const saltPassword = await bcrypt.genSalt(10);
+        const securePassword = await bcrypt.hash(request.body.password, saltPassword)
+            // const key = new NodeRSA({ b: 1024 });
+            // var encryptedString = key.encrypt
 
         var key = new rsa().generateKeyPair();
         const privateKey = key.exportKey("private");
         const publicKey = key.exportKey("public");
         const name = request.body.name;
         const ID = request.body.ID;
-        // const password = securePassword;
-        const password = request.body.password;
+        const password = securePassword;
+        // const password = request.body.password;
         // const privateKey;
         // const publicKey;
         const wallet = 1000;

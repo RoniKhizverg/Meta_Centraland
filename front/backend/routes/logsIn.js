@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const logTemplatesCopy = require('../models/log-In') //import the shceme we have created
+const signUpScheme = require('../models/signupUser')
+const bcrypt = require('bcrypt');
 
 
 router.get('/', async(req, res) => {
@@ -51,27 +53,69 @@ async function getUser(req, res, next) {
 
 }
 
-router.route('/login').post(async(request, response) => {
+async function getUserFromSignup(req, res, next) {
+    let user;
+    try {
+        user = await signUpScheme.find()
+        if (user == null) {
+            return res.json({
+                message: 'Cannot find User'
+            })
+        }
+    } catch (err) {
+        return res.status(500).json({
+                message: err.message
+            }) // status 500 means that there is something wrong with our circuit
+    }
+    res.user = user
+    next()
 
+}
 
-    const ID = request.body.ID;
-    const password = request.body.password;
-    const userType = request.body.userType;
+router.post('/login', getUserFromSignup, async(request, response) => {
+    let login = '';
+    const updateuser = await response.user;
 
+    for (let i = 0; i < updateuser.length; i++) {
 
-    const user = new logTemplatesCopy({
-        ID,
-        password,
-        userType
+        if (updateuser[i].ID == request.body.ID) {
 
-    })
+            login = updateuser[i];
+        }
+    }
+    if (request.body.ID != login.ID) {
+        return response.send('Cannot find User')
 
-    user.save()
-        .then(data => {
-            response.json(data)
-        })
+    }
+    try {
+        const verify_password = await bcrypt.compare(request.body.password, login.password);
+        if (verify_password === true) {
+            console.log("hi");
+            const ID = request.body.ID;
+            const password = login.password;
+            const userType = request.body.userType;
 
+            console.log(login)
+            const user = new logTemplatesCopy({
+                ID,
+                password,
+                userType
+
+            })
+
+            user.save()
+
+            .then(data => {
+                response.json(data)
+            })
+        } else {
+            return response.send('wrong password!')
+        }
+    } catch {
+        response.status(500).send()
+    }
 })
+
 
 
 module.exports = router

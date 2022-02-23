@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Paper, Avatar, Typography, TextField } from '@material-ui/core'
+import { Grid, Paper, Avatar, Typography, TextField,Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 import axios from 'axios';
@@ -36,25 +36,17 @@ localStorage.setItem("legened",1);
        wallet:1000
 
     }
-     axios.get('http://localhost:4000/signupUsers')
+     axios.post('http://localhost:4000/signupUsers/signup', newUser)
      .then((response) => {
          const data = response.data;
-         const length = data.length;
-         for(var i=0; i < length; i++)
-         {
-            if(data[i].ID === newUser.ID )
-            {
-                isRepeat = 1;
-                alert("You already have account!!!");
-                break;
-            }    
-            }
-        if(isRepeat === 0)
+         if(data === "You already have account!")  
         {
-        localStorage.setItem("loguserid",newUser.ID);
-        axios.post('http://localhost:4000/signupUsers/signup',newUser)
-        .then(res => console.log(res.data));
+                alert(data);
 
+        } 
+        else{
+         
+        localStorage.setItem("loguserid",newUser.ID);
         window.location = "/signin";
 }
        })
@@ -64,6 +56,8 @@ localStorage.setItem("legened",1);
     const paperStyle = { padding: 20, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
+        const btnstyle={margin:'8px 0'}
+
     return (
         <div>
         <br></br>
@@ -94,20 +88,17 @@ localStorage.setItem("legened",1);
                     onChange={event => setID(event.target.value)}
                          />
                         
-                         <div className="form-group"> 
-          <         label>Create Password: </label>
-                    <input  type="text"
+                          <TextField fullWidth label="password"placeholder="Enter your ID"
                      required
                     className="form-control"
                     value={password}
                     onChange={event => setPaswword(event.target.value)}
                          />
-                         </div>
                         <div>
         <br></br>
         </div>
 
-                    <input type="submit" value="Create_User" className="btn btn-primary" />
+                <Button type='submit' value="signup" color='primary' variant="contained" style={btnstyle} fullWidth>Create user</Button>               
                 </form>
                 
             </Paper>
