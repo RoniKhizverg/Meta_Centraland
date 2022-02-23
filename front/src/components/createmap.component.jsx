@@ -6,7 +6,8 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
 
-
+let count =0;
+    var executed = false;
 
 const CreateMap = () =>{
 
@@ -24,15 +25,13 @@ const CreateMap = () =>{
     const[cellStateCHEEPPLOT] = useState("cheepPlot");
     const[cellStateMEDIOCREPLOT] = useState("mediocrePLOT");
     const[cellStateHIGHPLOT] = useState("highPlot");
-    const[cells] = useState(initializeCells());
     const[user,setUser] = useState('');
     const[usertype,setUserType] = useState('');
+    const [cells,setCells] = useState([[]]);
 
         
         
     useEffect(() => {
-    
-            
         var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
 
     colorize = function(colorList) {
@@ -56,58 +55,60 @@ const CreateMap = () =>{
 }
 
     colorize(colorList);
+    const getLogIn = async () =>{
+    try
+    {
+        const getUserLogIn = (await axios.get('http://localhost:4000/logsIn')).data;
 
-     axios.get('http://localhost:4000/logsIn')
-     .then((response) => {
+                console.log(getUserLogIn);
 
-         const data = response.data;
-         var length = data.length;
-         if(length===0 || !localStorage.getItem('loguserid'))
-         {
+    
+     if(getUserLogIn == "")
+     {
             setUser("Welcome Guest");
             setUserType("guest");
-
-         }
-         else{
-             axios.get('http://localhost:4000/signupUsers')
-     .then((response) => {
+     }
+     else
+     {
+         console.log(getUserLogIn)
+        const getUserSignUp = (await axios.get('http://localhost:4000/signupUsers')).data;
         const userid = localStorage.getItem('loguserid');
-         const data1 = response.data;
-         var length1 = data1.length;
-         for(var i=0; i < length1; i++)
-         {
-            if(data1[i].ID === userid )
+            if(getUserSignUp[0].ID === userid ) 
             {
-                localStorage.setItem("user_id",data[0]._id);
-                 setUser(data1[i].name +" has " + data1[i].wallet + " $" );
-                 setUserType(data1[i].userType);
-                 console.log(data1[i].userType)
+                localStorage.setItem("user_id",getUserLogIn[0]._id);
+                 setUser(getUserSignUp[0].name +" has " + getUserSignUp[0].wallet + " $" );
+                 setUserType(getUserSignUp[0].userType);
+                 console.log(getUserSignUp[0].userType)
             }
-      }
+     }
 
-   
-  });
-}
-});
+            }catch(error) {
+        console.log(error);
+    }
+};
+
+getLogIn();
+setCells(initializeCells());
 
 
+        
 },[]);
 
 
    
-   function initializeCells() {
-        let cells = [];
+    function initializeCells (){ 
+        let cells =[]
+        let plots=[];
+        console.log("hi")
+            
 
-       
-        
+for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
+        cells[columnIndex] = [];
+        for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
 
-        for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
-            cells[columnIndex] = [];
-            for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
 
-                
 
-                if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
+            if (((rowIndex >= 20) && (rowIndex <= 30) && (columnIndex >= 20) && (columnIndex <= 30))) {
                     cells[columnIndex][rowIndex] = cellStatePARK;
 
                 } else if ((rowIndex >= 70) && (rowIndex <= 80) && (columnIndex >= 20) && (columnIndex <= 30)) {
@@ -170,15 +171,14 @@ const CreateMap = () =>{
             }
 
         }
-
- axios.get('http://localhost:4000/plots')
+       
+            axios.get('http://localhost:4000/plots')
      .then((response) => {
          const data = response.data;
          const length = data.length;
 
     for(let i=0; i< length;i++)
                 {
-
                  if((data[i].price <50)&& (cells[data[i].column][data[i].row]===cellStateDead))
                     cells[data[i].column][data[i].row] = cellStateCHEEPPLOT;
                 
@@ -190,15 +190,14 @@ const CreateMap = () =>{
                     cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
                 }
             }
-            
-
-     })
-        
-     
-        
-
+                   
+const newCellsState = cells;
+            setState(newCellsState)
+          
+    })   
         return cells;
-    }
+        
+    };
 
 
 
@@ -260,12 +259,12 @@ const CreateMap = () =>{
 
 
 
-    function renderCells() {
-
+      function renderCells() {
         return ( 
             
             <div className = "MetaCentraland__cells">  {
                 cells.map((rows, columnIndex) => {
+                    
                     return renderColumn(rows, columnIndex)
                 })
             } 
@@ -274,10 +273,10 @@ const CreateMap = () =>{
 
             
         );
-    }
+    
+}
 
-    function renderColumn(rows, columnIndex) {
-
+    function renderColumn(rows, columnIndex) {        
         return ( 
             <div className = "MetaCentraland__column"
             key = {
@@ -290,6 +289,7 @@ const CreateMap = () =>{
                         `MetaCentraland__cell MetaCentraland__cell--${cellModifier}`
                     }
                     key = {
+                        
                         `cell_${columnIndex}_${rowIndex}`
                     }
                     onClick = {
@@ -304,11 +304,12 @@ const CreateMap = () =>{
         )
     }
 
+
         
+
 
         return ( 
             
-
             <TransformWrapper >
                 
                 <br></br>

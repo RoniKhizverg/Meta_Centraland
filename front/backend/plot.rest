@@ -4,15 +4,12 @@ POST http://localhost:4000/plots/plots/
 Content-Type: application/json
 
 {
-    "ownerName":"or",
-    "price":"1000",
-    "description":"joke",
-    "avaibleForSale":true,
-    "row": 31,
-    "column": 15,
-    "userid": "123456789"
-    
+   
 }
 
-### 
+###
+GET http://localhost:4000/plots/createcells
 
+
+### 
+GET http://localhost:4000/plots/getplots

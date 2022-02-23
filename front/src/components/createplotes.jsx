@@ -255,10 +255,15 @@ const CreatePlots = () => {
     
    
 useEffect(() => {
-    {
-    axios.post('http://localhost:4000/plots/plots', { userid: localStorage.getItem("loguserid") });
-        
-    }
+    
+    const createPlots = async () =>{
+    await (axios.post('http://localhost:4000/plots/plots', { userid: localStorage.getItem("loguserid") }));
+    window.location="/createmap"
+
+        };
+    
+    createPlots();
+
 },[]);
 
   
@@ -266,11 +271,9 @@ useEffect(() => {
 
 
 return(  
-    setTimeout(() => {
-                window.location="/createmap"
-
-        }, 5000));
-
+    <div>
+        </div>
+)
 }
 
 

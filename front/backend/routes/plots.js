@@ -1,6 +1,10 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router()
 const plotsTemplatesCopy = require('../models/plot') //import the shceme we have created
+const columnsAmount = 200;
+const rowsAmount = 200;
+const cells = [];
+const schemePlots = [];
 
 
 router.get('/', async(req, res) => {
@@ -15,6 +19,12 @@ router.get('/', async(req, res) => {
     }
 
 })
+
+
+
+
+
+
 
 router.delete('/:id', getPlot, async(req, res) => {
     try {
@@ -93,9 +103,13 @@ async function getPlot(req, res, next) {
 
 
 router.post('/plots', async(request, response) => {
-    console.log(request.body)
 
-    for (let i = 0; i < 2000; i++) {
+
+
+
+
+    for (let i = 0; i < 20000; i++) {
+
 
         const userPlot = new plotsTemplatesCopy({
             ownerName: "O&R.Ltd",
@@ -105,15 +119,16 @@ router.post('/plots', async(request, response) => {
             row: Math.floor(Math.random() * 200),
             column: Math.floor(Math.random() * 200),
             userid: request.body.userid
+
         })
+
         userPlot.save()
     }
-
-
-
     response.json({
-            success: "ok"
-        }) // when a user enters every data to buy a plot and click 'send'- a post request has been made and come to this server,method.
+        success: "ok"
+    })
 
 })
+
+
 module.exports = router
