@@ -162,9 +162,8 @@ const updatePlot = {
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     return (
-        <div>
-
-          <CreateMap></CreateMap>
+        <div class="image">
+    <img src="plotWorld.png" ></img>
 
         <br></br>
         <br></br>

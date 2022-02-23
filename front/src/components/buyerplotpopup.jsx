@@ -200,8 +200,8 @@ const BuyerPopUp = () => {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
        
       return (
-        <div>
-          <CreateMap></CreateMap>
+          <div class="image">
+    <img src="plotWorld.png" ></img>
 
         <br></br>
         <br></br>

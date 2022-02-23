@@ -83,9 +83,9 @@ const GuestPopUp = () => {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
             
     return (
-        <div>
-          <CreateMap></CreateMap>
-                   <input className={inputype} type="submit" value="play game" />
+        <div class="image">
+    <img src="plotWorld.png" ></img>
+            <input className={inputype} type="submit" value="play game" />
 
         <br></br>
         <br></br>

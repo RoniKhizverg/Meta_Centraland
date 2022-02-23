@@ -1,5 +1,16 @@
 .MetaCentraland {
     background-color: rgb(87, 93, 129);
+    height: 100vmax;
+    width: 100vmax;
+}
+
+.image {
+    background-image: url('metaVerse.jpg');
+    height: 100vmax;
+    width: 100vmax;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .MetaCentraland__cells {
