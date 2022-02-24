@@ -33,7 +33,7 @@ const GuestPopUp = () => {
           data[i]
         )
         console.log(data[i].linkToGame)
-        if(data[i].linkToGame != null)
+        if(data[i].linkToGame != null && data[i].linkToGame != "")
         {
             setLinkToGame(
           data[i].linkToGame

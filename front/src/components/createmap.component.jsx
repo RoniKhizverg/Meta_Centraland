@@ -155,9 +155,15 @@ const newCellsState = cells;
             {
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid);
+                if(data[i].avaibleForSale === false)
+                {
+                    window.location ="/guestpopup"
 
-                console.log( data[i].userid +"hi")
+                }
+                else
+                {
                 window.location ="/buyerplotpopup";
+                }
             }
             else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller"))
             {

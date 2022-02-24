@@ -139,7 +139,7 @@ const userId = localStorage.getItem("userid");
 
   const handleSubmit = event => {
     event.preventDefault();
-         console.log(avaibleForSale)
+         console.log(linkToGame)
 
     let plotPrice='';
     if(!price)
@@ -152,7 +152,7 @@ const userId = localStorage.getItem("userid");
 
    let availablePlot='';
    console.log(avaibleForSale)
-    if(availablePlot === "")
+    if(avaibleForSale === "")
     {
       availablePlot = plot.avaibleForSale;
     }

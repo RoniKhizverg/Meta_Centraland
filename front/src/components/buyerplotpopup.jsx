@@ -77,9 +77,9 @@ const BuyerPopUp = () => {
            data[i]
         )
         console.log(data[i].linkToGame)
-        if(data[i].linkToGame != null)
+        if(data[i].linkToGame != "" && data[i].linkToGame != null)
         {
-
+          
             setLinkToGame(
           data[i].linkToGame
         )
@@ -159,17 +159,8 @@ function handleClick() {
         console.log(plotId);
 
         console.log(buyeruser)
-    const updatePlot = {
-      ownerName: buyeruser.name,
-      
-      //  userType: userType,
-      //  password: password,
-       userid: buyeruser.ID
-    }
-    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
-
+    
     const updateWallet = Number(buyeruser.wallet)- Number(plot.price)
-    console.log(updatePlot);
     if(updateWallet < 0 )
     {
       alert("You dont have enough money!!!");
@@ -179,6 +170,19 @@ function handleClick() {
     }
     if(isMinus === 0)
     {
+
+const updatePlot = {
+      ownerName: buyeruser.name,
+      
+      //  userType: userType,
+      //  password: password,
+       userid: buyeruser.ID
+    }
+        console.log(updatePlot);
+
+    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
+
+
     const userId = buyeruser._id
     const updateBuyerUser = {
          wallet: updateWallet
