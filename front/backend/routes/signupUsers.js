@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const signupTemplatesCopy = require('../models/signupUser') //import the shceme we have created
 const bcrypt = require('bcrypt');
-var rsa = require('node-rsa');
-
+const EC = require('elliptic').ec;
+const ec = new EC('secp256k1');
 
 router.get('/', async(req, res) => {
     try {
@@ -127,9 +127,9 @@ router.post('/signup', getUserFromSignup, async(request, response) => {
             // const key = new NodeRSA({ b: 1024 });
             // var encryptedString = key.encrypt
 
-        var key = new rsa().generateKeyPair();
-        const privateKey = key.exportKey("private");
-        const publicKey = key.exportKey("public");
+        var key = ec.genKeyPair();
+        const privateKey = key.getPrivate('hex')
+        const publicKey = key.getPublic('hex')
         const name = request.body.name;
         const ID = request.body.ID;
         const password = securePassword;

@@ -34,6 +34,10 @@ const plotScheme = new mongoose.Schema({
         linkToGame: {
             type: String,
             required: false
+        },
+        hash: {
+            type: String,
+            required: true
         }
 
 

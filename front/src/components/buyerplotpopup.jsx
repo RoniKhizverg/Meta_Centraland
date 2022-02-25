@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { Grid, Paper, Avatar, Typography, Dialog } from '@material-ui/core'
+import { Grid, Paper, Avatar, Typography, Dialog ,TextField} from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CreateMap from './createmap.component'
 import axios from 'axios';
@@ -140,7 +140,11 @@ function handleClick() {
    window.location.href = plot.linkToGame.toString();
    console.log("hi")
   }
+function handleVerify()
+{
+  
 
+}
 
 
   
@@ -212,8 +216,7 @@ const updatePlot = {
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-                         console.log(gametype)
-                                                   console.log(inputtype)
+    
 
 
       return (
@@ -243,14 +246,38 @@ const updatePlot = {
 
                       <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
 
-                         {/* <TextField  label='privateKey' placeholder="Enter seller's private key" 
+
+             <TextField  label='hash plot' placeholder="E" 
                  required
                     className="form-control"
-                    value={this.state.privateKey}
-                    onChange={this.onChangePrivateKey}
-                         /> */}
-                        
+                    value={""+plot.hash}
+                         /> 
+                         <br></br>
+
+         <TextField  label='signature' placeholder="E" 
+                 required
+                    className="form-control"
+                    value={""+plot.hash}
+                         /> 
+
+                      <br></br>
+        <br></br>
+
+              <button  className="validinput" type="button" onClick={() => handleVerify()} >Verify</button>
+
+                         <br></br>
+                         <br></br>
+          <TextField   placeholder="verified" 
+                 required
+                    className="form-control"
+                    value={""}
+                         /> 
+
+                      <br></br>
+        <br></br>
+
                          
+                            
                         <div>
 
 

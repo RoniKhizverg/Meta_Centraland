@@ -5,6 +5,8 @@ const columnsAmount = 200;
 const rowsAmount = 200;
 const cells = [];
 const schemePlots = [];
+const SHA256 = require('crypto-js/sha256');
+const { hash } = require('bcrypt');
 
 
 router.get('/', async(req, res) => {
@@ -107,18 +109,19 @@ router.post('/plots', async(request, response) => {
 
 
 
-
+    let userPlot = '';
     for (let i = 0; i < 20000; i++) {
 
 
-        const userPlot = new plotsTemplatesCopy({
+        userPlot = new plotsTemplatesCopy({
             ownerName: "O&R.Ltd",
             price: Math.floor(Math.random() * 200),
             description: `index ${i}`,
             avaibleForSale: true,
             row: Math.floor(Math.random() * 200),
             column: Math.floor(Math.random() * 200),
-            userid: request.body.userid
+            userid: request.body.userid,
+            hash: SHA256(userPlot.ownerName + userPlot.price + userPlot.row + userPlot.column + userPlot.description).toString()
 
         })
 
