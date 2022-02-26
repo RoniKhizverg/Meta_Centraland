@@ -28,6 +28,7 @@ router.get('/', async(req, res) => {
 
 
 
+
 router.delete('/:id', getPlot, async(req, res) => {
     try {
         await res.plot.remove()
@@ -121,7 +122,7 @@ router.post('/plots', async(request, response) => {
             row: Math.floor(Math.random() * 200),
             column: Math.floor(Math.random() * 200),
             userid: request.body.userid,
-            hash: SHA256(userPlot.ownerName + userPlot.price + userPlot.row + userPlot.column + userPlot.description).toString()
+            hash: SHA256(userPlot.description).toString()
 
         })
 

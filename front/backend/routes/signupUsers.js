@@ -4,6 +4,8 @@ const signupTemplatesCopy = require('../models/signupUser') //import the shceme 
 const bcrypt = require('bcrypt');
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
+const crypto = require('crypto');
+const { format } = require('path');
 
 router.get('/', async(req, res) => {
     try {
@@ -60,6 +62,9 @@ router.patch('/:id', getUser, async(req, res) => {
 })
 
 
+
+
+
 router.delete('/:id', getUser, async(req, res) => {
     try {
         await res.user.remove()
@@ -110,6 +115,68 @@ async function getUserFromSignup(req, res, next) {
     next()
 
 }
+router.post('/verify', async(req, res) => {
+    data = req.body.data
+    publicKey = req.body.publicKey
+    signature = req.body.signature
+
+    publicKey = crypto.createPublicKey({
+        key: Buffer.from(publicKey, 'base64'),
+        type: 'spki',
+        format: 'der',
+
+    })
+
+    console.log(signature)
+    console.log(publicKey)
+
+    const verify = crypto.createVerify("SHA256")
+    verify.update(data)
+    verify.end()
+
+    let result = verify.verify(publicKey, Buffer.from(signature, 'base64'))
+
+    res.send({ verify: result })
+
+})
+
+
+router.post('/seller', async(req, res) => {
+    users = await signupTemplatesCopy.find();
+    const userid = req.body.userid
+    console.log(userid)
+    let privateKey = []
+
+
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].ID === userid) {
+            privateKey = users[i].privateKey
+        }
+    }
+
+    // crypto.createPrivateKey({
+    //     key: Buffer.from(privateKey, 'base64'),
+    //     type: 'pkcs8',
+    //     format: 'der',
+    // })
+
+    const sign = crypto.createSign('SHA256')
+    const hashData = req.body.hash
+    console.log(hashData)
+    sign.update(hashData)
+    sign.end()
+    const signature = sign.sign({
+        key: Buffer.from(privateKey, 'base64'),
+        format: 'der',
+        type: 'pkcs8',
+    }).toString('base64'); // specify format and type
+
+    res.send({ signature })
+
+
+
+})
+
 
 router.post('/signup', getUserFromSignup, async(request, response) => {
 
@@ -124,12 +191,25 @@ router.post('/signup', getUserFromSignup, async(request, response) => {
 
         const saltPassword = await bcrypt.genSalt(10);
         const securePassword = await bcrypt.hash(request.body.password, saltPassword)
-            // const key = new NodeRSA({ b: 1024 });
-            // var encryptedString = key.encrypt
+        let { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+            modulusLength: 2048,
+            publicKeyEncoding: {
+                type: 'spki',
+                format: 'der',
+            },
+            privateKeyEncoding: {
+                type: 'pkcs8',
+                format: 'der',
+            },
 
-        var key = ec.genKeyPair();
-        const privateKey = key.getPrivate('hex')
-        const publicKey = key.getPublic('hex')
+        })
+
+        publicKey = publicKey.toString('base64')
+        privateKey = privateKey.toString('base64')
+        console.log(publicKey);
+
+
+
         const name = request.body.name;
         const ID = request.body.ID;
         const password = securePassword;

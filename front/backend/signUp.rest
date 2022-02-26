@@ -10,7 +10,47 @@ Content-Type: application/json
 {
     "name":"Slav",
     "ID":"12",
-    "userType":"Seller",
     "password":"12"
+}
+
+###
+POST http://localhost:4000/signupUsers/verify
+Content-Type: application/json
+
+{
+    "data":"Slav",
+    "public Key":"12",
+    "password":"12"
+}
+
+###
+POST http://localhost:4000/signupUsers/seller
+Content-Type: application/json
+
+{
+    "ownerName"
+:
+"O&R.Ltd",
+"price"
+:
+"143",
+"description"
+:
+"index 0",
+"avaibleForSale"
+:
+true,
+"row"
+:
+"60",
+"column"
+:
+"105",
+"userid"
+:
+"123456789",
+"hash"
+:
+"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 }
 

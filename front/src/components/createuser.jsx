@@ -18,7 +18,6 @@ function createuser()
      const newUser = {
       name: "O&R.Ltd",
       ID: "123456789",
-       userType: "seller",
        password: "123",
        wallet:1000
 

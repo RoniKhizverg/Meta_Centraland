@@ -162,6 +162,17 @@ const newCellsState = cells;
                 }
                 else
                 {
+                
+
+         axios.post('http://localhost:4000/signUpUsers/seller',data[i])
+        .then((response) => {
+                const data = JSON.stringify(response.data);
+                
+                localStorage.setItem('signature',data);
+        })
+      
+    
+       
                 window.location ="/buyerplotpopup";
                 }
             }

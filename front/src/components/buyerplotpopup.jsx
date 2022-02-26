@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, Dialog ,TextField} from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import CreateMap from './createmap.component'
 import axios from 'axios';
 import '../MetaCentraland/MetaCentraland.css'
 
@@ -13,13 +12,7 @@ import {
 
 localStorage.setItem("legened",1);
 const BuyerPopUp = () => {
-  // constructor(props) {  
-  //   super(props);
-
-  //   this.onChangeDescription = this.onChangeDescription.bind(this);
-  //   this.onChangePrice = this.onChangePrice.bind(this);
-  //   this.onChangePrivateKey = this.onChangePrivateKey.bind(this);
-  //   this.onSubmit = this.onSubmit.bind(this);
+  
 
   const[buyeruser, setBuyerUser] = useState('');
   const[selleruser, setSellerUser] = useState('');
@@ -28,22 +21,10 @@ const BuyerPopUp = () => {
  // const[privateKey], [setprivateKey] = useState('');
  const[inputtype,setinputtype] = useState('hiddeninput');
   const[gametype,setinputGameType] = useState('hiddeninput');
+  const [signature,setSignature] = useState('')
 
    const[linkToGame,setLinkToGame] = useState('');
 
-
-
-  //   this.state = {
-  //     buyeruser:'',
-  //     selleruser:'',
-  //     plot:'',
-  //     description: '',
-  //     price: '',
-  //     privateKey:'',
-  //     inputtype:'hiddeninput'
-
-  //   }
-  // }
        useEffect(() => {
 
        
@@ -62,6 +43,8 @@ const BuyerPopUp = () => {
            data[i])
         
       }
+      
+      
     }
   })
   
@@ -76,6 +59,13 @@ const BuyerPopUp = () => {
             setPlot(
            data[i]
         )
+axios.post('http://localhost:4000/signUpUsers/seller',data[i])
+        .then((response) => {
+                const data = response.data;
+                setSignature(data);
+                console.log(data)
+        })
+        
         console.log(data[i].linkToGame)
         if(data[i].linkToGame != "" && data[i].linkToGame != null)
         {
@@ -117,6 +107,51 @@ const BuyerPopUp = () => {
       }
     }
   })
+        // const userID= localStorage.getItem("loguserid");
+        // const plotOwnerId= localStorage.getItem("ownerNameId");
+        
+        // if(userID === plotOwnerId)
+        // {
+           setinputtype(
+        "hiddeninput"
+        )
+        // }
+        // else{
+        //   setinputtype(
+        // "validinput"
+        // )
+        // }
+// 
+        
+      },[]);
+
+        
+
+function handleClick() {
+   window.location.href = plot.linkToGame.toString();
+   console.log("hi")
+  }
+function handleVerify()
+{
+
+   
+        console.log(signature)
+      const information =
+      {
+        data: plot.hash,
+        publicKey: selleruser.publicKey,
+        signature: signature
+      }  
+      console.log(information)
+      axios.post('http://localhost:4000/signUpUsers/verify',information)
+      .then((response) =>{
+        const data = response.data
+        console.log(data)
+        document.getElementById('digital_signiture').value = data;
+        console.log("hi")
+      })
+    
+
         const userID= localStorage.getItem("loguserid");
         const plotOwnerId= localStorage.getItem("ownerNameId");
         
@@ -131,23 +166,12 @@ const BuyerPopUp = () => {
         "validinput"
         )
         }
-       
-      },[]);
-
-        
-
-function handleClick() {
-   window.location.href = plot.linkToGame.toString();
-   console.log("hi")
-  }
-function handleVerify()
-{
-  
 
 }
 
+ 
+      
 
-  
   const handleSubmit = e => { //when we click on submit button
     let isMinus = 0;
     e.preventDefault();   //do what we wrote down
@@ -216,8 +240,6 @@ const updatePlot = {
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-    
-
 
       return (
         
@@ -250,14 +272,14 @@ const updatePlot = {
              <TextField  label='hash plot' placeholder="E" 
                  required
                     className="form-control"
-                    value={""+plot.hash}
+                    value={" "+plot.hash}
                          /> 
                          <br></br>
 
-         <TextField  label='signature' placeholder="E" 
+         <TextField id="digital_signiture"  label='signature' placeholder="E" 
                  required
                     className="form-control"
-                    value={""+plot.hash}
+                    value={localStorage.getItem('signature')}
                          /> 
 
                       <br></br>
@@ -267,7 +289,7 @@ const updatePlot = {
 
                          <br></br>
                          <br></br>
-          <TextField   placeholder="verified" 
+          <TextField id="digital_signiture"  placeholder="signiture after dycript" 
                  required
                     className="form-control"
                     value={""}
@@ -285,7 +307,6 @@ const updatePlot = {
 
         <br></br>
         </div>
-
 
                     <input className={inputtype} type="submit" value="buy plot" />
                             <div></div>
