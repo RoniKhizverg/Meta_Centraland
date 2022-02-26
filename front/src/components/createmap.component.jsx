@@ -64,7 +64,7 @@ localStorage.setItem("legend",0);
                 localStorage.setItem("user_id",getUserLogIn[0]._id);
                  setUser(getUserSignUp[i].name +" has " + getUserSignUp[i].wallet + " $" );
                  setUserType(getUserLogIn[0].userType);
-                 console.log(getUserLogIn[0].userType)
+                 console.log(getUserLogIn[0].userType);
             }
         }
      }
