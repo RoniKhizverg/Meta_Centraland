@@ -115,11 +115,11 @@ async function getUserFromSignup(req, res, next) {
     next()
 
 }
-router.post('/verify', async(req, res) => {
-    data = req.body.data
-    publicKey = req.body.publicKey
-    signature = req.body.signature
+router.post('/verify', (req, res) => {
+    let { data, publicKey, signature } = req.body
 
+    //console.log(publicKey)
+    //console.log(data)
     publicKey = crypto.createPublicKey({
         key: Buffer.from(publicKey, 'base64'),
         type: 'spki',
@@ -127,16 +127,19 @@ router.post('/verify', async(req, res) => {
 
     })
 
-    console.log(signature)
-    console.log(publicKey)
+    const sign = JSON.stringify(signature)
+    console.log(sign)
+        // console.log(publicKey)
 
     const verify = crypto.createVerify("SHA256")
     verify.update(data)
     verify.end()
 
+    console.log(publicKey)
     let result = verify.verify(publicKey, Buffer.from(signature, 'base64'))
 
-    res.send({ verify: result })
+    res.send(
+        result)
 
 })
 
@@ -144,7 +147,6 @@ router.post('/verify', async(req, res) => {
 router.post('/seller', async(req, res) => {
     users = await signupTemplatesCopy.find();
     const userid = req.body.userid
-    console.log(userid)
     let privateKey = []
 
 
@@ -154,24 +156,19 @@ router.post('/seller', async(req, res) => {
         }
     }
 
-    // crypto.createPrivateKey({
-    //     key: Buffer.from(privateKey, 'base64'),
-    //     type: 'pkcs8',
-    //     format: 'der',
-    // })
+    privateKey = crypto.createPrivateKey({
+        key: Buffer.from(privateKey, 'base64'),
+        type: 'pkcs8',
+        format: 'der',
+    })
 
     const sign = crypto.createSign('SHA256')
     const hashData = req.body.hash
-    console.log(hashData)
     sign.update(hashData)
     sign.end()
-    const signature = sign.sign({
-        key: Buffer.from(privateKey, 'base64'),
-        format: 'der',
-        type: 'pkcs8',
-    }).toString('base64'); // specify format and type
+    const signature = sign.sign(privateKey).toString('base64')
 
-    res.send({ signature })
+    res.send(signature)
 
 
 

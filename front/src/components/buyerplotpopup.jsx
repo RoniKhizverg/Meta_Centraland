@@ -22,12 +22,14 @@ const BuyerPopUp = () => {
  const[inputtype,setinputtype] = useState('hiddeninput');
   const[gametype,setinputGameType] = useState('hiddeninput');
   const [signature,setSignature] = useState('')
+  const [hash,setHash] = useState('');
+  const [decrypt,setDecrypt]= useState('');
 
    const[linkToGame,setLinkToGame] = useState('');
 
        useEffect(() => {
 
-       
+       document.getElementById('')
 
 
          const userId = localStorage.getItem("loguserid");
@@ -58,6 +60,10 @@ const BuyerPopUp = () => {
           {
             setPlot(
            data[i]
+        )
+        document.getElementById('hash_plot').value = data[i].hash
+        setHash(
+          data[i].hash
         )
 axios.post('http://localhost:4000/signUpUsers/seller',data[i])
         .then((response) => {
@@ -133,22 +139,19 @@ function handleClick() {
   }
 function handleVerify()
 {
-
-   
         console.log(signature)
       const information =
       {
-        data: plot.hash,
+        data:hash,
         publicKey: selleruser.publicKey,
-        signature: signature
+        signature: signature,
       }  
       console.log(information)
       axios.post('http://localhost:4000/signUpUsers/verify',information)
       .then((response) =>{
         const data = response.data
         console.log(data)
-        document.getElementById('digital_signiture').value = data;
-        console.log("hi")
+        setDecrypt(data);
       })
     
 
@@ -181,6 +184,8 @@ function handleVerify()
   //      inGame = 1;
   //     window.location.href = plot.linkToGame.toString()
   //  }
+  if(decrypt === true)
+  {
    if(inGame !== 1)
    {
     const plotId = plot._id
@@ -232,12 +237,15 @@ const updatePlot = {
 
     window.location="/createmap";
   }
-
 }
 
+}
+else{
+alert("The details are wrong!");
+}
 
   }
-    const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
+    const paperStyle = {padding: 20,top:10000,height: 650, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
 
@@ -269,17 +277,19 @@ const updatePlot = {
                       <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
 
 
-             <TextField  label='hash plot' placeholder="E" 
+             <TextField  id= "hash_plot"label='hash plot' placeholder="E" 
                  required
                     className="form-control"
-                    value={" "+plot.hash}
+                    value={""+hash}
+                    onChange = {event => setHash(event.target.value)}
                          /> 
                          <br></br>
 
          <TextField id="digital_signiture"  label='signature' placeholder="E" 
                  required
                     className="form-control"
-                    value={localStorage.getItem('signature')}
+                    value={signature}
+                    onChange ={event => setSignature(event.target.value)}
                          /> 
 
                       <br></br>
@@ -289,10 +299,9 @@ const updatePlot = {
 
                          <br></br>
                          <br></br>
-          <TextField id="digital_signiture"  placeholder="signiture after dycript" 
-                 required
+          <TextField id="decrypt_digital_signiture"label='result'  placeholder="result" 
                     className="form-control"
-                    value={""}
+                    value={decrypt}
                          /> 
 
                       <br></br>

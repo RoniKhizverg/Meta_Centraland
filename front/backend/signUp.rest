@@ -18,9 +18,9 @@ POST http://localhost:4000/signupUsers/verify
 Content-Type: application/json
 
 {
-    "data":"Slav",
-    "public Key":"12",
-    "password":"12"
+    "data":"5508d758257e6917b8dd2f8e13b82500622dfc74d7c381abfef2d409c03156cc",
+    "publicKey":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy3veGyESpTMjSplerW7UTmPl6AB3oafTkccg4H/cK2+/FEaw76Ei6A1RLAqdscB/x9vzBRcxM2+RUEyen46736r4NVzEyT8kr1HEQdJcbqzefSxTKALVk25rUfrAIvwRcyJwXHiskOM4BjNFS58TNsKh+SQBKdVoErsuYhkhxqjyTHJof/7iJdpII8ACRARuQkQDwZ7zfN4BRAthuOVWRx1H7BTh0a80JKApmtmsN2XY7kcPfaCmazO+HTyWKtr4y5/Rh/cVLmWhheP6uGAw8F7iqJmh3e0cdjvgnaoMB0Q26jr5d9mnqBUMIO5oD4IKMUIbAZeW0jD3X4MaT/77MQIDAQAB",
+    "signature":"x/HzQPkAlBB9htZ8Nwe/e+x2vOe0MKKJIAprRVLuIqi1OVXt5jAV1AT6x66hCt5v0odcnlRHG4yM2uV9KMkF8uR9GI5uB934XYYMokcuyhNQxzw5m0cRHWFUl90UYbL/zHmamWIk3/8AVGLEBda/WwoHbt7TZNFHZACe5bnfhx71fbvRLtGvTLnIbR1vhFH4isCTXHSqwXpVoydNvnW6YkwqoMa2x/r3gJxhqWlQYtxPYXgK55CYaVf6CBvshShGYtpCvhbPvy8PTHmvgNMb2a6GJUGcy271dpijlw0LkLOvn6nxXeDzoZ2Y4UZqpfywMVWZ1EHR0p6iBwyvOzUMVg=="
 }
 
 ###
