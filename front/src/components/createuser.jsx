@@ -9,11 +9,8 @@ const CreateUser = () => {
     const [user] = useState(createuser);
        
 
-    
-
-
 function createuser()
-    {
+    { //create the register user- 'admin'
        
      const newUser = {
       name: "O&R.Ltd",

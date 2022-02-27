@@ -13,15 +13,7 @@ import SellerPopUp from "../components/sellerpopup";
 import GuestPopUp from "../components/guestpopup";
 import LogOut from "../components/logout";
 
-
-
-
-
-
-
-
-
-function MetaCentraland() {
+function MetaCentraland() { //deifne each route and the exact path
   return (
     <BrowserRouter>
     <div className="container">
@@ -38,14 +30,6 @@ function MetaCentraland() {
         <Route exact path="/sellerpopup"  element={<SellerPopUp/>}> </Route>
         <Route exact path="/guestpopup"  element={<GuestPopUp/>}> </Route>
         <Route exact path="/logout"  element={<LogOut/>}> </Route>
-
-
-
-
-
-
-
-
     </Routes>
     </div>
   </BrowserRouter>

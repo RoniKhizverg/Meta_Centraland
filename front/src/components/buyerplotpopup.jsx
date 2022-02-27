@@ -1,39 +1,33 @@
 import React, { useState,useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, Dialog ,TextField} from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import axios from 'axios';
+import axios from 'axios';// axios for send data to the backend.
 import '../MetaCentraland/MetaCentraland.css'
 
 import {
     Link
 } from 'react-router-dom';
-//import axios from 'axios';
-// axios for send data to the backend.
 
-localStorage.setItem("legened",1);
-const BuyerPopUp = () => {
-  
 
-  const[buyeruser, setBuyerUser] = useState('');
+  localStorage.setItem("legened",1);
+  const BuyerPopUp = () => {   //define  the attributes 
+  const[buyeruser, setBuyerUser] = useState('');      
   const[selleruser, setSellerUser] = useState('');
   const[plot, setPlot] = useState('');
-  // const[price], [SetPrice] = useState('');
- // const[privateKey], [setprivateKey] = useState('');
- const[inputtype,setinputtype] = useState('hiddeninput');
+  const[inputtype,setinputtype] = useState('hiddeninput');
   const[gametype,setinputGameType] = useState('hiddeninput');
   const [signature,setSignature] = useState('')
   const [hash,setHash] = useState('');
   const [decrypt,setDecrypt]= useState('');
+  const[linkToGame,setLinkToGame] = useState('');
 
-   const[linkToGame,setLinkToGame] = useState('');
 
        useEffect(() => {
 
-       document.getElementById('')
-
-
-         const userId = localStorage.getItem("loguserid");
-        axios.get('http://localhost:4000/signupUsers').then((response) => {
+         const userId = localStorage.getItem("loguserid"); 
+        const sellerId = localStorage.getItem("ownerNameId");
+              
+         axios.get('http://localhost:4000/signupUsers').then((response) => { //get the registerd list from the database
          const data = response.data;
          const length = data.length;
 
@@ -41,39 +35,41 @@ const BuyerPopUp = () => {
         {
           if(data[i].ID === userId)
           {
-        setBuyerUser(
+        setBuyerUser(         //set the buyer
            data[i])
         
-      }
-      
-      
+          }
+      if(data[i].ID === sellerId)  //set the seller
+          {
+        setSellerUser(
+           data[i]
+        )
+        }    
     }
   })
   
          const plot_id = localStorage.getItem("plot");
-         axios.get('http://localhost:4000/plots').then((response) => {
+         axios.get('http://localhost:4000/plots').then((response) => {      //get the plots list from the database
          const data = response.data;
          const length = data.length;
         for(var i=0; i < length; i++)
         {
           if(data[i]._id === plot_id)
           {
-            setPlot(
+            setPlot(      //set the plot
            data[i]
         )
-        document.getElementById('hash_plot').value = data[i].hash
+        document.getElementById('hash_plot').value = data[i].hash   //update the hash value in the text field
         setHash(
           data[i].hash
         )
-axios.post('http://localhost:4000/signUpUsers/seller',data[i])
+        axios.post('http://localhost:4000/signUpUsers/seller',data[i])    //creating and update the seller signature
         .then((response) => {
                 const data = response.data;
                 setSignature(data);
-                console.log(data)
         })
         
-        console.log(data[i].linkToGame)
-        if(data[i].linkToGame != "" && data[i].linkToGame != null)
+        if(data[i].linkToGame != "" && data[i].linkToGame != null)  //check if there is a link game and put it in the text field
         {
           
             setLinkToGame(
@@ -84,7 +80,7 @@ axios.post('http://localhost:4000/signUpUsers/seller',data[i])
         "validinput"
         )
         }
-        else{
+        else{   //hide the button 'play game'
 
           setinputGameType(
         "hiddeninput"
@@ -96,69 +92,35 @@ axios.post('http://localhost:4000/signUpUsers/seller',data[i])
       
           })
 
-
-         axios.get('http://localhost:4000/signupUsers').then((response) => {
-         const data = response.data;
-         const length = data.length;
-           const sellerId = localStorage.getItem("ownerNameId");
-        console.log(sellerId)
-
-        for(var i=0; i < length; i++)
-        {
-          if(data[i].ID === sellerId)
-          {
-        setSellerUser(
-           data[i]
-        )
-      }
-    }
-  })
-        // const userID= localStorage.getItem("loguserid");
-        // const plotOwnerId= localStorage.getItem("ownerNameId");
-        
-        // if(userID === plotOwnerId)
-        // {
            setinputtype(
         "hiddeninput"
-        )
-        // }
-        // else{
-        //   setinputtype(
-        // "validinput"
-        // )
-        // }
-// 
-        
+        )    
       },[]);
 
         
 
-function handleClick() {
-   window.location.href = plot.linkToGame.toString();
-   console.log("hi")
+function handleClick() {    // link to the game
+   window.location.href = linkToGame.toString();
   }
 function handleVerify()
 {
-        console.log(signature)
-      const information =
+      const information =   
       {
         data:hash,
         publicKey: selleruser.publicKey,
         signature: signature,
       }  
-      console.log(information)
-      axios.post('http://localhost:4000/signUpUsers/verify',information)
+      axios.post('http://localhost:4000/signUpUsers/verify',information)//send the data,public key,signature to the server to check if details are valid
       .then((response) =>{
         const data = response.data
-        console.log(data)
-        setDecrypt(data);
+        setDecrypt(data);               //return the result
       })
     
 
         const userID= localStorage.getItem("loguserid");
         const plotOwnerId= localStorage.getItem("ownerNameId");
         
-        if(userID === plotOwnerId)
+        if(userID === plotOwnerId)   // if the buyer and the sellers are equal there is no need the button 'buy plot'
         {
            setinputtype(
         "hiddeninput"
@@ -173,76 +135,53 @@ function handleVerify()
 }
 
  
-      
-
   const handleSubmit = e => { //when we click on submit button
     let isMinus = 0;
     e.preventDefault();   //do what we wrote down
-    let inGame = 0;
-  //   if(plot.linkToGame !=null)
-  //  {
-  //      inGame = 1;
-  //     window.location.href = plot.linkToGame.toString()
-  //  }
+  
   if(decrypt === true)
   {
-   if(inGame !== 1)
-   {
+  
     const plotId = plot._id
-        console.log(plotId);
-
-        console.log(buyeruser)
-    
     const updateWallet = Number(buyeruser.wallet)- Number(plot.price)
     if(updateWallet < 0 )
     {
       alert("You dont have enough money!!!");
       isMinus = 1
-          window.location="/createmap";
+      window.location="/createmap";
 
     }
     if(isMinus === 0)
     {
 
-const updatePlot = {
-      ownerName: buyeruser.name,
-      
-      //  userType: userType,
-      //  password: password,
+  const updatePlot = {   //update plot details
+      ownerName: buyeruser.name,      
        userid: buyeruser.ID
     }
-        console.log(updatePlot);
 
     axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
 
-
     const userId = buyeruser._id
-    const updateBuyerUser = {
+    const updateBuyerUser = {     //update the buyer wallet after the buying
          wallet: updateWallet
-         //privatekey:
     }
       axios.patch('http://localhost:4000/signupUsers/'+ userId , updateBuyerUser);
  
       const seller_id =selleruser._id
-      console.log(seller_id);
       const sellerWallet =Number(plot.price) + Number(selleruser.wallet);
-            console.log(sellerWallet);
 
-      const updateSellerUser = {
+      const updateSellerUser = {  //update the seller wallet after the selling
          wallet: sellerWallet
-         //privatekey:
     }
         axios.patch('http://localhost:4000/signupUsers/'+ seller_id , updateSellerUser);
 
-
-    window.location="/createmap";
+    window.location="/createmap";  //return to the map
   }
-}
 
 }
-else{
-alert("The details are wrong!");
-}
+  else {  //decrypt isnt successed
+    alert("The details are wrong!");
+      }
 
   }
     const paperStyle = {padding: 20,top:10000,height: 650, width: 300, margin: "0 auto" }
@@ -252,7 +191,7 @@ alert("The details are wrong!");
       return (
         
           <div className="image">
-    <img src="plotWorld.png" ></img>
+    <img src="plotWorld.png"alt="plotWorld" ></img>
     
         <br></br>
         <br></br>
@@ -274,9 +213,8 @@ alert("The details are wrong!");
 
                     <br></br>
 
-                      <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
-
-
+              <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
+              
              <TextField  id= "hash_plot"label='hash plot' placeholder="E" 
                  required
                     className="form-control"
@@ -284,60 +222,41 @@ alert("The details are wrong!");
                     onChange = {event => setHash(event.target.value)}
                          /> 
                          <br></br>
-
          <TextField id="digital_signiture"  label='signature' placeholder="E" 
                  required
                     className="form-control"
                     value={signature}
                     onChange ={event => setSignature(event.target.value)}
                          /> 
-
-                      <br></br>
+          <br></br>
         <br></br>
-
-              <button  className="validinput" type="button" onClick={() => handleVerify()} >Verify</button>
-
+            <button  className="validinput" type="button" onClick={() => handleVerify()} >Verify</button>
                          <br></br>
                          <br></br>
           <TextField id="decrypt_digital_signiture"label='result'  placeholder="result" 
                     className="form-control"
                     value={decrypt}
                          /> 
-
-                      <br></br>
-        <br></br>
-
-                         
-                            
-                        <div>
-
-
-
-
+               <br></br>
+        <br></br>                         
+              <div>
         <br></br>
         </div>
 
-                    <input className={inputtype} type="submit" value="buy plot" />
-                            <div></div>
-
-                      
-                                   <br></br>
-<div></div>
+            <input className={inputtype} type="submit" value="buy plot" />
+            <div></div>                  
+        <br></br>
+      <div></div>
 
               <button  className={gametype} type="button" onClick={() => handleClick()}>play game</button>
-
         <br></br>
         <br></br>
         <br></br>
         <br></br>
-
         <br></br>
-
-
                 <Link to="/createmap" className="btn btn-primary">close</Link>
                 </form>
-                                </Grid>
-
+                  </Grid>
             </Paper>
         </Dialog>
         </div>

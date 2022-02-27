@@ -2,38 +2,32 @@ import React, { useState,useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography,Dialog } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import axios from 'axios';
-import CreateMap from './createmap.component'
 import '../MetaCentraland/MetaCentraland.css'
 import {
     Link
 } from 'react-router-dom';
 localStorage.setItem("legened",1);
-const GuestPopUp = () => {
+  const GuestPopUp = () => { //define the variables
  
-  const[plot,setPlot] = useState('');
-  const[linkToGame,setLinkToGame] = useState('');
-  const[status,setStatus] = useState('');
-  const[inputype,setInputype] = useState('hiddeninput');
-
+    const[plot,setPlot] = useState('');
+    const[linkToGame,setLinkToGame] = useState('');
+    const[status,setStatus] = useState('');
+    const[inputype,setInputype] = useState('hiddeninput');
 
 
        useEffect(() => {
-        
-
-
          const plot_id = localStorage.getItem("plot");
-         axios.get('http://localhost:4000/plots').then((response) => {
+         axios.get('http://localhost:4000/plots').then((response) => { //get the all plots
          const data = response.data;
          const length = data.length;
         for(var i=0; i < length; i++)
         {
           if(data[i]._id === plot_id)
           {
-            setPlot(
+            setPlot(   //define the current plot
           data[i]
         )
-        console.log(data[i].linkToGame)
-        if(data[i].linkToGame != null && data[i].linkToGame != "")
+        if(data[i].linkToGame != null && data[i].linkToGame != "") //there is link game to this plot
         {
             setLinkToGame(
           data[i].linkToGame
@@ -42,9 +36,8 @@ const GuestPopUp = () => {
         setInputype(
         "validinput"
         )
-        console.log(inputype)
         }
-        else{
+        else{      // there is no link game
           setInputype(
         "hiddeninput"
         )
@@ -70,18 +63,16 @@ const GuestPopUp = () => {
 },[]);
       
 
-      const handleSubmit = event => {
-        event.preventDefault();
+   const handleSubmit = event => {
+     event.preventDefault();
 
-   if(plot.linkToGame !=null)
-   {
-       console.log(plot.linkToGame.toString())
+    if(plot.linkToGame !=null)
+     {
       window.location.href = plot.linkToGame.toString()
    }
   
   }
   
-    
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
@@ -89,9 +80,7 @@ const GuestPopUp = () => {
     return (
       
         <div className="image">
-    <img src="plotWorld.png" ></img>
-            
-
+    <img src="plotWorld.png" alt="plotWorld"></img>
         <br></br>
         <br></br>
         <br></br>
@@ -113,8 +102,7 @@ const GuestPopUp = () => {
 
                     <br></br>
 
-                      <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>
-                                             
+                      <Typography variant='caption' gutterBottom>Owner name:{plot.ownerName} </Typography>                                           
                         <div>
         <br></br>
         </div>
@@ -125,12 +113,9 @@ const GuestPopUp = () => {
         <br></br>
         <br></br>
         <br></br>
-
-
                 <Link to="/createmap" className="btn btn-primary">close</Link>
                 </form>
-                                </Grid>
-
+               </Grid>
             </Paper>
         </Dialog>
         </div>

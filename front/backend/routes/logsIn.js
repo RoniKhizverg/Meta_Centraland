@@ -5,24 +5,23 @@ const signUpScheme = require('../models/signupUser')
 const bcrypt = require('bcrypt');
 
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res) => { //get all the users that registered
     try {
         const signup = await logTemplatesCopy.find()
         res.json(signup)
     } catch (err) {
         res.status(500).json({
-                message: err.message
-            }) // if there is a error we want to send that to the user as json because this is a json api
-            //500 error means that there is an error on our server(our fault)
+            message: err.message
+        })
     }
 
 })
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res) => { //get user according _id
     res.json(res.user)
 })
 
 
-router.delete('/:id', getUser, async(req, res) => {
+router.delete('/:id', getUser, async(req, res) => { //delete user accroding _id 
     try {
         await res.user.remove()
         res.json({
@@ -34,7 +33,7 @@ router.delete('/:id', getUser, async(req, res) => {
         })
     }
 })
-async function getUser(req, res, next) {
+async function getUser(req, res, next) { //function to find the specific user we want according _id
     let user
     try {
         user = await logTemplatesCopy.findById(req.params.id)
@@ -53,7 +52,7 @@ async function getUser(req, res, next) {
 
 }
 
-async function getUserFromSignup(req, res, next) {
+async function getUserFromSignup(req, res, next) { //get the specific user that did signup according his _id
     let user;
     try {
         user = await signUpScheme.find()
@@ -72,9 +71,9 @@ async function getUserFromSignup(req, res, next) {
 
 }
 
-router.post('/login', getUserFromSignup, async(request, response) => {
+router.post('/login', getUserFromSignup, async(request, response) => { // post the user in login's database         
     let login = '';
-    const updateuser = await response.user;
+    const updateuser = await response.user; //list of all registered users
 
     for (let i = 0; i < updateuser.length; i++) {
 
@@ -83,19 +82,17 @@ router.post('/login', getUserFromSignup, async(request, response) => {
             login = updateuser[i];
         }
     }
-    if (request.body.ID != login.ID) {
+    if (request.body.ID != login.ID) { // the user has never registered before and therefore cant register
         return response.send('Cannot find User')
 
     }
     try {
-        const verify_password = await bcrypt.compare(request.body.password, login.password);
-        if (verify_password === true) {
-            console.log("hi");
+        const verify_password = await bcrypt.compare(request.body.password, login.password); //compare with the encrypted password
+        if (verify_password === true) { // post the user in login's database
             const ID = request.body.ID;
             const password = login.password;
             const userType = request.body.userType;
 
-            console.log(login)
             const user = new logTemplatesCopy({
                 ID,
                 password,
@@ -108,7 +105,7 @@ router.post('/login', getUserFromSignup, async(request, response) => {
             .then(data => {
                 response.json(data)
             })
-        } else {
+        } else { //right ID but wrong password
             return response.send('wrong password!')
         }
     } catch {

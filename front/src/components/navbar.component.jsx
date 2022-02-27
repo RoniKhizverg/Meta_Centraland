@@ -19,9 +19,9 @@ const [user , setUser] = useState('');
 
 
     
-       useEffect(() => {
+  useEffect(() => { //to write user details on the navbar
     
-axios.get('http://localhost:4000/logsIn')
+    axios.get('http://localhost:4000/logsIn')
      .then((response) => {
 
          const data = response.data;
@@ -43,16 +43,14 @@ axios.get('http://localhost:4000/logsIn')
             {
                  setUser(data1[i].name +" has " + data1[i].wallet + " $" );
             }
-      }
-
-   
+      }  
   });
 }
 });
 },[]);
 
 
-  axios.get('http://localhost:4000/logsIn')
+  axios.get('http://localhost:4000/logsIn') //define which a tag will be displayed on the Navbar 
      .then((response) => {
 
          const data = response.data;

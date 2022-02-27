@@ -6,29 +6,16 @@ import axios from 'axios';
 // axios for send data to the backend.
 
 localStorage.setItem("legened",1);
-  const FunctionSignUp = () =>{ 
-  // constructor(props) {  
-  //   super(props);
-
-  //   this.onChangeUsername = this.onChangeUsername.bind(this);
-  //   this.onChangeId = this.onChangeId.bind(this);
-  //   this.onChangeUserType = this.onChangeUserType.bind(this);
-  //   this.onChangePaswword = this.onChangePaswword.bind(this);
-  //   this.onSubmit = this.onSubmit.bind(this);
-
+  const FunctionSignUp = () =>{ //define the variables
     const[name,setName] = useState('');
     const[ID,setID] = useState('');
     const[password,setPaswword] = useState('');
-    const[wallet,setWallet] = useState('1000');
   
 
   
 
   const handleSubmit = event => {
     event.preventDefault();
-
-
-    var isRepeat = 0;
     const newUser = {
       name: name,
       ID: ID,
@@ -36,7 +23,7 @@ localStorage.setItem("legened",1);
        wallet:1000
 
     }
-     axios.post('http://localhost:4000/signupUsers/signup', newUser)
+     axios.post('http://localhost:4000/signupUsers/signup', newUser) // check if the creating user successed
      .then((response) => {
          const data = response.data;
          if(data === "You already have account!")  
@@ -44,8 +31,7 @@ localStorage.setItem("legened",1);
                 alert(data);
 
         } 
-        else{
-         
+        else{       
         localStorage.setItem("loguserid",newUser.ID);
         window.location = "/signin";
 }
@@ -94,13 +80,11 @@ localStorage.setItem("legened",1);
                     value={password}
                     onChange={event => setPaswword(event.target.value)}
                          />
-                        <div>
+            <div>
         <br></br>
         </div>
-
                 <Button type='submit' value="signup" color='primary' variant="contained" style={btnstyle} fullWidth>Create user</Button>               
                 </form>
-                
             </Paper>
         </Grid>
         </div>

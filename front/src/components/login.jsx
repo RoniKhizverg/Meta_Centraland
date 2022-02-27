@@ -7,34 +7,25 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 localStorage.setItem("legened",1);
-const Login = () => {
-
-
-    // this.onChangeID = this.onChangeID.bind(this);
-    // this.onChangePaswword = this.onChangePaswword.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
-
-    const[ID,setID] = useState('');
+const Login = () => {  //define variables
+     const[ID,setID] = useState('');
     const[password,setPassword] = useState('');
     const[userType,setUserType] = useState('');
 
 
   const handleSubmit = event => {
     event.preventDefault();
-    var notRegistered = 0;
-    var isPasswordValid =1;
-
     const user = {
        ID: ID,
        password: password,
        userType:userType
     }
 
- axios.post('http://localhost:4000/logsIn/login',user).then((response) => {
+ axios.post('http://localhost:4000/logsIn/login',user).then((response) => { //check if the user log'in is valid
          const data = response.data;
         if(data === "Cannot find User")  
         {
-                alert("Your details are wrong!!!");
+            alert("Your details are wrong!!!");
 
         } 
         else if(data === "wrong password!")  
@@ -42,7 +33,7 @@ const Login = () => {
             alert(data);
 
         }    
-        else{
+        else{  //the validation successed
              localStorage.clear();
             localStorage.setItem("loguserid",user.ID);
             window.location="/createmap";
@@ -50,8 +41,6 @@ const Login = () => {
     
        })
                
-
-  
     }
 
     const paperStyle={padding :20,height:'73vh',width:300, margin:"0 auto"}

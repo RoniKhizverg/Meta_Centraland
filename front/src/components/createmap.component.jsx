@@ -5,19 +5,11 @@ import axios from 'axios';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
-
-let count =0;
-    var executed = false;
-
-const CreateMap = () =>{
-
-     let colorize=[];
-
+const CreateMap = () =>{  // deifine the variables
     
     const [columnsAmount] = useState(200);
     const [rowsAmount] = useState(200);
     const [state,setState] = useState('')
-    const[cellStateAlive] = useState(true);
     const[cellStateDead] = useState(false);
     const[cellStateROAD] = useState("road");
     const[cellStatePARK] = useState("park");
@@ -30,23 +22,19 @@ const CreateMap = () =>{
     const [cells,setCells] = useState([[]]);
 
         
-      var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};
+      var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};   //define the map legend
       const legend= localStorage.getItem("legened");
     
     useEffect(() => {
        if(legend==1){
-Colorize(colorList);
-localStorage.setItem("legend",0);
-}
+        Colorize(colorList);
+        localStorage.setItem("legend",0);
+    }
 
     const getLogIn = async () =>{
     try
     {
-        const getUserLogIn = (await axios.get('http://localhost:4000/logsIn')).data;
-
-                console.log(getUserLogIn);
-
-    
+        const getUserLogIn = (await axios.get('http://localhost:4000/logsIn')).data;    //get the current register user
      if(getUserLogIn == "")
      {
             setUser("Welcome Guest");
@@ -54,47 +42,34 @@ localStorage.setItem("legend",0);
      }
      else
      {
-         console.log(getUserLogIn)
-        const getUserSignUp = (await axios.get('http://localhost:4000/signupUsers')).data;
+        const getSignUpUsers = (await axios.get('http://localhost:4000/signupUsers')).data; //get the all registerd users
         const userid = localStorage.getItem('loguserid');
-        for(var i=0; i < getUserSignUp.length;i++)
+        for(var i=0; i < getSignUpUsers.length;i++)
         {
-            if(getUserSignUp[i].ID === userid ) 
+            if(getSignUpUsers[i].ID === userid ) 
             {
                 localStorage.setItem("user_id",getUserLogIn[0]._id);
-                 setUser(getUserSignUp[i].name +" has " + getUserSignUp[i].wallet + " $" );
+                 setUser(getSignUpUsers[i].name +" has " + getSignUpUsers[i].wallet + " $" );
                  setUserType(getUserLogIn[0].userType);
-                 console.log(getUserLogIn[0].userType);
             }
         }
      }
-
             }catch(error) {
         console.log(error);
     }
 };
-
-getLogIn();
-setCells(initializeCells());
-
-
-        
+    getLogIn();
+    setCells(initializeCells());
+    
 },[]);
 
 
    
-    function initializeCells (){ 
+    function initializeCells (){   //creating the map
         let cells =[]
-        let plots=[];
-        console.log("hi")
-            
-
-for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
+        for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
         cells[columnIndex] = [];
         for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
-
-
-
             if(((rowIndex %50 <30 && rowIndex % 50> 19 )&& (columnIndex % 50<30 && columnIndex % 50 >20)) ){
                 cells[columnIndex][rowIndex] = cellStatePARK;
             }
@@ -105,14 +80,11 @@ for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
                         cells[columnIndex][rowIndex] = cellStateDead;
     
                     }
-                
-
-
             }
 
         }
        
-            axios.get('http://localhost:4000/plots')
+      axios.get('http://localhost:4000/plots')   //get the all plots and add them to the map
      .then((response) => {
          const data = response.data;
          const length = data.length;
@@ -128,10 +100,10 @@ for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
                     else if(data[i].price >150 && (cells[data[i].column][data[i].row]===cellStateDead))
                     {
                     cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
+                    }
                 }
-            }
-const newCellsState = cells;
-            setState(newCellsState)
+    const newCellsState = cells;
+    setState(newCellsState)
           
     })   
         return cells;
@@ -140,62 +112,47 @@ const newCellsState = cells;
 
 
 
-    function toggleCellState(columnIndex, rowIndex) {
+    function toggleCellState(columnIndex, rowIndex) {  //when we click on the plot in the map
 
-
-        console.log(usertype);
         axios.get('http://localhost:4000/plots')
-     .then((response) => {
+       .then((response) => {
          const data = response.data;
          const length = data.length;
         for(var i=0; i < length; i++)
         {
 
-            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer"))
+            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer")) //if the user is buyer
             {
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid);
-                if(data[i].avaibleForSale === false)
+                if(data[i].avaibleForSale === false)   //if the plot is not for sale so we enter the pop up as guest
                 {
                     window.location ="/guestpopup"
 
                 }
                 else
                 {
-                
-
-         axios.post('http://localhost:4000/signUpUsers/seller',data[i])
-        .then((response) => {
-                const data = JSON.stringify(response.data);
-                
-                localStorage.setItem('signature',data);
-        })
-      
-    
-       
                 window.location ="/buyerplotpopup";
                 }
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller"))
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller")) //if the user is seller
             {
                 
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid);
 
                 const selleruserid= localStorage.getItem("loguserid");
-                const plotOwnerName= localStorage.getItem("ownerNameId");
+                const plotOwnerID= localStorage.getItem("ownerNameId");
 
-                if(selleruserid !== plotOwnerName)
+                if(selleruserid !== plotOwnerID)   //the user cant edit plot if the plot isnt belong to him
                 {
-                window.location ="/guestpopup"
+                    window.location ="/guestpopup"
                 }
                 else{
-
-                console.log( data[i].userid)
-                window.location ="/sellerpopup";
-                }
+                    window.location ="/sellerpopup";
+                    }
             }
-             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "guest")))
+             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "guest"))) //if the user is guest
             {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/guestpopup";
@@ -203,20 +160,15 @@ const newCellsState = cells;
         }
     })
     
-        const newCellsState = cells;
-        
-        newCellsState[columnIndex][rowIndex] = !newCellsState[columnIndex][rowIndex];
-
+        const newCellsState = cells;       
+        newCellsState[columnIndex][rowIndex] = !newCellsState[columnIndex][rowIndex];  //change the color when we clicked on the plot
         setState({
             newCellsState
         })
     }
 
-
-
-      function renderCells() {
-        return ( 
-            
+      function renderCells() { //define the coloring of each square
+        return (           
             <div className = "MetaCentraland__cells">  {
                 cells.map((rows, columnIndex) => {
                     
@@ -231,7 +183,7 @@ const newCellsState = cells;
     
 }
 
-    function renderColumn(rows, columnIndex) {        
+    function renderColumn(rows, columnIndex) {       //define the coloring of each square 
         return ( 
             <div className = "MetaCentraland__column"
             key = {
@@ -260,22 +212,14 @@ const newCellsState = cells;
     }
 
 
-        
-
-
-        return ( 
-            
-            <TransformWrapper >
-                
+        return (             
+            <TransformWrapper >              
                 <br></br>
         <br></br>
             <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
-            <div>
-             
-        
+            <div> 
             <div className = "MetaCentraland"  > {
-                renderCells()
-              
+                renderCells()     
             } 
             </div>
             </div>
@@ -284,7 +228,7 @@ const newCellsState = cells;
                         
         );
         
-function Colorize (colorList) {
+function Colorize (colorList) {   //creating the map's legend
             var container = document.getElementById('root');
           
             for (var key in colorList) {
@@ -304,7 +248,7 @@ function Colorize (colorList) {
            }
         }
 
-function cellColoring(cellState) {
+function cellColoring(cellState) {   //define the 'status' of each cell
     let cell = "";
     if (cellState === cellStateDead) {
 
@@ -336,7 +280,7 @@ function cellColoring(cellState) {
     }
     return cell;
 
-}
+    }
 }
 export default CreateMap
 

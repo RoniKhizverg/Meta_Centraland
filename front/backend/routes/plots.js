@@ -8,7 +8,7 @@ const schemePlots = [];
 const SHA256 = require('crypto-js/sha256');
 const { hash } = require('bcrypt');
 
-let descriptionCountriesList = [
+let descriptionCountriesList = [ // plots's description
     " Everydays: The First 5000 Days",
     "Jack Dorsey's first tweet",
     "The origins of the internet",
@@ -257,7 +257,7 @@ let descriptionCountriesList = [
 const avaibleForSaleIndex = [true, false];
 
 
-function getRandomInt(min, max) {
+function getRandomInt(min, max) { //random numbers between  min to max
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
@@ -266,7 +266,7 @@ function getRandomInt(min, max) {
 
 
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res) => { // get the all plots we have in the database
     try {
         const plot = await plotsTemplatesCopy.find()
         res.json(plot)
@@ -286,7 +286,7 @@ router.get('/', async(req, res) => {
 
 
 
-router.delete('/:id', getPlot, async(req, res) => {
+router.delete('/:id', getPlot, async(req, res) => { //delete plot according _id
     try {
         await res.plot.remove()
         res.json({
@@ -299,7 +299,7 @@ router.delete('/:id', getPlot, async(req, res) => {
     }
 })
 
-router.patch('/:id', getPlot, async(req, res) => {
+router.patch('/:id', getPlot, async(req, res) => { //get the plot from the user and update it
 
     if (req.body.ownerName != null) {
         res.plot.ownerName = req.body.ownerName
@@ -341,7 +341,7 @@ router.patch('/:id', getPlot, async(req, res) => {
 
 
 
-async function getPlot(req, res, next) {
+async function getPlot(req, res, next) { //get the plot according _id
     let plot
     try {
         plot = await plotsTemplatesCopy.findById(req.params.id)
@@ -362,10 +362,7 @@ async function getPlot(req, res, next) {
 
 
 
-router.post('/plots', async(request, response) => {
-
-
-
+router.post('/plots', async(request, response) => { //create the plots
 
     let userPlot = '';
     for (let i = 0; i < 20000; i++) {
@@ -375,7 +372,6 @@ router.post('/plots', async(request, response) => {
         var column = getRandomInt(1, 199);
         var countryIndex = getRandomInt(0, 243);
         var availableIndex = getRandomInt(0, 2);
-        // console.log(availableIndex)
         userPlot = new plotsTemplatesCopy({
             ownerName: "O&R.Ltd",
             price: price,

@@ -8,7 +8,7 @@ localStorage.setItem("legened",1);
 
     
    
-useEffect(() => {
+useEffect(() => {  //creating the all plots
     
     const createPlots = async () =>{
     await (axios.post('http://localhost:4000/plots/plots', { userid: localStorage.getItem("loguserid") }));
@@ -26,7 +26,7 @@ useEffect(() => {
 
 return(  
     <div>
-        </div>
+    </div>
 )
 }
 

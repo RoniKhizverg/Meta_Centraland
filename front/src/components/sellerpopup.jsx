@@ -6,54 +6,28 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import axios from 'axios';
-import CreateMap from './createmap.component'
 import '../MetaCentraland/MetaCentraland.css'
 import {
     Link
 } from 'react-router-dom';
 
 
-//import axios from 'axios';
-// axios for send data to the backend.
 
 localStorage.setItem("legened",1);
-const SellerPopUp =() => {
+  const SellerPopUp =() => {
 
     const[plot,setPlot] = useState('');
     const[user,setUser] = useState('');
-    const[selleruser,setSellerUser] = useState('');
-    const[description,setDescription] = useState('');
     const[price,setPrice] = useState('');
     const[avaibleForSale,setAvaibleForSale] = useState('');
     const[linkToGame,setLinkToGame] = useState('');
     const[status,setStatus] = useState('');
     const[inputype,setInputype] = useState('hiddeninput');
-  // constructor(props) {  
-  //   super(props);
-
-  //   this.onChangeDescription = this.onChangeDescription.bind(this);
-  //   this.onChangePrice = this.onChangePrice.bind(this);
-  //   this.onChangeavaibleForSale = this.onChangeavaibleForSale.bind(this);
-  //   this.onChangeLinkGame = this.onChangeLinkGame.bind(this);
-  //   this.onSubmit = this.onSubmit.bind(this);
-
-  //   this.state = {
-  //     plot:'',
-  //     user:'',
-  //     selleruser: '',
-  //     description: '',
-  //     price: '',
-  //     avaibleForSale:'',
-  //     linkToGame:'',
-  //     status:'',
-  //     inputtype:'hiddeninput'
-
-  //   }
-  // }
-       useEffect(() => {
+  
+    useEffect(() => {
         
-const userId = localStorage.getItem("userid");
-        axios.get('http://localhost:4000/signupUsers').then((response) => {
+        const userId = localStorage.getItem("userid");
+        axios.get('http://localhost:4000/signupUsers').then((response) => { 
          const data = response.data;
          const length = data.length;
 
@@ -61,7 +35,7 @@ const userId = localStorage.getItem("userid");
         {
           if(data[i].ID === userId)
           {
-        setUser(
+        setUser(  //define the current user\seller
           data[i]
         )
       }
@@ -76,7 +50,7 @@ const userId = localStorage.getItem("userid");
         {
           if(data[i]._id === plot_id)
           {
-            setPlot(
+            setPlot(   //define the current plot
           data[i]
         )
         if(data[i].avaibleForSale === true)
@@ -95,11 +69,9 @@ const userId = localStorage.getItem("userid");
           }
         })
         const selleruserid= localStorage.getItem("loguserid");
-        const plotOwnerName= localStorage.getItem("ownerNameId");
-        console.log(selleruserid)
-                console.log(plotOwnerName)
+        const plotOwnerId= localStorage.getItem("ownerNameId");
 
-        if(selleruserid === plotOwnerName)
+        if(selleruserid === plotOwnerId) 
         {
            setInputype(
         "validinput"
@@ -139,20 +111,18 @@ const userId = localStorage.getItem("userid");
 
   const handleSubmit = event => {
     event.preventDefault();
-         console.log(linkToGame)
 
     let plotPrice='';
-    if(!price)
+    if(!price) //the price isnt changed by the user so the price remains the same
     {
       plotPrice = plot.price;
     }
-    else{
+    else{  //update the price
       plotPrice =price;
     }
 
    let availablePlot='';
-   console.log(avaibleForSale)
-    if(avaibleForSale === "")
+    if(avaibleForSale === "") //the plot's status isnt changed by the user so the status remains the same
     {
       availablePlot = plot.avaibleForSale;
     }
@@ -160,17 +130,13 @@ const userId = localStorage.getItem("userid");
       availablePlot =avaibleForSale
     }
    const plotId = plot._id
-   console.log(availablePlot)
-const updatePlot = {
+   const updatePlot = {
       price: plotPrice,
       avaibleForSale: availablePlot,
       linkToGame: linkToGame
     }
-    console.log(updatePlot)
-    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot);
+    axios.patch('http://localhost:4000/plots/'+ plotId , updatePlot); // update the plot 
     window.location="/createmap";
-
-
   
 }
     
@@ -180,7 +146,7 @@ const updatePlot = {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     return (
         <div className="image">
-    <img src="plotWorld.png" ></img>
+    <img src="plotWorld.png" alt="plotWorld" ></img>
 
         <br></br>
         <br></br>
@@ -195,7 +161,7 @@ const updatePlot = {
                     <h2 style={headerStyle}>Edit plot</h2>
                     <br></br>
                     <Typography variant='caption' gutterBottom>Status:{status} </Typography>
-            <br></br>
+              <br></br>
                     <Typography variant='caption' gutterBottom>Description:{plot.description} </Typography>
                                 <br></br>
 
@@ -220,24 +186,18 @@ const updatePlot = {
                             <FormControlLabel value="available for sale" control={<Radio />} label="available for sale" />
                             <FormControlLabel value="not available for sale"  control={<Radio />} label="not available for sale" />
                         </RadioGroup> 
-
-                              <input className={inputype} type="submit" value="submit" />
-
-
-<br></br>
+               <input className={inputype} type="submit" value="submit" />
         <br></br>
         <br></br>
         <br></br>
         <br></br>
-
-
+        <br></br>
                 <Link to="/createmap" className="btn btn-primary">close</Link>
-                        <div>
+          <div>
         <br></br>
         </div>
-
-                </form>
-                                </Grid>
+         </form>
+             </Grid>
 
             </Paper>
         </Dialog>

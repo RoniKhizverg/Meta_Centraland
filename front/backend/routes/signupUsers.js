@@ -7,7 +7,7 @@ const ec = new EC('secp256k1');
 const crypto = require('crypto');
 const { format } = require('path');
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res) => { //get the all users who have registered(sign up)
     try {
         const signup = await signupTemplatesCopy.find()
         res.json(signup)
@@ -19,13 +19,13 @@ router.get('/', async(req, res) => {
     }
 
 })
-router.get("/:id", getUser, (req, res) => {
+router.get("/:id", getUser, (req, res) => { //get the user according _id
     res.json(res.user)
 })
 
 
 
-router.patch('/:id', getUser, async(req, res) => {
+router.patch('/:id', getUser, async(req, res) => { // update users's details
 
     if (req.body.privateKey != null) {
         res.user.privateKey = req.body.privateKey
@@ -49,7 +49,7 @@ router.patch('/:id', getUser, async(req, res) => {
         res.user.wallet = req.body.wallet
     }
     try {
-        const updateuser = await res.user.save() //the updated version of our plot if they successfully saved 
+        const updateuser = await res.user.save()
         res.json(updateuser)
     } catch (err) {
         res.status(400).json({
@@ -65,7 +65,7 @@ router.patch('/:id', getUser, async(req, res) => {
 
 
 
-router.delete('/:id', getUser, async(req, res) => {
+router.delete('/:id', getUser, async(req, res) => { //delete user
     try {
         await res.user.remove()
         res.json({
@@ -77,7 +77,7 @@ router.delete('/:id', getUser, async(req, res) => {
         })
     }
 })
-async function getUser(req, res, next) {
+async function getUser(req, res, next) { //get the current register user
     let user
     try {
         user = await signupTemplatesCopy.findById(req.params.id)
@@ -97,7 +97,7 @@ async function getUser(req, res, next) {
 }
 
 
-async function getUserFromSignup(req, res, next) {
+async function getUserFromSignup(req, res, next) { //get the list of the reigstered users
     let user;
     try {
         user = await signupTemplatesCopy.find()
@@ -115,11 +115,8 @@ async function getUserFromSignup(req, res, next) {
     next()
 
 }
-router.post('/verify', (req, res) => {
+router.post('/verify', (req, res) => { //verify if the hash of the data equals to the signature
     let { data, publicKey, signature } = req.body
-
-    //console.log(publicKey)
-    //console.log(data)
     publicKey = crypto.createPublicKey({
         key: Buffer.from(publicKey, 'base64'),
         type: 'spki',
@@ -128,14 +125,10 @@ router.post('/verify', (req, res) => {
     })
 
     const sign = JSON.stringify(signature)
-    console.log(sign)
-        // console.log(publicKey)
-
     const verify = crypto.createVerify("SHA256")
     verify.update(data)
     verify.end()
 
-    console.log(publicKey)
     let result = verify.verify(publicKey, Buffer.from(signature, 'base64'))
 
     res.send(
@@ -144,7 +137,7 @@ router.post('/verify', (req, res) => {
 })
 
 
-router.post('/seller', async(req, res) => {
+router.post('/seller', async(req, res) => { //create the signature
     users = await signupTemplatesCopy.find();
     const userid = req.body.userid
     let privateKey = []
@@ -175,61 +168,58 @@ router.post('/seller', async(req, res) => {
 })
 
 
-router.post('/signup', getUserFromSignup, async(request, response) => {
+router.post('/signup', getUserFromSignup, async(request, response) => { //create new register user
 
-        const signup = await response.user;
-        for (let i = 0; i < signup.length; i++) {
+    const signup = await response.user; //get the list of all registered users
+    for (let i = 0; i < signup.length; i++) {
 
-            if (signup[i].ID == request.body.ID) {
+        if (signup[i].ID == request.body.ID) {
 
-                return response.send('You already have account!')
-            }
+            return response.send('You already have account!')
         }
+    }
 
-        const saltPassword = await bcrypt.genSalt(10);
-        const securePassword = await bcrypt.hash(request.body.password, saltPassword)
-        let { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-            modulusLength: 2048,
-            publicKeyEncoding: {
-                type: 'spki',
-                format: 'der',
-            },
-            privateKeyEncoding: {
-                type: 'pkcs8',
-                format: 'der',
-            },
+    const saltPassword = await bcrypt.genSalt(10);
+    const securePassword = await bcrypt.hash(request.body.password, saltPassword) //password encryption
+    let { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', { //creating the keys
+        modulusLength: 2048,
+        publicKeyEncoding: {
+            type: 'spki',
+            format: 'der',
+        },
+        privateKeyEncoding: {
+            type: 'pkcs8',
+            format: 'der',
+        },
 
+    })
+
+    publicKey = publicKey.toString('base64') //convert to format 'base64'
+    privateKey = privateKey.toString('base64')
+    console.log(publicKey);
+
+
+
+    const name = request.body.name;
+    const ID = request.body.ID;
+    const password = securePassword;
+    const wallet = 1000;
+
+    const newUser = new signupTemplatesCopy({
+        privateKey,
+        publicKey,
+        name,
+        ID,
+        password,
+        wallet
+    })
+
+    newUser.save()
+        .then(data => {
+            response.json(data)
         })
 
-        publicKey = publicKey.toString('base64')
-        privateKey = privateKey.toString('base64')
-        console.log(publicKey);
-
-
-
-        const name = request.body.name;
-        const ID = request.body.ID;
-        const password = securePassword;
-        // const password = request.body.password;
-        // const privateKey;
-        // const publicKey;
-        const wallet = 1000;
-
-        const newUser = new signupTemplatesCopy({
-            privateKey,
-            publicKey,
-            name,
-            ID,
-            password,
-            wallet
-        })
-
-        newUser.save()
-            .then(data => {
-                response.json(data)
-            })
-
-    }) // when a user enters every data to buy a plot and click 'send'- a post request has been made and come to this server,method.
+})
 
 
 module.exports = router
