@@ -1,5 +1,5 @@
 import React, {
-    Component, useState,useEffect
+     useState,useEffect
 } from 'react';
 import {
     Link
@@ -20,7 +20,6 @@ const [user , setUser] = useState('');
 
     
   useEffect(() => { //to write user details on the navbar
-    
     axios.get('http://localhost:4000/logsIn')
      .then((response) => {
 

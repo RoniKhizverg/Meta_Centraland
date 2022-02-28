@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
 import axios from 'axios';
 
@@ -6,11 +6,10 @@ import axios from 'axios';
 
 const CreateUser = () => {
 
-    const [user] = useState(createuser);
        
+useEffect(() => {  //creating the all plots
 
-function createuser()
-    { //create the register user- 'admin'
+const createUser = async () =>{ //create the register user- 'admin'
        
      const newUser = {
       name: "O&R.Ltd",
@@ -21,11 +20,16 @@ function createuser()
     }  
     localStorage.setItem("loguserid", newUser.ID);
     
-      axios.post('http://localhost:4000/signupUsers/signup',newUser)
+      await(axios.post('http://localhost:4000/signupUsers/signup',newUser))
         .then(res => console.log(res.data));
+
+      window.location="/createplots"
     }
+    createUser();
+
+},[])
 return(
-   <div>{window.location="/createplots"}</div>
+   <div></div>
 )
 }
 export default CreateUser;

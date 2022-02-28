@@ -5,7 +5,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import axios from 'axios';
 // axios for send data to the backend.
 
-localStorage.setItem("legened",1);
+localStorage.setItem("legend",1);
   const FunctionSignUp = () =>{ //define the variables
     const[name,setName] = useState('');
     const[ID,setID] = useState('');

@@ -6,11 +6,11 @@ import '../MetaCentraland/MetaCentraland.css'
 import {
     Link
 } from 'react-router-dom';
-localStorage.setItem("legened",1);
+localStorage.setItem("legend",1);
   const GuestPopUp = () => { //define the variables
  
     const[plot,setPlot] = useState('');
-    const[linkToGame,setLinkToGame] = useState('');
+    const[,setLinkToGame] = useState('');
     const[status,setStatus] = useState('');
     const[inputype,setInputype] = useState('hiddeninput');
 
@@ -27,7 +27,7 @@ localStorage.setItem("legened",1);
             setPlot(   //define the current plot
           data[i]
         )
-        if(data[i].linkToGame != null && data[i].linkToGame != "") //there is link game to this plot
+        if(data[i].linkToGame !== "" && data[i].linkToGame !== undefined) //there is link game to this plot
         {
             setLinkToGame(
           data[i].linkToGame
@@ -76,7 +76,6 @@ localStorage.setItem("legened",1);
     const paperStyle = { padding: 20,top:10000,height: 500, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
-            console.log(inputype)
     return (
       
         <div className="image">

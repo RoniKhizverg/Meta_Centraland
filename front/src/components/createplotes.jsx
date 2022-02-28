@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import axios from 'axios';
 
 
 const CreatePlots = () => {
-localStorage.setItem("legened",1);
+localStorage.setItem("legend",1);
 
     
    

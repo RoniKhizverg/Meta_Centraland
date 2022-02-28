@@ -7,9 +7,8 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const CreateMap = () =>{  // deifine the variables
     
-    const [columnsAmount] = useState(200);
-    const [rowsAmount] = useState(200);
-    const [state,setState] = useState('')
+    
+    const [,setState] = useState('')
     const[cellStateDead] = useState(false);
     const[cellStateROAD] = useState("road");
     const[cellStatePARK] = useState("park");
@@ -17,16 +16,21 @@ const CreateMap = () =>{  // deifine the variables
     const[cellStateCHEEPPLOT] = useState("cheepPlot");
     const[cellStateMEDIOCREPLOT] = useState("mediocrePLOT");
     const[cellStateHIGHPLOT] = useState("highPlot");
-    const[user,setUser] = useState('');
+    const[,setUser] = useState('');
     const[usertype,setUserType] = useState('');
     const [cells,setCells] = useState([[]]);
 
         
-      var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};   //define the map legend
-      const legend= localStorage.getItem("legened");
-    
+      
     useEffect(() => {
-       if(legend==1){
+
+    const columnsAmount = 200;
+    const rowsAmount = 200;
+    var colorList = {"<215$": 'red', "<150$": 'yellow', "<50$": 'green'};   //define the map legend
+    const legend= localStorage.getItem("legend");
+    //console.log(legend)
+       if(legend==='1'){
+           console.log("hi")
         Colorize(colorList);
         localStorage.setItem("legend",0);
     }
@@ -35,8 +39,9 @@ const CreateMap = () =>{  // deifine the variables
     try
     {
         const getUserLogIn = (await axios.get('http://localhost:4000/logsIn')).data;    //get the current register user
-     if(getUserLogIn == "")
+     if(getUserLogIn.length === 0)
      {
+
             setUser("Welcome Guest");
             setUserType("guest");
      }
@@ -46,7 +51,7 @@ const CreateMap = () =>{  // deifine the variables
         const userid = localStorage.getItem('loguserid');
         for(var i=0; i < getSignUpUsers.length;i++)
         {
-            if(getSignUpUsers[i].ID === userid ) 
+            if(getSignUpUsers[i].ID === userid && getUserLogIn[0]!== undefined) 
             {
                 localStorage.setItem("user_id",getUserLogIn[0]._id);
                  setUser(getSignUpUsers[i].name +" has " + getSignUpUsers[i].wallet + " $" );
@@ -55,29 +60,29 @@ const CreateMap = () =>{  // deifine the variables
         }
      }
             }catch(error) {
+         
         console.log(error);
+        
     }
+        
+    
+    
 };
     getLogIn();
     setCells(initializeCells());
-    
-},[]);
-
-
-   
     function initializeCells (){   //creating the map
         let cells =[]
         for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
         cells[columnIndex] = [];
         for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
             if(((rowIndex %50 <30 && rowIndex % 50> 19 )&& (columnIndex % 50<30 && columnIndex % 50 >20)) ){
-                cells[columnIndex][rowIndex] = cellStatePARK;
+                cells[columnIndex][rowIndex] = "park";
             }
-           else if((columnIndex%50<2 && columnIndex>10) || (columnIndex% 25 <1 && columnIndex>10)|| (rowIndex%50<2 && rowIndex>10) || (rowIndex% 25 <1 && rowIndex>10)|| (columnIndex == 199) ||( rowIndex == 199)|| (columnIndex == 0) ||( rowIndex == 0)){
-            cells[columnIndex][rowIndex] = cellStateROAD;
+           else if((columnIndex%50<2 && columnIndex>10) || (columnIndex% 25 <1 && columnIndex>10)|| (rowIndex%50<2 && rowIndex>10) || (rowIndex% 25 <1 && rowIndex>10)|| (columnIndex === 199) ||( rowIndex === 199)|| (columnIndex === 0) ||( rowIndex === 0)){
+            cells[columnIndex][rowIndex] = "road";
            }
             else {
-                        cells[columnIndex][rowIndex] = cellStateDead;
+                        cells[columnIndex][rowIndex] = false;
     
                     }
             }
@@ -91,15 +96,15 @@ const CreateMap = () =>{  // deifine the variables
 
     for(let i=0; i< length;i++)
                 {
-                 if((data[i].price <50)&& (cells[data[i].column][data[i].row]===cellStateDead))
-                    cells[data[i].column][data[i].row] = cellStateCHEEPPLOT;
+                 if((data[i].price <50)&& (cells[data[i].column][data[i].row]===false))
+                    cells[data[i].column][data[i].row] = "cheepPlot";
                 
-                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].column][data[i].row]===cellStateDead))
-                    cells[data[i].column][data[i].row] = cellStateMEDIOCREPLOT;
+                    else if((data[i].price >50) && (data[i].price < 150)&& (cells[data[i].column][data[i].row]===false))
+                    cells[data[i].column][data[i].row] = "mediocrePLOT";
                 
-                    else if(data[i].price >150 && (cells[data[i].column][data[i].row]===cellStateDead))
+                    else if(data[i].price >150 && (cells[data[i].column][data[i].row]===false))
                     {
-                    cells[data[i].column][data[i].row] = cellStateHIGHPLOT;
+                    cells[data[i].column][data[i].row] = "highPlot";
                     }
                 }
     const newCellsState = cells;
@@ -109,7 +114,11 @@ const CreateMap = () =>{  // deifine the variables
         return cells;
         
     };
+},[]);
 
+
+   
+   
 
 
     function toggleCellState(columnIndex, rowIndex) {  //when we click on the plot in the map
@@ -205,17 +214,22 @@ const CreateMap = () =>{  // deifine the variables
                     />
                 })
             } 
-                        </div>
-
-                        
+                        </div>                       
         )
     }
 
 
-        return (             
-            <TransformWrapper >              
-                <br></br>
-        <br></br>
+        return (   
+           
+      <TransformWrapper>
+      
+        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+          <React.Fragment>
+            <div className="tools">
+              <button onClick={() => zoomIn()}>+</button>
+              <button onClick={() => zoomOut()}>-</button>
+              <button onClick={() => resetTransform()}>x</button>
+            </div>
             <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
             <div> 
             <div className = "MetaCentraland"  > {
@@ -224,11 +238,14 @@ const CreateMap = () =>{  // deifine the variables
             </div>
             </div>
             </TransformComponent>
-            </TransformWrapper>
-                        
-        );
+          </React.Fragment>
+        )}
+      </TransformWrapper>
+    );
+
         
-function Colorize (colorList) {   //creating the map's legend
+        
+    function Colorize (colorList) {   //creating the map's legend
             var container = document.getElementById('root');
           
             for (var key in colorList) {
@@ -248,7 +265,7 @@ function Colorize (colorList) {   //creating the map's legend
            }
         }
 
-function cellColoring(cellState) {   //define the 'status' of each cell
+   function cellColoring(cellState) {   //define the 'status' of each cell
     let cell = "";
     if (cellState === cellStateDead) {
 

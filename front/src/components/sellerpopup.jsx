@@ -13,11 +13,11 @@ import {
 
 
 
-localStorage.setItem("legened",1);
+localStorage.setItem("legend",1);
   const SellerPopUp =() => {
 
     const[plot,setPlot] = useState('');
-    const[user,setUser] = useState('');
+    const[,setUser] = useState('');
     const[price,setPrice] = useState('');
     const[avaibleForSale,setAvaibleForSale] = useState('');
     const[linkToGame,setLinkToGame] = useState('');
@@ -95,14 +95,12 @@ localStorage.setItem("legened",1);
     setAvaibleForSale(      
       true     
     )
-      console.log(avaibleForSale)
 
   }
   else{
        setAvaibleForSale(      
       false
           )
-      console.log(avaibleForSale)
 
   }
 }

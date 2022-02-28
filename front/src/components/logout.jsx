@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 
 const LogOut = () => {
-    const [user] = useState(logout);
+
+
+    useEffect(() => {
        
-    function logout()
+    const logOut = async () =>
     {
        let userId = localStorage.getItem('user_id');
       localStorage.clear();
-      axios.delete('http://localhost:4000/logsIn/'+ userId) //delete the user from the log'ins list
+      await(axios.delete('http://localhost:4000/logsIn/'+ userId)) //delete the user from the log'ins list
         .then(res => console.log(res.data));
+        
+        window.location="/createmap"
     }
+    logOut();
+  },[]);
 return(
-  <div>{window.location="/createmap"}</div>
+  <div></div>
 )
     }
 

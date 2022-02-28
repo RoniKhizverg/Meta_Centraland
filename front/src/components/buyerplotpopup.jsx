@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 
 
-  localStorage.setItem("legened",1);
+  localStorage.setItem("legend",1);
   const BuyerPopUp = () => {   //define  the attributes 
   const[buyeruser, setBuyerUser] = useState('');      
   const[selleruser, setSellerUser] = useState('');
@@ -69,8 +69,9 @@ import {
                 setSignature(data);
         })
         
-        if(data[i].linkToGame != "" && data[i].linkToGame != null)  //check if there is a link game and put it in the text field
+        if(data[i].linkToGame !== "" && data[i].linkToGame !== undefined)  //check if there is a link game and put it in the text field
         {
+          console.log(data[i].linkToGame)
           
             setLinkToGame(
           data[i].linkToGame
