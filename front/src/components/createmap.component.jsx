@@ -4,7 +4,6 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-
 const CreateMap = () =>{  // deifine the variables
     
     
@@ -30,7 +29,6 @@ const CreateMap = () =>{  // deifine the variables
     const legend= localStorage.getItem("legend");
     //console.log(legend)
        if(legend==='1'){
-           console.log("hi")
         Colorize(colorList);
         localStorage.setItem("legend",0);
     }
@@ -220,32 +218,21 @@ const CreateMap = () =>{  // deifine the variables
     }
 
 
-        return (   
-           
-      <TransformWrapper>
-      
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-          <React.Fragment>
-            <div className="tools">
-              <button onClick={() => zoomIn()}>+</button>
-              <button onClick={() => zoomOut()}>-</button>
-              <button onClick={() => resetTransform()}>x</button>
-            </div>
-            <br/>
+        return (             
+            <TransformWrapper >              
+                <br></br>
+        <br></br>
             <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
             <div> 
-           
-            
-            <div className = "MetaCentraland "  > {
+            <div className = "MetaCentraland"  > {
                 renderCells()     
             } 
             </div>
             </div>
             </TransformComponent>
-          </React.Fragment>
-        )}
-      </TransformWrapper>
-    );
+            </TransformWrapper>
+                        
+        );
 
         
         

@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 
+    
 
 const Navbar = () => {
 
@@ -22,7 +23,6 @@ const [user , setUser] = useState('');
   useEffect(() => { //to write user details on the navbar
     axios.get('http://localhost:4000/logsIn')
      .then((response) => {
-
          const data = response.data;
          var length = data.length;
          if(length===0 || !localStorage.getItem('loguserid'))
@@ -49,6 +49,7 @@ const [user , setUser] = useState('');
 },[]);
 
 
+
   axios.get('http://localhost:4000/logsIn') //define which a tag will be displayed on the Navbar 
      .then((response) => {
 
@@ -73,13 +74,13 @@ const [user , setUser] = useState('');
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className={logIn}>
-          <Link to="/signin" className={"nav-link"}>LOG-IN</Link>
+          <Link to="/signin" className={"nav-link"}onClick={()=> refresh()}>LOG-IN</Link>
           </li>
           <li className={signIn}>
-          <Link to="/signup" className="nav-link">SIGN-UP</Link>
+          <Link to="/signup" className="nav-link" onClick={()=> refresh()}>SIGN-UP</Link>
           </li>
           <li className={logout}>
-          <Link to="/logout" className="nav-link">LOG-OUT</Link>
+          <Link to="/logout" className="nav-link" onClick={()=> refresh()}>LOG-OUT</Link>
           </li>
 
           <li className={"navbar-item"}>
@@ -93,6 +94,15 @@ const [user , setUser] = useState('');
         </div>
       </nav>
     );
-  }
+    function refresh()
+    {
+      var childWindow = "";
+      var newTabUrl="/";
+      childWindow = window.location.assign(newTabUrl).reload();
+      childWindow.close();
+          
+
+    }
+}
   export default Navbar;
 

@@ -252,9 +252,7 @@ function handleVerify()
               <button  className={gametype} type="button" onClick={() => handleClick()}>play game</button>
         <br></br>
         <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+        <br></br>    
                 <Link to="/createmap" className="btn btn-primary">close</Link>
                 </form>
                   </Grid>
