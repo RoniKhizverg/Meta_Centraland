@@ -1,4 +1,14 @@
-.MetaCentraland {}
+.MetaCentraland {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* .map {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100em
+} */
 
 .image {
     background-image: url('metaVerse.jpg');
@@ -11,6 +21,9 @@
 
 .MetaCentraland__cells {
     display: flex;
+    /* width: 50cm; */
+    margin-left: 16em;
+    margin-right: 15em;
 }
 
 .MetaCentraland__column {
@@ -19,8 +32,8 @@
 }
 
 .MetaCentraland__cell {
-    width: 6.5px;
-    height: 3.6px;
+    width: 7px;
+    height: 3.7px;
     border: 0.1px solid #868585be;
 }
 

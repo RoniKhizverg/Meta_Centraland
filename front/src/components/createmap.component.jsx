@@ -194,6 +194,7 @@ const CreateMap = () =>{  // deifine the variables
 
     function renderColumn(rows, columnIndex) {       //define the coloring of each square 
         return ( 
+            
             <div className = "MetaCentraland__column"
             key = {
                 `column_${columnIndex}`
@@ -230,9 +231,12 @@ const CreateMap = () =>{  // deifine the variables
               <button onClick={() => zoomOut()}>-</button>
               <button onClick={() => resetTransform()}>x</button>
             </div>
+            <br/>
             <TransformComponent style={{ height: "80vh" }} zoom={2} center={[20, 100]}>
             <div> 
-            <div className = "MetaCentraland"  > {
+           
+            
+            <div className = "MetaCentraland "  > {
                 renderCells()     
             } 
             </div>

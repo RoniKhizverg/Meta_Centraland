@@ -78,7 +78,7 @@ localStorage.setItem("legend",1);
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     return (
       
-        <div className="image">
+        <div className="image " >
     <img src="plotWorld.png" alt="plotWorld"></img>
         <br></br>
         <br></br>

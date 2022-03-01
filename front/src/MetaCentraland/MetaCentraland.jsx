@@ -16,7 +16,7 @@ import LogOut from "../components/logout";
 function MetaCentraland() { //deifne each route and the exact path
   return (
     <BrowserRouter>
-    <div className="container">
+    <div className="MetaCentraland">
     <Navbar />
       <br/>
       <Routes>
