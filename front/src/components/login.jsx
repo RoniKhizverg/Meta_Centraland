@@ -15,7 +15,15 @@ const Login = () => {  //define variables
 
 
   const handleSubmit = event => {
+      var isUserTypeSelected = 1;
     event.preventDefault();
+    if(userType === "")
+    {
+        alert("Please choose user type!!");
+        isUserTypeSelected = 0;
+    }
+    if(isUserTypeSelected === 1)
+    {
     const user = {
        ID: ID,
        password: password,
@@ -41,6 +49,7 @@ const Login = () => {  //define variables
         }          
     
        })
+    }
                
     }
 
