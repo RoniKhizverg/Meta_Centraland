@@ -363,32 +363,36 @@ async function getPlot(req, res, next) { //get the plot according _id
 
 
 router.post('/plots', async(request, response) => { //create the plots
+    const plots = await plotsTemplatesCopy.find()
+    if (plots == "") {
+        for (let i = 0; i < 20000; i++) {
+            let userPlot = '';
 
-    let userPlot = '';
-    for (let i = 0; i < 20000; i++) {
+            var price = getRandomInt(15, 200);
+            var row = getRandomInt(1, 199);
+            var column = getRandomInt(1, 199);
+            var countryIndex = getRandomInt(0, 243);
+            var availableIndex = getRandomInt(0, 2);
+            userPlot = new plotsTemplatesCopy({
+                ownerName: "O&R.Ltd",
+                price: price,
+                description: descriptionCountriesList[countryIndex],
+                avaibleForSale: avaibleForSaleIndex[availableIndex],
+                row: row,
+                column: column,
+                userid: request.body.userid,
+                hash: SHA256(userPlot.description + userPlot.row + userPlot.column).toString()
 
-        var price = getRandomInt(15, 200);
-        var row = getRandomInt(1, 199);
-        var column = getRandomInt(1, 199);
-        var countryIndex = getRandomInt(0, 243);
-        var availableIndex = getRandomInt(0, 2);
-        userPlot = new plotsTemplatesCopy({
-            ownerName: "O&R.Ltd",
-            price: price,
-            description: descriptionCountriesList[countryIndex],
-            avaibleForSale: avaibleForSaleIndex[availableIndex],
-            row: row,
-            column: column,
-            userid: request.body.userid,
-            hash: SHA256(userPlot.description + userPlot.row + userPlot.column).toString()
+            })
 
+            userPlot.save()
+        }
+        response.json({
+            success: "ok"
         })
-
-        userPlot.save()
+    } else {
+        response.send("have plots already")
     }
-    response.json({
-        success: "ok"
-    })
 
 })
 

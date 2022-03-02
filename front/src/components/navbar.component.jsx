@@ -74,15 +74,14 @@ const [user , setUser] = useState('');
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className={logIn}>
-          <Link to="/signin" className={"nav-link"}onClick={()=> refresh()}>LOG-IN</Link>
+          <Link to  className={"nav-link"}onClick={()=>window.location="/signin"}>LOG-IN</Link>
           </li>
           <li className={signIn}>
-          <Link to="/signup" className="nav-link" onClick={()=> refresh()}>SIGN-UP</Link>
+          <Link to className="nav-link"onClick={()=>window.location="/signup"}>SIGN-UP</Link>
           </li>
           <li className={logout}>
-          <Link to="/logout" className="nav-link" onClick={()=> refresh()}>LOG-OUT</Link>
+          <Link to className="nav-link" onClick={()=>window.lo="/logout"}>LOG-OUT</Link>
           </li>
-
           <li className={"navbar-item"}>
           <div className="navbar navbar-dark bg-dark">{user}</div>
           </li>
@@ -94,15 +93,7 @@ const [user , setUser] = useState('');
         </div>
       </nav>
     );
-    function refresh()
-    {
-      var childWindow = "";
-      var newTabUrl="/";
-      childWindow = window.location.assign(newTabUrl).reload();
-      childWindow.close();
-          
-
-    }
+    
 }
   export default Navbar;
 
