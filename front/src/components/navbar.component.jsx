@@ -80,7 +80,7 @@ const [user , setUser] = useState('');
           <Link to className="nav-link"onClick={()=>window.location="/signup"}>SIGN-UP</Link>
           </li>
           <li className={logout}>
-          <Link to className="nav-link" onClick={()=>window.lo="/logout"}>LOG-OUT</Link>
+          <Link to className="nav-link" onClick={()=>window.location="/logout"}>LOG-OUT</Link>
           </li>
           <li className={"navbar-item"}>
           <div className="navbar navbar-dark bg-dark">{user}</div>
