@@ -80,7 +80,7 @@ const Login = () => {  //define variables
                         </RadioGroup> 
                 <Button type='submit' value="Login" color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>               
                 <Typography align="center">Do you not have an account ? <br></br>
-                     <Link href="/signup" onClick={()=>window.location="/"} >
+                     <Link href="/signup">
                         Sign Up 
                 </Link>
                 </Typography>
