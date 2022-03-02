@@ -7,6 +7,7 @@ const cells = [];
 const schemePlots = [];
 const SHA256 = require('crypto-js/sha256');
 const { hash } = require('bcrypt');
+const { json } = require('express');
 
 let descriptionCountriesList = [ // plots's description
     " Everydays: The First 5000 Days",
@@ -363,29 +364,52 @@ async function getPlot(req, res, next) { //get the plot according _id
 
 
 router.post('/plots', async(request, response) => { //create the plots
-    const plots = await plotsTemplatesCopy.find()
+    let plots = await plotsTemplatesCopy.find()
+    var row;
+    var column;
+    let equal;
+    let currentPlots = [];
+    let index = 0;
     if (plots == "") {
-        for (let i = 0; i < 20000; i++) {
+        while (index != 20000) {
+
+            equal = 0;
             let userPlot = '';
+            checkRowAndColumn();
 
-            var price = getRandomInt(15, 200);
-            var row = getRandomInt(1, 199);
-            var column = getRandomInt(1, 199);
-            var countryIndex = getRandomInt(0, 243);
-            var availableIndex = getRandomInt(0, 2);
-            userPlot = new plotsTemplatesCopy({
-                ownerName: "O&R.Ltd",
-                price: price,
-                description: descriptionCountriesList[countryIndex],
-                avaibleForSale: avaibleForSaleIndex[availableIndex],
-                row: row,
-                column: column,
-                userid: request.body.userid,
-                hash: SHA256(userPlot.description + userPlot.row + userPlot.column).toString()
+            function checkRowAndColumn() {
+                row = getRandomInt(1, 199);
+                column = getRandomInt(1, 199);
+                for (var j = 0; j < currentPlots.length; j++) {
+                    let row1 = currentPlots[j].row;
+                    let col1 = currentPlots[j].column;
+                    if ((row1 == row) && (col1 == column)) {
+                        equal = 1;
+                        break;
+                    }
+                }
+            }
+            if (equal == 0) {
+                var price = getRandomInt(15, 200);
+                // var row = getRandomInt(1, 199);
+                // var column = getRandomInt(1, 199);
+                var countryIndex = getRandomInt(0, 243);
+                var availableIndex = getRandomInt(0, 2);
+                userPlot = new plotsTemplatesCopy({
+                    ownerName: "O&R.Ltd",
+                    price: price,
+                    description: descriptionCountriesList[countryIndex],
+                    avaibleForSale: avaibleForSaleIndex[availableIndex],
+                    row: row,
+                    column: column,
+                    userid: request.body.userid,
+                    hash: SHA256(userPlot.description + userPlot.row + userPlot.column).toString()
 
-            })
+                })
+                userPlot.save()
+                currentPlots[index++] = JSON.parse(JSON.stringify(userPlot));
 
-            userPlot.save()
+            }
         }
         response.json({
             success: "ok"

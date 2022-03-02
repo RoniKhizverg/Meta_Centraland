@@ -196,9 +196,6 @@ router.post('/signup', getUserFromSignup, async(request, response) => { //create
 
     publicKey = publicKey.toString('base64') //convert to format 'base64'
     privateKey = privateKey.toString('base64')
-    console.log(publicKey);
-
-
 
     const name = request.body.name;
     const ID = request.body.ID;
