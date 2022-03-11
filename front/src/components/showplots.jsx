@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import {
-    Link
-} from 'react-router-dom';
 
 const URL = 'http://localhost:4000/plots'
 
