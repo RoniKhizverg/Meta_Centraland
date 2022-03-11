@@ -18,6 +18,8 @@ const [logout , setLogOut] = useState('hiddeninput');
 
 const [user , setUser] = useState('');
 
+const [showPlots, setShowPlots] = useState('');
+
 
     
   useEffect(() => { //to write user details on the navbar
@@ -59,13 +61,16 @@ const [user , setUser] = useState('');
          {
           setSignIn("hiddeninput");
           setLogIn("hiddeninput");
-          setLogOut("visabiity")
+          setLogOut("visabiity");
+          setShowPlots("visability");
 
          }
          else{
-           setLogOut("hiddeninput")
+           setLogOut("hiddeninput");
            setSignIn("visabiity");
           setLogIn("visabiity");
+          setShowPlots("hiddeninput");
+
          }
         })  
         return ( <
@@ -79,12 +84,20 @@ const [user , setUser] = useState('');
           <li className={signIn}>
           <Link to className="nav-link"onClick={()=>window.location="/signup"}>SIGN-UP</Link>
           </li>
+           <li className={showPlots}>
+          <Link to className={"nav-link"}onClick={()=>window.location="/showplots"}>My Plots</Link>
+          </li>
           <li className={logout}>
           <Link to className="nav-link" onClick={()=>window.location="/logout"}>LOG-OUT</Link>
           </li>
           <li className={"navbar-item"}>
           <div className="navbar navbar-dark bg-dark">{user}</div>
           </li>
+          
+          
+         
+          
+          
 
 
           <li className="navbar-item">

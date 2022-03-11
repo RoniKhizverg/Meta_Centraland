@@ -22,7 +22,7 @@
 .MetaCentraland__cells {
     display: flex;
     /* width: 50cm; */
-    margin-left: 16em;
+    margin-left: 5em;
     margin-right: 15em;
 }
 
@@ -106,4 +106,31 @@
 
 .navbar-item {
     color: blueviolet
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#plot {
+    border-collapse: collapse;
+    border: 3px solid #ddd;
+}
+
+#plot td,
+#plot th {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+#plot tr:hover {
+    background-color: #ddd;
+}
+
+#plot th {
+    padding: 10px;
+    text-align: center;
+    background-color: #af4c7f;
+    color: white;
 }
