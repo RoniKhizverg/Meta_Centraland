@@ -73,17 +73,14 @@ const CreateMap = () =>{  // deifine the variables
         for (let columnIndex = 0; columnIndex < columnsAmount; columnIndex++) {
         cells[columnIndex] = [];
         for (let rowIndex = 0; rowIndex < rowsAmount; rowIndex++) {
+            cells[columnIndex][rowIndex] = false;
             if(((rowIndex %50 <30 && rowIndex % 50> 19 )&& (columnIndex % 50<30 && columnIndex % 50 >20)) ){
                 cells[columnIndex][rowIndex] = "park";
             }
            else if((columnIndex%50<2 && columnIndex>10) || (columnIndex% 25 <1 && columnIndex>10)|| (rowIndex%50<2 && rowIndex>10) || (rowIndex% 25 <1 && rowIndex>10)|| (columnIndex === 199) ||( rowIndex === 199)|| (columnIndex === 0) ||( rowIndex === 0)){
             cells[columnIndex][rowIndex] = "road";
            }
-            else {
-                        cells[columnIndex][rowIndex] = false;
-    
-                    }
-            }
+             }
 
         }
        
@@ -127,8 +124,7 @@ const CreateMap = () =>{  // deifine the variables
          const length = data.length;
         for(var i=0; i < length; i++)
         {
-
-            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer")) //if the user is buyer
+            if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "buyer") && (cells[columnIndex][rowIndex]!== "park") && (cells[columnIndex][rowIndex]!== "road")) //if the user is buyer
             {
                 localStorage.setItem("plot",data[i]._id);
                 localStorage.setItem("ownerNameId", data[i].userid);
@@ -142,7 +138,7 @@ const CreateMap = () =>{  // deifine the variables
                 window.location ="/buyerplotpopup";
                 }
             }
-            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller")) //if the user is seller
+            else if((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "seller") && (cells[columnIndex][rowIndex]!== "park") && (cells[columnIndex][rowIndex]!== "road")) //if the user is seller
             {
                 
                 localStorage.setItem("plot",data[i]._id);
@@ -159,19 +155,25 @@ const CreateMap = () =>{  // deifine the variables
                     window.location ="/sellerpopup";
                     }
             }
-             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "guest"))) //if the user is guest
+             else if(((Number(data[i].row) === rowIndex) && (Number(data[i].column) === columnIndex) && (usertype === "guest") && (cells[columnIndex][rowIndex]!== "park") && (cells[columnIndex][rowIndex]!== "road"))) //if the user is guest
             {
                 localStorage.setItem("plot",data[i]._id);
                 window.location ="/guestpopup";
             }
+        
         }
-    })
-    
-        const newCellsState = cells;       
-        newCellsState[columnIndex][rowIndex] = !newCellsState[columnIndex][rowIndex];  //change the color when we clicked on the plot
+        const newCellsState = cells;
+        const originColor = newCellsState[columnIndex][rowIndex];
+        newCellsState[columnIndex][rowIndex] = "empty"  //change the color when we clicked on the plot
+        setTimeout(() => {
+            newCellsState[columnIndex][rowIndex] =originColor;
+        }, 1000);
         setState({
             newCellsState
         })
+    })
+
+        
     }
 
       function renderCells() { //define the coloring of each square
