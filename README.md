@@ -1,7 +1,5 @@
 # Meta_Centraland
 
-# Game Development - Final Project
-
 ### About The Project
 
 <br />
