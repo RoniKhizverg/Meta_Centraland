@@ -3,7 +3,7 @@
 ### About The Project
 
 <br />
-Developed by Or Amram and Roni Khizverg.
+## Developed by Or Amram and Roni Khizverg.
 
 ### Built With
 
