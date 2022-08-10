@@ -29,6 +29,7 @@ Initial selling price will range randomly between $15 - $200.
 <br />
 
 Entry into the world is in two main functions:
+<br />
 A. As sellers or buyers (registered with encrypted registration, they are automatically equipped with 1000 dollars each.
 <br />
 B. As guests.
